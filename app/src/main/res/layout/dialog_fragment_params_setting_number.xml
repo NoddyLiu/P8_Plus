@@ -1,0 +1,121 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.superh2.p8.dialogs.DialogFragment_Params_Setting_Number">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="10dp">
+
+            <RelativeLayout
+                    android:id="@+id/layout_hundred"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_hundred_add"
+                        style="@style/DialogButtonStyle"
+                        android:text="+"/>
+
+                <TextView
+                        android:id="@+id/textview_hundred"
+                        style="@style/DialogTextViewStyle"
+                        android:layout_below="@id/btn_hundred_add"/>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_hundred_subtract"
+                        style="@style/DialogButtonStyle"
+                        android:text="-"
+                        android:layout_below="@id/textview_hundred"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_ten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_ten_add"
+                        style="@style/DialogButtonStyle"
+                        android:text="+"/>
+
+                <TextView
+                        android:id="@+id/textview_ten"
+                        style="@style/DialogTextViewStyle"
+                        android:layout_below="@id/btn_ten_add"/>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_ten_subtract"
+                        style="@style/DialogButtonStyle"
+                        android:text="-"
+                        android:layout_below="@id/textview_ten"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_single"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_single_add"
+                        style="@style/DialogButtonStyle"
+                        android:text="+"/>
+
+                <TextView
+                        android:id="@+id/textview_single"
+                        style="@style/DialogTextViewStyle"
+                        android:layout_below="@id/btn_single_add"/>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_single_subtract"
+                        style="@style/DialogButtonStyle"
+                        android:text="-"
+                        android:layout_below="@id/textview_single"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/layout_range"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="invisible">
+
+            <TextView
+                    style="@style/DialogTextViewRangeStyle"
+                    android:text="Range"/>
+            <TextView
+                    style="@style/DialogTextViewRangeStyle"
+                    android:text=":"/>
+
+            <TextView
+                    android:id="@+id/tv_range_from"
+                    style="@style/DialogTextViewRangeStyle"
+                    android:text="0"/>
+
+            <TextView
+                    style="@style/DialogTextViewRangeStyle"
+                    android:text=" - "/>
+
+            <TextView
+                    android:id="@+id/tv_range_to"
+                    style="@style/DialogTextViewRangeStyle"
+                    android:text="0"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

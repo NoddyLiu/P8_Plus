@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".FragmentMaintenance"
+             android:layout_marginTop="@dimen/title_height"
+             tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/content_layout_margin"
+            android:layout_marginRight="@dimen/content_layout_margin">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+            <!--指令-->
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/layout_each_line_height"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cmd"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <EditText
+                        android:id="@+id/et_do"
+                        android:layout_width="800dp"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_do"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/execute"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--复位按钮-->
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_x_reset"
+                    android:text="@string/x_reset"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_y_reset"
+                    android:text="@string/y_reset"
+                    android:layout_toRightOf="@id/btn_x_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_z_reset"
+                    android:text="@string/z_reset"
+                    android:layout_toRightOf="@id/btn_y_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_m_reset"
+                    android:text="@string/m_reset"
+                    android:layout_toRightOf="@id/btn_z_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"
+                    android:visibility="gone"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_w_reset"
+                    android:text="@string/w_reset"
+                    android:layout_toRightOf="@id/btn_m_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_p_reset"
+                    android:text="@string/p_reset"
+                    android:layout_toRightOf="@id/btn_w_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_all_reset"
+                    android:text="@string/all_reset"
+                    android:layout_toRightOf="@id/btn_p_reset"
+                    android:layout_marginLeft="@dimen/btn_default_margin"/>
+        </RelativeLayout>
+
+        <View style="@style/SeparatorStyle"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="2"
+                android:rowCount="4"
+                android:layout_marginTop="0dp">
+
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:layout_columnSpan="2"
+                    android:background="@color/appBackground">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+                    <TextView
+                            style="@style/TitleTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:text="@string/position"/>
+                    <TextView
+                            style="@style/TitleTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:text="@string/base_on_0"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--试管位置信息-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tubes_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_tubes_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--tips位置信息-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tips_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_tips_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+<!--            &lt;!&ndash;蒸汽吹风位置信息&ndash;&gt;-->
+<!--            <LinearLayout style="@style/GridCellStyle">-->
+
+<!--                <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                    <TextView-->
+<!--                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/humid_blow_pos"/>-->
+
+<!--                    <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text=":"/>-->
+
+<!--                    <info.hoang8f.widget.FButton-->
+<!--                            style="@style/ButtonStyle"-->
+<!--                            android:id="@+id/btn_humid_blow_pos"-->
+<!--                            android:layout_marginLeft="10dp"-->
+<!--                            android:text="@string/setting"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+            <!--二维码识别位置信息-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/barcode_scan_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_barcode_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--喷雾位置信息-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/spray_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_spray_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--滴液位置信息-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dispense_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_dispense_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--固定液位置-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fixative_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_fixative_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--玻片位置-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/slide_pos"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_slide_pos"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--scale值-->
+            <LinearLayout style="@style/GridCellStyle">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+
+                    <!--scale值-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                                android:layout_height="wrap_content"
+                                android:text="@string/axis_scale_value"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                        <info.hoang8f.widget.FButton
+                                style="@style/ButtonStyle"
+                                android:id="@+id/btn_scale"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/setting"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--工程师参数界面-->
+            <LinearLayout style="@style/GridCellStyle">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_parameters"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_general_params"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/setting"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--照明灯-->
+            <LinearLayout style="@style/GridCellStyle">
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="222dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/light"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_light_on"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/on"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_light_off"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/off"/>
+                </LinearLayout>
+            </LinearLayout>
+        </GridLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".FragmentMaintenance"
+        tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/content_layout_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="2"
+                android:rowCount="10">
+
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:layout_columnSpan="2"
+                    android:background="@color/appBackground"
+                    android:orientation="vertical">
+
+                <TextView
+                        style="@style/TitleTextViewStyle"
+                        android:text="@string/method_parameters_more" />
+
+                <TextView
+                        style="@style/SubTitleTextViewStyle"
+                        android:text="@string/spreading_mode_parameters" />
+            </LinearLayout>
+
+
+            <!--喷雾移动前固定时间（即在玻片开始位置喷雾n秒后再移动）-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_spray_liquid_time_before_move" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/zero_3"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_spray_liquid_time_before_move"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_second"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_spray_liquid_time_before_move"
+                        style="@style/ButtonStyle"
+                        android:layout_marginLeft="5dp"
+                        android:text="..." />
+            </LinearLayout>
+
+            <!--空-->
+            <LinearLayout style="@style/GridCellStyle"/>
+
+        </GridLayout>
+    </LinearLayout>
+
+    <!--Last-->
+    <info.hoang8f.widget.FButton
+            android:id="@+id/btn_last"
+            style="@style/ButtonStyle"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/last" />
+</FrameLayout>

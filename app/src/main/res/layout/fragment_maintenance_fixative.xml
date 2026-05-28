@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".FragmentMaintenance"
+             android:layout_marginTop="@dimen/title_height"
+             tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/content_layout_margin"
+            android:gravity="center_horizontal">
+
+        <TextView
+                style="@style/TitleTextViewStyle"
+                android:text="@string/fixative_pos"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <!--第一点位置-->
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/first_point_x"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_first_point_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_first_point_x"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/first_point_y"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_first_point_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_first_point_y"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point_y_step"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_point_y_step"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp">
+
+                    <!--高度量程-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/height_range"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/top_to_bottom"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_height_range"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_height_range"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <!--固定液高度-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="30dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fixative_height"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/bottom_to_top"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_fixative_height"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="number"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_fixative_height"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp">
+
+                    <!--x步长-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/step_length_x"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_step_length_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <!--y步长-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/step_length_y"
+                            android:layout_marginLeft="150dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_step_length_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/test_point_x"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_test_point_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_test_point_x"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/test_point_y"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_test_point_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_test_point_y"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_save"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/save"
+                    android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!--点位置按钮-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_this_pos"
+                    android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <GridLayout
+                android:id="@+id/layout_btn_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+        </GridLayout>
+    </LinearLayout>
+
+</FrameLayout>

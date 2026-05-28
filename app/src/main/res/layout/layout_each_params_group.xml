@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout style="@style/GridCellStyle">
+
+        <TextView
+                android:id="@+id/textview_group"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/params_group_textSize"
+                android:text="10."
+                android:gravity="left"/>
+
+        <EditText
+                android:id="@+id/edittext_group"
+                android:layout_width="@dimen/params_group_edittext_layout_width"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="false"
+                android:inputType="textFilter"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/params_group_textSize"/>
+
+        <info.hoang8f.widget.FButton
+                style="@style/ButtonStyle"
+                android:id="@+id/btn_save"
+                android:textSize="@dimen/params_group_textSize"
+                android:text="@string/save"/>
+
+        <info.hoang8f.widget.FButton
+                style="@style/ButtonStyle"
+                android:id="@+id/btn_detail"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/params_group_textSize"
+                android:text="@string/detail"/>
+    </LinearLayout>
+
+</FrameLayout>

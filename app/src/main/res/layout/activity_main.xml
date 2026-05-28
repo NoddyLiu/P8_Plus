@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appBackground"
+        tools:context=".MainActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/content_marginTop">
+
+            <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="@dimen/image_logo_width"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/logo_new" />
+
+            <!--左边功能按钮-->
+            <FrameLayout
+                    android:id="@+id/framelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <View
+                        android:id="@+id/view_exit"
+                        android:layout_width="@dimen/view_exit_width"
+                        android:layout_height="@dimen/view_exit_height" />
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btnReturn"
+                        style="@style/ButtonStyle"
+                        android:layout_width="@dimen/btn_return_width"
+                        android:layout_height="@dimen/btn_return_height"
+                        android:layout_marginLeft="@dimen/btn_return_marginLeft"
+                        android:text="@string/key_return"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/btn_return_text_size" />
+            </FrameLayout>
+
+            <!--右边功能按钮-->
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btnFunctionRight"
+                    style="@style/ButtonStyle"
+                    android:layout_width="@dimen/btn_return_width"
+                    android:layout_height="@dimen/btn_return_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/btn_return_marginLeft"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/btn_return_text_size" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- 右上角-->
+    <LinearLayout
+            android:id="@+id/layout_params_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/content_marginTop"
+            android:layout_marginRight="@dimen/btn_return_marginLeft"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+        <!--自启动-->
+        <com.suke.widget.SwitchButton
+                android:id="@+id/switch_auto_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                app:sb_show_indicator="false" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/auto_run" />
+
+        <!--当前所选参数组-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/parameter_group_selected"
+                    android:textSize="@dimen/default_textSize" />
+
+            <TextView
+                    android:id="@+id/tv_selected_params_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:text="Group 1"
+                    android:textColor="@color/fbutton_default_color"
+                    android:textSize="@dimen/content_title_textSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <FrameLayout
+            android:id="@+id/framelayout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</FrameLayout>

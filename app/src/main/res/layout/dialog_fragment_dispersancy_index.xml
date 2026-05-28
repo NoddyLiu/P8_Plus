@@ -1,0 +1,87 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.superh2.p8.dialogs.DialogFragment_Warn_Prompt">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text="@string/environment_temp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_dispersancy_index_temp"
+                    android:layout_width="@dimen/method_params_value_layout_width"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="0.0"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text="°C"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text="@string/relative_humidity"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_dispersancy_index_humi"
+                    android:layout_width="@dimen/method_params_value_layout_width"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="0.0"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_textSize"
+                    android:layout_gravity="center"
+                    android:text="%"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

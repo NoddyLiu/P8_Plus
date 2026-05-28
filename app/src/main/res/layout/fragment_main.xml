@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/title_height"
+        tools:context=".FragmentMain">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/appBackground"
+            android:gravity="bottom|center_horizontal">
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_method_parameters"
+                style="@style/MainPageButtonStyle"
+                android:layout_alignTop="@+id/btn_home"
+                android:text="@string/method_parameters_two_lines" />
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_scan_tube_barcode"
+                style="@style/MainPageButtonStyle"
+                android:layout_marginLeft="@dimen/main_page_btn_marginLeft"
+                android:layout_toRightOf="@id/btn_method_parameters"
+                android:text="@string/rescan_tube_barcode_two_lines" />
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_hardware_io"
+                style="@style/MainPageButtonStyle"
+                android:layout_marginLeft="@dimen/main_page_btn_marginLeft"
+                android:layout_toRightOf="@id/btn_scan_tube_barcode"
+                android:text="@string/hardware_io_two_lines" />
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_home"
+                style="@style/MainPageButtonStyle"
+                android:layout_marginLeft="@dimen/main_page_btn_marginLeft"
+                android:layout_toRightOf="@id/btn_hardware_io"
+                android:text="@string/home"
+                android:textSize="50sp" />
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_run"
+                style="@style/MainPageButtonStyle"
+                android:layout_marginLeft="@dimen/main_page_btn_marginLeft"
+                android:layout_toRightOf="@id/btn_home"
+                android:text="@string/run"
+                android:textSize="50sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="670dp"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/content_layout_margin"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow_slide_frame"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/content_marginTop"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            android:layout_width="@dimen/main_page_png_layout_width"
+                            android:layout_height="@dimen/main_page_png_layout_height"
+                            android:background="@mipmap/slide" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/slide_frame"
+                            android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                    <!--颜色表示状态-->
+                    <!--已经扫码-->
+                    <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/lightGreen"
+                            android:gravity="center"
+                            android:text="@string/slide_scanned" />
+                    <!--出错的-->
+                    <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/red"
+                            android:gravity="center"
+                            android:text="@string/slide_wrong" />
+                    <!--已经扫码-->
+                    <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/green"
+                            android:gravity="center"
+                            android:text="@string/slide_finished" />
+
+                    <!--当前扫码玻片内容-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="@string/slide_code_content" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text=":" />
+
+                    <TextView
+                            android:id="@+id/tv_current_qr_code"
+                            android:layout_width="160dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="" />
+
+                </LinearLayout>
+
+                <GridLayout
+                        android:id="@+id/gridLayout_slide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/content_marginTop">
+
+                </GridLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shadow_environment"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/content_layout_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                        <ImageView
+                                android:layout_width="@dimen/main_page_png_small_layout_width"
+                                android:layout_height="@dimen/main_page_png_small_layout_height"
+                                android:background="@mipmap/temp" />
+
+                        <TextView
+                                android:layout_width="@dimen/main_page_data_item_tv_layout_width"
+                                android:layout_height="wrap_content"
+                                android:text="@string/environment_temp"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <TextView
+                                android:id="@+id/tv_environment_temp"
+                                android:layout_width="@dimen/main_page_data_value_tv_layout_width"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="0.0"
+                                android:textSize="40sp" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="°C"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_temp_set"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="5dp"
+                                android:text="0.0°C"
+                                android:textSize="@dimen/default_textSize" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/content_layout_margin"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                        <ImageView
+                                android:layout_width="@dimen/main_page_png_small_layout_width"
+                                android:layout_height="@dimen/main_page_png_small_layout_height"
+                                android:background="@mipmap/humidity" />
+
+                        <TextView
+                                android:layout_width="@dimen/main_page_data_item_tv_layout_width"
+                                android:layout_height="wrap_content"
+                                android:text="@string/relative_humidity"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <TextView
+                                android:id="@+id/tv_relative_humidity"
+                                android:layout_width="@dimen/main_page_data_value_tv_layout_width"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="0.0"
+                                android:textSize="40sp" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="％"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_hum_set"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="5dp"
+                                android:text="0.0%"
+                                android:textSize="@dimen/default_textSize" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="5dp">
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="top"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/off"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+
+                        <com.suke.widget.SwitchButton
+                                android:id="@+id/switchbtn_toggle_humiture_power"
+                                android:layout_width="@dimen/switchbutton_layout_width"
+                                android:layout_height="@dimen/switchbutton_layout_height"
+                                android:layout_gravity="center_vertical"
+                                app:sb_show_indicator="false" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/on"
+                                android:textSize="@dimen/main_page_sub_tv_textSize" />
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="@dimen/main_page_data_item_tv_layout_width"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_params_dispersancy_index"
+                            android:textSize="@dimen/default_textSize"
+                            android:layout_marginTop="5dp"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+<!--                        <TextView-->
+<!--                                android:id="@+id/tv_dispersancy_index"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textSize="@dimen/content_title_textSize"-->
+<!--                                android:textColor="@color/fbutton_default_color"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:text="1"/>-->
+
+                        <Spinner
+                                android:id="@+id/spinner_dispersancy_index"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:textColor="@color/black"
+                                android:padding="8dp">
+                        </Spinner>
+
+                        <com.suke.widget.SwitchButton
+                                android:id="@+id/switchbtn_dispersancy_index"
+                                android:layout_width="@dimen/switchbutton_layout_width"
+                                android:layout_height="@dimen/switchbutton_layout_height"
+                                android:layout_gravity="center_vertical"
+                                app:sb_show_indicator="false"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/content_layout_margin"
+                android:layout_marginRight="@dimen/content_layout_margin"
+                android:background="@drawable/shadow_tube"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/content_marginTop"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="@dimen/main_page_png_layout_width"
+                        android:layout_height="@dimen/main_page_png_layout_height"
+                        android:background="@mipmap/barcode" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/sample"
+                        android:textSize="@dimen/main_page_sub_tv_textSize" />
+            </LinearLayout>
+
+            <GridLayout
+                    android:id="@+id/gridLayout_tube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/content_marginTop">
+
+            </GridLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

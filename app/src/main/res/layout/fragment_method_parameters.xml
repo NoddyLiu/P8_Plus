@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".FragmentMaintenance"
+             tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal">
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="3"
+                android:rowCount="1">
+
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:layout_columnSpan="3"
+                    android:background="@color/appBackground"
+                    android:orientation="vertical">
+
+                <TextView
+                        style="@style/TitleTextViewStyle"
+                        android:text="@string/method_parameters"/>
+
+                <TextView
+                        style="@style/SubTitleTextViewStyle"
+                        android:text="@string/common_parameters"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="4"
+                android:rowCount="1"
+                android:layout_marginTop="-10dp">
+            <!--滴片模式-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1.4">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/method_params_spreading_mode"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="45dp"/>
+
+                <RadioGroup
+                        android:id="@+id/rg_spreading_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <RadioButton
+                            android:id="@+id/rbtn_dry_slide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_dry_slide"
+                            android:layout_marginLeft="10dp"/>
+
+                    <RadioButton
+                            android:id="@+id/rbtn_wet_slide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_wet_slide"
+                            android:layout_marginLeft="10dp"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <!--扫二维码-->
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:layout_columnSpan="1"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="0.8">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/method_params_barcode"
+                                android:layout_gravity="center_vertical"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:layout_gravity="center_vertical"/>
+
+                        <com.suke.widget.SwitchButton
+                                android:id="@+id/switchbtn_barcode"
+                                android:layout_width="@dimen/switchbutton_layout_width"
+                                android:layout_height="@dimen/switchbutton_layout_height"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical"
+                                app:sb_show_indicator="false"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/camera_compatible"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_marginTop="-5dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--玻片数量 或者 试管数量-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:gravity="center_vertical"
+                    android:layout_columnSpan="2"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="2">
+
+                <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <!--（扫二维码时使用）-->
+                    <LinearLayout
+                            android:id="@+id/layout_slide_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            >
+
+                        <!--玻片数量-->
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/method_params_slide_quantity"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/one_64"
+                                    android:textSize="@dimen/tv_explain_info_textSize"
+                                    android:layout_gravity="center_horizontal"/>
+                        </LinearLayout>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:id="@+id/tv_slide_quantity"
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="1"
+                                    android:gravity="center_horizontal"/>
+                        </LinearLayout>
+
+                        <info.hoang8f.widget.FButton
+                                style="@style/ButtonStyle"
+                                android:id="@+id/btn_slide_quantity"
+                                android:layout_marginLeft="5dp"
+                                android:text="..."/>
+
+                        <!--是否自动摆放（自动：吸头吸玻片摆放；手动：玻片手动摆放到盘面）-->
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="15dp">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/method_params_slide_automatic"
+                                    android:layout_gravity="center_vertical"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":"
+                                    android:layout_gravity="center_vertical"/>
+
+                            <com.suke.widget.SwitchButton
+                                    android:id="@+id/switchbtn_slide_automatic"
+                                    android:layout_width="@dimen/switchbutton_layout_width"
+                                    android:layout_height="@dimen/switchbutton_layout_height"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_gravity="center_vertical"
+                                    app:sb_show_indicator="false"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!--（不扫二维码时使用）-->
+                    <LinearLayout
+                            android:id="@+id/layout_tube_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible">
+
+                        <!--试管数量-->
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/method_params_tube_quantity"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/one_64"
+                                    android:textSize="@dimen/tv_explain_info_textSize"
+                                    android:layout_gravity="center_horizontal"/>
+                        </LinearLayout>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"/>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:id="@+id/tv_tube_quantity"
+                                    android:layout_width="@dimen/method_params_value_layout_width"
+                                    android:layout_height="wrap_content"
+                                    android:text="1"
+                                    android:gravity="center_horizontal"/>
+                        </LinearLayout>
+
+                        <info.hoang8f.widget.FButton
+                                style="@style/ButtonStyle"
+                                android:id="@+id/btn_tube_quantity"
+                                android:layout_marginLeft="5dp"
+                                android:text="..."/>
+                    </LinearLayout>
+                </FrameLayout>
+
+
+            </LinearLayout>
+        </GridLayout>
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="3"
+                android:rowCount="1"
+                android:layout_marginTop="-4dp">
+            <!--滴片数量-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_common_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_slide_per_tube"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_10"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_slide_per_tube"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_slide_per_tube"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_slide_per_tube"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--滴片点数-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_common_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_spot_per_slide"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_3"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_spot_per_slide"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_spot_per_slide"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_spot_per_slide"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--玻片角度-->
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <TextView
+                        android:layout_width="@dimen/method_params_common_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:text="@string/method_params_angle_of_slide"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <RadioGroup
+                        android:id="@+id/rg_angle_of_slide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <RadioButton
+                            android:id="@+id/rbtn_angle_of_slide_zero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0°"
+                            android:layout_marginLeft="10dp"/>
+
+                    <RadioButton
+                            android:id="@+id/rbtn_angle_of_slide_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5°"
+                            android:layout_marginLeft="10dp"/>
+
+                    <RadioButton
+                            android:id="@+id/rbtn_angle_of_slide_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10°"
+                            android:layout_marginLeft="10dp"/>
+
+
+                </RadioGroup>
+            </LinearLayout>
+        </GridLayout>
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_width="match_parent"
+                android:columnCount="2"
+                android:rowCount="4"
+                android:layout_marginTop="-4dp">
+
+            <LinearLayout
+                    style="@style/GridCellStyle"
+                    android:layout_columnSpan="2"
+                    android:background="@color/appBackground">
+
+                <TextView
+                        style="@style/SubTitleTextViewStyle"
+                        android:text="@string/spreading_mode_parameters"/>
+            </LinearLayout>
+
+            <!--喷雾前固定-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_fixative_volumn_before_spray" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_100"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_fixative_volumn_before_spray"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_ul_per_drop"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_fixative_volumn_before_spray"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--雾化后等待-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_delay_time_after_spray"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_3"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_delay_time_after_spray"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_second"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_delay_time_after_spray"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--雾化后固定-->
+            <LinearLayout style="@style/GridCellStyle"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_fixative_volumn_after_spray" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_100"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_fixative_volumn_after_spray"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_ul_per_drop"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_fixative_volumn_after_spray"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--固定液压力-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_fixative_dispense_pressure"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_12"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <TextView
+                        android:id="@+id/tv_fixative_dispense_pressure"
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:gravity="center_horizontal"/>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_fixative_dispense_pressure"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--滴样体积-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_volumn_per_drop"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ten_100"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_volumn_per_drop"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_ul_per_drop"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_volumn_per_drop"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--滴液高度-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dispense_height"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_100"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_dispense_height"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/unit_mm"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_dispense_height"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--滴液速度-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_dispense_speed"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_12"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <TextView
+                        android:id="@+id/tv_dispense_speed"
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:gravity="center_horizontal"/>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_dispense_speed"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--滴样前等待时间-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_delay_time_before_sample_dropping" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/zero_5"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_delay_time_before_sample_dropping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_second"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_delay_time_before_sample_dropping"
+                        style="@style/ButtonStyle"
+                        android:layout_marginLeft="5dp"
+                        android:text="..." />
+            </LinearLayout>
+
+            <!--滴样后等待时间-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_delay_time_after_sample_dropping" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/zero_3"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_delay_time_after_sample_dropping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_second"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_delay_time_after_sample_dropping"
+                        style="@style/ButtonStyle"
+                        android:layout_marginLeft="5dp"
+                        android:text="..." />
+            </LinearLayout>
+
+            <!--追加固定-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_fixative_volumn_per_drop" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/zero_100"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_fixative_volumn_per_drop"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_ul_per_drop"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_fixative_volumn_per_drop"
+                        style="@style/ButtonStyle"
+                        android:layout_marginLeft="5dp"
+                        android:text="..." />
+            </LinearLayout>
+
+            <!--喷雾时Y轴速度-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_y_speed_when_spraying"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/one_10"
+                            android:textSize="@dimen/tv_explain_info_textSize"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                <TextView
+                        android:id="@+id/tv_y_speed_when_spraying"
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:gravity="center_horizontal"/>
+
+                <info.hoang8f.widget.FButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btn_y_speed_when_spraying"
+                        android:layout_marginLeft="5dp"
+                        android:text="..."/>
+            </LinearLayout>
+
+            <!--喷雾加液间隔-->
+            <LinearLayout style="@style/GridCellStyle">
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_mode_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/method_params_spray_liquid_addition_interval" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/one_64"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="@dimen/method_params_value_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/tv_spray_liquid_addition_interval"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="0" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_slide_per_addition"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <info.hoang8f.widget.FButton
+                        android:id="@+id/btn_spray_liquid_addition_interval"
+                        style="@style/ButtonStyle"
+                        android:layout_marginLeft="5dp"
+                        android:text="..." />
+            </LinearLayout>
+
+
+
+            <!--空-->
+            <!--            <LinearLayout style="@style/GridCellStyle"/>-->
+        </GridLayout>
+    </LinearLayout>
+
+    <!--导出-->
+    <info.hoang8f.widget.FButton
+            style="@style/ButtonStyle"
+            android:id="@+id/btn_export"
+            android:text="@string/export"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="140dp"/>
+
+    <!--Next-->
+    <info.hoang8f.widget.FButton
+            style="@style/ButtonStyle"
+            android:id="@+id/btn_next"
+            android:text="@string/next"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp" />
+
+</FrameLayout>

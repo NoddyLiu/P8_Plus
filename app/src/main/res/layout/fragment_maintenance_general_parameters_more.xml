@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="35dp"
+        tools:context=".FragmentMaintenance"
+        tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/content_layout_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+        <GridLayout
+                style="@style/GridLayoutStyle"
+                android:layout_marginTop="30dp"
+                android:columnCount="2"
+                android:rowCount="4">
+
+            <LinearLayout
+                    style="@style/GridCellStyleGeneralParamsTitle"
+                    android:layout_columnSpan="2"
+                    android:background="@color/appBackground">
+
+                <TextView
+                        style="@style/TitleTextViewStyle"
+                        android:text="@string/general_parameters" />
+            </LinearLayout>
+
+            <!--气流速度-->
+            <LinearLayout style="@style/GridCellStyleGeneralParams">
+
+                <LinearLayout
+                        android:layout_width="@dimen/general_params_tv_title_item_layout_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_params_airflow_speed" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/one_8"
+                            android:textSize="@dimen/tv_explain_info_textSize" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":" />
+
+                <EditText
+                        android:id="@+id/et_speed_air_flow"
+                        android:layout_width="@dimen/et_input_layout_width"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:inputType="number" />
+            </LinearLayout>
+
+            <!--分散指数-->
+            <LinearLayout style="@style/GridCellStyleGeneralParams">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_params_dispersancy_index" />
+
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text=":" />
+
+                <GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_1"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_width="41dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="1" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_2"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="1"
+                            android:text="2" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_3"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="2"
+                            android:text="3" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_4"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="3"
+                            android:text="4" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_5"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="4"
+                            android:text="5" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_6"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="5"
+                            android:text="6" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_7"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="6"
+                            android:text="7" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_8"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="7"
+                            android:text="8" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_9"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="0"
+                            android:layout_column="8"
+                            android:text="9" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_10"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="0"
+                            android:text="10" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_11"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="1"
+                            android:text="11" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_12"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="2"
+                            android:text="12" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_13"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="3"
+                            android:text="13" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_14"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="4"
+                            android:text="14" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_15"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="5"
+                            android:text="15" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_16"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="6"
+                            android:text="16" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_17"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="7"
+                            android:text="17" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_dispersancy_index_18"
+                            style="@style/ButtonStyleSmall"
+                            android:layout_gravity="center_vertical"
+                            android:layout_row="1"
+                            android:layout_column="8"
+                            android:text="18" />
+                </GridLayout>
+            </LinearLayout>
+
+            <!--开门报警（运行中开门弹窗报警）-->
+            <LinearLayout
+                    style="@style/GridCellStyleGeneralParams"
+                    android:gravity="center_vertical">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/general_params_door_open_alarm" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text=":" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/off"/>
+
+                    <com.suke.widget.SwitchButton
+                            android:id="@+id/switchbtn_alarm_door"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            app:sb_show_indicator="false" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/on"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--重置、保存按钮-->
+            <LinearLayout
+                    style="@style/GridCellStyleGeneralParams"
+                    android:gravity="center_horizontal">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_remote_maintenance"
+                            style="@style/ButtonStyle"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/general_params_remote_maintenance" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_reset"
+                            style="@style/ButtonStyle"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="30dp"
+                            android:text="@string/reset" />
+
+                    <info.hoang8f.widget.FButton
+                            android:id="@+id/btn_save"
+                            style="@style/ButtonStyle"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="30dp"
+                            android:text="@string/save" />
+                </LinearLayout>
+            </LinearLayout>
+        </GridLayout>
+    </LinearLayout>
+
+    <!--Prev-->
+    <info.hoang8f.widget.FButton
+            android:id="@+id/btn_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="47dp"
+            android:layout_marginRight="90dp"
+            android:text="@string/last" />
+</FrameLayout>

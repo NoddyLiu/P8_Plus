@@ -1,0 +1,146 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:textSize">@dimen/default_textSize</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!--通用按钮-->
+    <style name="ButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">@dimen/btn_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/btn_paddingRight</item>
+        <item name="android:background">@color/fbutton_default_color</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+    <style name="ButtonStyleSmall">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+    <!--小按钮-->
+    <style name="ButtonStyle_Small" parent="@style/ButtonStyle">
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">@dimen/btn_textSize_small</item>
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+
+    <!--分割线-->
+    <style name="SeparatorStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:background">@drawable/divider_shadow</item>
+        <item name="android:layout_marginLeft">@dimen/separator_layout_margin_left_right</item>
+        <item name="android:layout_marginRight">@dimen/separator_layout_margin_left_right</item>
+        <item name="android:layout_marginTop">@dimen/separator_layout_margin_top_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/separator_layout_margin_top_bottom</item>
+    </style>
+
+    <!--标题-->
+    <style name="TitleTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/content_title_textSize</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <!--副标题-->
+    <style name="SubTitleTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/content_sub_title_textSize</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!--GridLayout-->
+    <style name="GridLayoutStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/fbutton_default_color</item>
+        <item name="android:padding">@dimen/grid_cell_border</item>
+    </style>
+    <!--每个单元格-->
+    <style name="GridCellStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/gridCellDefaultBackground</item>
+        <item name="android:layout_margin">@dimen/grid_cell_border</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">fill</item>
+    </style>
+    <!--每个单元格（工程师界面通用参数）-->
+    <style name="GridCellStyleGeneralParams">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/gridCellDefaultBackground</item>
+        <item name="android:layout_margin">@dimen/grid_cell_border</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">fill</item>
+    </style>
+    <style name="GridCellStyleGeneralParamsTitle" parent="@style/GridCellStyleGeneralParams">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!--主界面-->
+    <style name="MainPageButtonStyle">
+        <item name="android:layout_width">@dimen/main_page_btn_layout_width</item>
+        <item name="android:layout_height">@dimen/main_page_btn_layout_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginBottom">@dimen/main_page_btn_layout_marginBottom</item>
+        <item name="android:textSize">@dimen/main_page_btn_textSize</item>
+        <item name="android:background">@color/fbutton_default_color</item>
+        <item name="android:paddingLeft">@dimen/main_page_btn_padding</item>
+        <item name="android:paddingRight">@dimen/main_page_btn_padding</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <!--参数界面-->
+    <!--参数弹出框按钮-->
+    <style name="DialogButtonStyle">
+        <item name="android:layout_width">@dimen/dialog_btn_param_width</item>
+        <item name="android:layout_height">@dimen/dialog_btn_param_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/dialog_btn_param_textSize</item>
+    </style>
+    <!--参数弹出框范围提示-->
+    <style name="DialogTextViewRangeStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/dialog_tv_range_textSize</item>
+    </style>
+    <!--参数弹出框文本-->
+    <style name="DialogTextViewStyle">
+        <item name="android:layout_width">@dimen/dialog_tv_layout_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:text">0</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textSize">@dimen/dialog_tv_param_textSize</item>
+    </style>
+</resources>

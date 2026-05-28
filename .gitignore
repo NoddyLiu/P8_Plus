@@ -1,0 +1,17 @@
+*.iml
+.gradle
+.idea/
+/local.properties
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# Project exclude paths
+/openCVLibrary3413/build/
+/openCVLibrary3413/build/intermediates/javac/debug/classes/
+/zxing-android-embedded/build/
+/zxing-android-embedded/build/intermediates/javac/debug/classes/

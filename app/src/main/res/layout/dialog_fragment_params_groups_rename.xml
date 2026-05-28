@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.superh2.p8.dialogs.DialogFragment_Warn_Prompt">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+        <EditText
+                android:id="@+id/et_params_group_rename"
+                android:layout_width="@dimen/params_group_edittext_layout_width"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="false"
+                android:inputType="textFilter"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/default_textSize"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"/>
+
+        <TextView
+                android:id="@+id/tv_params_group_rename_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tv_explain_info_textSize"
+                android:textColor="@color/red"
+                android:layout_gravity="center_horizontal"
+                android:text=""
+                android:layout_margin="10dp"/>
+
+        <com.superh2.library.myView.FloatingKeyboardViewNotDragable
+                android:id="@+id/keyboardview"
+                android:layout_width="@dimen/soft_keyboard_width"
+                android:layout_height="@dimen/soft_keyboard_height"
+                android:focusable="true"
+                android:visibility="gone"
+                android:focusableInTouchMode="true"
+                android:keyTextColor="@color/black"
+                android:keyBackground="@drawable/selector_keyboard"
+                android:keyTextSize="30sp"
+                android:shadowRadius="0.0"
+                android:background="@android:color/transparent"
+                android:elevation="1dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-50dp"/>
+    </LinearLayout>
+</FrameLayout>

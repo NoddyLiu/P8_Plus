@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/popup_default_layout_width"
+    android:layout_height="@dimen/popup_default_layout_height"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_solid_radius">
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="@dimen/popup_tv_default_textSize"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp">
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/btn_cancel"
+            style="@style/ButtonStyle_Small"
+            android:textSize="@dimen/btn_textSize_small"
+            android:text="@string/cancel"/>
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/btn_confirm"
+            style="@style/ButtonStyle_Small"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/btn_textSize_small"
+            android:text="@string/confirm"/>
+    </RelativeLayout>
+</FrameLayout>

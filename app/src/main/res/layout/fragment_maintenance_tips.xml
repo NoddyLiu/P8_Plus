@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".FragmentMaintenance"
+             android:layout_marginTop="@dimen/title_height"
+             tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/content_layout_margin"
+            android:gravity="center_horizontal">
+
+        <!--<TextView-->
+        <!--style="@style/TitleTextViewStyle"-->
+        <!--android:text="@string/tips_pos"/>-->
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="0dp">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <!--枪头盒-->
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tips_box"
+                            android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                    <!--第一点位置-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/first_point_x"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_first_point_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_first_point_x"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/first_point_y"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_first_point_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_first_point_y"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                    <!--预取枪高度-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/pre_take_tip_height"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/top_to_bottom"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_pre_take_tip_height"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_pre_take_tip_height"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <!--取枪高度-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="30dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/take_tip_height"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/top_to_bottom"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_take_tip_height"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_take_tip_height"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <!--步长-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/step_length"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_step_length"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+                </LinearLayout>
+
+                <!--退枪头-->
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip"
+                            android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"
+                            android:layout_gravity="center_horizontal"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                    <!--退枪位置-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip_x"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_x"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip_y"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_y"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                    <!--退枪高度-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/release_tip_height"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/top_to_bottom"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_height"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_height"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <!--拉提偏移-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/release_tip_offset"
+                                android:layout_marginLeft="30dp"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/bottom_to_top"
+                                android:textSize="@dimen/tv_explain_info_textSize"
+                                android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_offset"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_offset"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <!--二维码退枪通道-->
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip_channel_1_y"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_channel_1_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mm"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_channel_1_y"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+                    <!--tip盒点1-->
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip_box_point_1"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_box_point_1_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=","/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_box_point_1_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_box_point_1"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                    <!--tip盒点2-->
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_tip_box_point_2"
+                            android:layout_marginLeft="30dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_box_point_2_x"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=","/>
+
+                    <EditText
+                            android:id="@+id/et_release_tip_box_point_2_y"
+                            android:layout_width="@dimen/et_input_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:inputType="numberDecimal"/>
+
+                    <info.hoang8f.widget.FButton
+                            style="@style/ButtonStyle"
+                            android:id="@+id/btn_release_tip_box_point_2"
+                            android:text="@string/execute"
+                            android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_save"
+                    android:layout_marginLeft="@dimen/btn_default_margin"
+                    android:text="@string/save"
+                    android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+
+        <!--Tip头隔离空气-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/additional_air_in_tip"
+                    android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp">
+
+            <!--隔离空气高度-->
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/additional_air_height"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/top_to_bottom"
+                        android:textSize="@dimen/tv_explain_info_textSize"
+                        android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_additional_air_height"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_additional_air_height"
+                    android:text="@string/execute"
+                    android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <!--移液头防漏挡板-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sealing_plate"
+                    android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/retracted_pos"
+                    android:layout_marginLeft="30dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_retracted_pos"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_retracted_pos"
+                    android:text="@string/execute"
+                    android:layout_marginLeft="5dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/extended_pos"
+                    android:layout_marginLeft="30dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_extended_pos"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_extended_pos"
+                    android:text="@string/execute"
+                    android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+        <!--枪头检测-->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tip_check"
+                    android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tip_check_pos"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_tip_check_pos_x"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/x"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=","/>
+
+            <EditText
+                    android:id="@+id/et_tip_check_pos_y"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/y"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_tip_check_pos"
+                    android:text="@string/execute"
+                    android:layout_marginLeft="5dp"/>
+
+            <EditText
+                    android:id="@+id/et_tip_check_height"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/z"
+                    android:layout_marginLeft="@dimen/content_layout_margin"/>
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_tip_check_height"
+                    android:text="@string/execute"
+                    android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

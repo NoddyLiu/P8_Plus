@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--总体布局-->
+    <!--默认字体-->
+    <dimen name="default_textSize">18sp</dimen>
+    <!--顶部标题高度-->
+    <dimen name="title_height">70dp</dimen>
+    <!--顶部margin-->
+    <dimen name="content_marginTop">10dp</dimen>
+    <!--退出点击区域大小-->
+    <dimen name="view_exit_width">200dp</dimen>
+    <dimen name="view_exit_height">@dimen/title_height</dimen>
+    <!--按钮-->
+    <!--返回按钮-->
+    <dimen name="btn_return_width">130dp</dimen>
+    <dimen name="btn_return_height">60dp</dimen>
+    <dimen name="btn_return_marginLeft">20dp</dimen>
+    <dimen name="btn_return_text_size">32sp</dimen>
+    <!--默认按钮-->
+    <dimen name="btn_paddingLeft">0dp</dimen>
+    <dimen name="btn_paddingRight">0dp</dimen>
+    <dimen name="btn_default_layout_height">60dp</dimen>
+    <dimen name="btn_default_margin">30dp</dimen>
+    <dimen name="btn_textSize_small">25sp</dimen>
+    <!--logo-->
+    <dimen name="image_logo_width">635dp</dimen>
+    <dimen name="image_logo_height">@dimen/title_height</dimen>
+    <!--分割线-->
+    <dimen name="separator_layout_margin_left_right">30dp</dimen>
+    <dimen name="separator_layout_margin_top_bottom">15dp</dimen>
+    <!--内容-->
+    <dimen name="content_layout_margin">10dp</dimen>
+    <dimen name="layout_each_line_height">70dp</dimen>
+    <dimen name="content_title_textSize">26sp</dimen>
+    <dimen name="content_sub_title_textSize">23sp</dimen>
+    <!--说明文字-->
+    <dimen name="tv_explain_info_textSize">13sp</dimen>
+    <!--Edittext输入框大小-->
+    <dimen name="et_input_layout_width">90dp</dimen>
+    <!-- 二维码扫描框大小-->
+    <dimen name="barcode_scan_size_width">250dp</dimen>
+    <dimen name="barcode_scan_size_height">250dp</dimen>
+    <!--单位文字大小-->
+    <dimen name="tv_unit_textSize">23sp</dimen>
+    <!--GridLayout Cell 边框-->
+    <dimen name="grid_cell_border">1dp</dimen>
+    <!--SwitchButton 大小-->
+    <dimen name="switchbutton_layout_width">70dp</dimen>
+    <dimen name="switchbutton_layout_height">45dp</dimen>
+
+    <!--工程师模式设置-->
+    <dimen name="maintenance_tv_title_item_layout_width">320dp</dimen>
+    <!--通用参数设置-->
+    <dimen name="general_params_tv_title_item_layout_width">290dp</dimen>
+    <dimen name="general_params_layout_each_marginLeft">20dp</dimen>
+    <!--方法参数设置-->
+    <dimen name="method_params_common_tv_title_item_layout_width">120dp</dimen>
+    <dimen name="method_params_mode_tv_title_item_layout_width">260dp</dimen>
+    <dimen name="method_params_value_layout_width">141dp</dimen>
+
+    <!--提示弹出框-->
+    <dimen name="dialog_prompt_textSize">35sp</dimen>
+    <!--参数弹出框-->
+    <!--参数弹出框加减按钮-->
+    <dimen name="dialog_btn_param_width">80dp</dimen>
+    <dimen name="dialog_btn_param_height">60dp</dimen>
+    <dimen name="dialog_btn_param_textSize">40sp</dimen>
+    <!--参数弹出框范围提示-->
+    <dimen name="dialog_tv_range_textSize">20sp</dimen>
+    <!--参数弹出框文本-->
+    <dimen name="dialog_tv_param_textSize">35sp</dimen>
+    <dimen name="dialog_tv_layout_width">50dp</dimen>
+
+    <!--主界面-->
+    <!--按钮-->
+    <dimen name="main_page_btn_layout_width">195dp</dimen>
+    <dimen name="main_page_btn_layout_height">90dp</dimen>
+    <dimen name="main_page_btn_layout_marginBottom">10dp</dimen>
+    <dimen name="main_page_btn_padding">5dp</dimen>
+    <dimen name="main_page_btn_marginLeft">8dp</dimen>
+    <dimen name="main_page_btn_textSize">25sp</dimen>
+    <!--文本-->
+    <dimen name="main_page_sub_tv_textSize">25sp</dimen>
+    <!--数据-->
+    <dimen name="main_page_data_item_tv_layout_width">150dp</dimen>
+    <dimen name="main_page_data_value_tv_layout_width">100dp</dimen>
+    <!--温湿度图片-->
+    <dimen name="main_page_png_layout_width">36dp</dimen>
+    <dimen name="main_page_png_layout_height">36dp</dimen>
+    <dimen name="main_page_png_small_layout_width">30dp</dimen>
+    <dimen name="main_page_png_small_layout_height">30dp</dimen>
+
+    <!--参数组界面-->
+    <dimen name="soft_keyboard_width">850dp</dimen>
+    <dimen name="soft_keyboard_height">250dp</dimen>
+    <dimen name="soft_keyboard_keyWidth">80dp</dimen>
+    <dimen name="soft_keyboard_keyHeight">60dp</dimen>
+    <dimen name="soft_keyboard_horizontalGap">40dp</dimen>
+    <dimen name="params_group_textSize">23sp</dimen>
+    <dimen name="params_group_textview_layout_width">450dp</dimen>
+    <dimen name="params_group_edittext_layout_width">450dp</dimen>
+    <dimen name="params_group_tab_textSize">30sp</dimen>
+    <dimen name="params_group_tab_layout_height">80dp</dimen>
+
+    <!--硬件输入输出界面-->
+    <dimen name="hardware_io_each_line_layout_width">480dp</dimen>
+    <dimen name="hardware_io_tv_title_item_layout_width">140dp</dimen>
+    <dimen name="hardware_io_edittext_layout_width">100dp</dimen>
+
+    <!--弹出框-->
+    <!--弹出框默认大小-->
+    <dimen name="popup_default_layout_width">450dp</dimen>
+    <dimen name="popup_default_layout_height">300dp</dimen>
+    <!--参数弹出框加减按钮-->
+    <dimen name="popup_btn_param_width">80dp</dimen>
+    <dimen name="popup_btn_param_height">60dp</dimen>
+    <dimen name="popup_btn_param_textSize">40sp</dimen>
+    <!--参数弹出框范围提示-->
+    <dimen name="popup_tv_range_textSize">20sp</dimen>
+    <!--参数弹出框文本-->
+    <dimen name="popup_tv_param_textSize">35sp</dimen>
+    <dimen name="popup_tv_layout_width">50dp</dimen>
+    <!--提示弹出框-->
+    <dimen name="popup_tv_default_textSize">28sp</dimen>
+    <!--弹出框项目宽度-->
+    <dimen name="popup_tv_item_width">250dp</dimen>
+    <dimen name="popup_tv_value_width">100dp</dimen>
+</resources>
