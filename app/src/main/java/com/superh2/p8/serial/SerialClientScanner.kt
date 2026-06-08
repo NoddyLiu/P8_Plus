@@ -24,8 +24,8 @@ class SerialClientScanner
     private val SERIAL_PORT = "ttyS3"
 
     private var serialttyS: SerialPort? = null
-    private var ttyS1InputStream: InputStream? = null
-    private var ttyS1OutputStream: OutputStream? = null
+    private var ttySInputStream: InputStream? = null
+    private var ttySOutputStream: OutputStream? = null
 
     // 是否心跳测试指令
     private var isHeartBeat = false
@@ -53,8 +53,8 @@ class SerialClientScanner
         try
         {
             serialttyS = SerialPort(File("/dev/${SERIAL_PORT}"), 9600, 0)
-            ttyS1InputStream = serialttyS!!.inputStream
-            ttyS1OutputStream = serialttyS!!.outputStream
+            ttySInputStream = serialttyS!!.inputStream
+            ttySOutputStream = serialttyS!!.outputStream
 
             // 监听接收事件
             val thread = Thread { dataReceive() }
@@ -101,8 +101,8 @@ class SerialClientScanner
     {
         try
         {
-            ttyS1InputStream?.close()
-            ttyS1OutputStream?.close()
+            ttySInputStream?.close()
+            ttySOutputStream?.close()
             serialttyS?.close()
             isConnected = false
         }
@@ -152,7 +152,7 @@ class SerialClientScanner
     {
         lastReceiveDecodeStr = ""
         lastSendTime = System.currentTimeMillis()
-        ttyS1OutputStream?.write(cmd)
+        ttySOutputStream?.write(cmd)
         LogHelper.info("扫码+ ${tag}-发送报文：${CRC16Utils.conver16HexStr(cmd)}")
         return true
     }
@@ -167,7 +167,7 @@ class SerialClientScanner
 
         while (true)
         {
-            bytesReadThisTime = ttyS1InputStream?.read(inputs)!!
+            bytesReadThisTime = ttySInputStream?.read(inputs)!!
             val bytes: ByteArray = inputs.copyOfRange(0, bytesReadThisTime)
             // 判断 bytes 是否为空
             if (bytes.isEmpty())

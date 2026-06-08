@@ -3,13 +3,13 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myInterface.ParamsGroupSetListener
 import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.library.utils.ViewUtils
@@ -39,7 +39,7 @@ class DialogFragment_Params_Groups_RadioGroup : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_params_groups_radiogroup, null)
 
         // 添加20组radiobutton
@@ -79,7 +79,7 @@ class DialogFragment_Params_Groups_RadioGroup : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -90,7 +90,7 @@ class DialogFragment_Params_Groups_RadioGroup : DialogFragment()
         isShow = true
 
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
     }
 
@@ -101,7 +101,7 @@ class DialogFragment_Params_Groups_RadioGroup : DialogFragment()
         isShow = false
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 
@@ -114,7 +114,7 @@ class DialogFragment_Params_Groups_RadioGroup : DialogFragment()
         dismiss()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

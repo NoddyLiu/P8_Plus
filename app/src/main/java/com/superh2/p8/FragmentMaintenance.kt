@@ -10,8 +10,9 @@ import com.superh2.library.myEnum.EOnOff
 import com.superh2.library.myException.InitException
 import com.superh2.library.utils.ParamsHelper
 import com.superh2.p8.MainActivity.Companion.mSerialClientHumiture
+import com.superh2.p8.databinding.FragmentMaintenanceBinding
 import com.superh2.p8.utils.CmdHelper
-import kotlinx.android.synthetic.main.fragment_maintenance.*
+import com.superh2.p8.utils.ViewUtils.fullScreen
 import kotlin.concurrent.thread
 
 
@@ -19,18 +20,11 @@ import kotlin.concurrent.thread
  *@Description 工程师界面（主界面）
  *@Author  Noddy
  */
-class FragmentMaintenance : FragmentBase(), View.OnClickListener
+class FragmentMaintenance : FragmentBase<FragmentMaintenanceBinding>(FragmentMaintenanceBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenance()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance, container, false)
-        return rootView as View
     }
 
     override fun onResume()
@@ -47,46 +41,46 @@ class FragmentMaintenance : FragmentBase(), View.OnClickListener
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
 
-        btn_do.setOnClickListener(this)
+        binding.btnDo.setOnClickListener(this)
 
         // 复位按钮
-        btn_x_reset.setOnClickListener(this)
-        btn_y_reset.setOnClickListener(this)
-        btn_z_reset.setOnClickListener(this)
-        btn_m_reset.setOnClickListener(this)
-        btn_w_reset.setOnClickListener(this)
-        btn_p_reset.setOnClickListener(this)
-        btn_all_reset.setOnClickListener(this)
+        binding.btnXReset.setOnClickListener(this)
+        binding.btnYReset.setOnClickListener(this)
+        binding.btnZReset.setOnClickListener(this)
+        binding.btnMReset.setOnClickListener(this)
+        binding.btnWReset.setOnClickListener(this)
+        binding.btnPReset.setOnClickListener(this)
+        binding.btnAllReset.setOnClickListener(this)
 
-        btn_scale.setOnClickListener(this)
-        btn_tubes_pos.setOnClickListener(this)
-        btn_tips_pos.setOnClickListener(this)
-//        btn_humid_blow_pos.setOnClickListener(this)
-        btn_barcode_pos.setOnClickListener(this)
-        btn_spray_pos.setOnClickListener(this)
-        btn_dispense_pos.setOnClickListener(this)
-        btn_fixative_pos.setOnClickListener(this)
-        btn_slide_pos.setOnClickListener(this)
-        btn_general_params.setOnClickListener(this)
+        binding.btnScale.setOnClickListener(this)
+        binding.btnTubesPos.setOnClickListener(this)
+        binding.btnTipsPos.setOnClickListener(this)
+//        binding.btnHumidBlowPos.setOnClickListener(this)
+        binding.btnBarcodePos.setOnClickListener(this)
+        binding.btnSprayPos.setOnClickListener(this)
+        binding.btnDispensePos.setOnClickListener(this)
+        binding.btnFixativePos.setOnClickListener(this)
+        binding.btnSlidePos.setOnClickListener(this)
+        binding.btnGeneralParams.setOnClickListener(this)
 
-        btn_light_on.setOnClickListener(this)
-        btn_light_off.setOnClickListener(this)
+        binding.btnLightOn.setOnClickListener(this)
+        binding.btnLightOff.setOnClickListener(this)
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMain.newInstance(), "FragmentMain")
             R.id.btn_do ->
             {
-                fullScreen()
+                fullScreen(activity)
 
                 try
                 {
-                    CmdHelper.doCmd(et_do.text.toString(), true)
+                    CmdHelper.doCmd(binding.etDo.text.toString(), true)
                 }
                 catch (ex: KotlinNullPointerException)
                 {

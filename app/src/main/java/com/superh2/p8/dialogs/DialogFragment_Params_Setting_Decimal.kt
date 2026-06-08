@@ -3,12 +3,12 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myInterface.ParamsDecimalSetListener
 import com.superh2.library.utils.ViewUtils
 import com.superh2.p8.R
@@ -57,7 +57,7 @@ class DialogFragment_Params_Setting_Decimal : DialogFragment(), View.OnClickList
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_params_setting_decimal, null)
 
         // 范围
@@ -149,7 +149,7 @@ class DialogFragment_Params_Setting_Decimal : DialogFragment(), View.OnClickList
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -157,7 +157,7 @@ class DialogFragment_Params_Setting_Decimal : DialogFragment(), View.OnClickList
     {
         super.onResume()
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
 
         // 确定按钮（如未超出范围，自动dimiss，否则提示范围）
@@ -188,7 +188,7 @@ class DialogFragment_Params_Setting_Decimal : DialogFragment(), View.OnClickList
     {
         super.onDestroy()
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

@@ -14,27 +14,20 @@ import com.superh2.library.myInterface.IDispersancyIndexCallback
 import com.superh2.library.myInterface.InfoPromptListener
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramGeneralParams
+import com.superh2.p8.databinding.FragmentMaintenanceGeneralParametersMoreBinding
 import com.superh2.p8.dialogs.DialogFragment_Dispersancy_Index
 import com.superh2.p8.dialogs.DialogFragment_Info_Prompt
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters_more.*
-import kotlinx.android.synthetic.main.fragment_method_parameters_container.*
-
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  *@Description 工程师界面2（通用参数设置界面2）（暂时停用，移植到FragmentMaintenanceGeneralParameters上）
  *@Author  Noddy
  */
-class FragmentMaintenanceGeneralParametersMore : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceGeneralParametersMore : FragmentBase<FragmentMaintenanceGeneralParametersMoreBinding>(FragmentMaintenanceGeneralParametersMoreBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceGeneralParametersMore()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_general_parameters_more, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -42,28 +35,28 @@ class FragmentMaintenanceGeneralParametersMore : FragmentBase(), View.OnClickLis
         val btnReturn = mActivity?.findViewById(R.id.btnReturn) as Button
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
-        btn_prev.setOnClickListener(this)
+        binding.btnPrev.setOnClickListener(this)
 
-        btn_dispersancy_index_1.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_2.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_3.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_4.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_5.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_6.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_7.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_8.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_9.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_10.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_11.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_12.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_13.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_14.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_15.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_16.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_17.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_18.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex1.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex2.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex3.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex4.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex5.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex6.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex7.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex8.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex9.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex10.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex11.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex12.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex13.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex14.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex15.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex16.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex17.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex18.setOnClickListener(dispersancyIndexOnClickListener)
 
-        switchbtn_alarm_door.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnAlarmDoor.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
                 paramGeneralParams.alarmDoor = EOnOff.On
             else
@@ -71,28 +64,28 @@ class FragmentMaintenanceGeneralParametersMore : FragmentBase(), View.OnClickLis
             saveAndRefreshSwitches()
         }
 
-        btn_remote_maintenance.setOnClickListener(this)
-        btn_reset.setOnClickListener(this)
-        btn_save.setOnClickListener(this)
+        binding.btnRemoteMaintenance.setOnClickListener(this)
+        binding.btnReset.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
         refreshControls()
     }
 
     private fun refreshControls()
     {
-        et_speed_air_flow.setText(4.toString())
+        binding.etSpeedAirFlow.setText(4.toString())
 
         refreshSwitches()
     }
 
     private fun refreshSwitches()
     {
-        switchbtn_alarm_door.isChecked = paramGeneralParams.alarmDoor == EOnOff.On
+        binding.switchbtnAlarmDoor.isChecked = paramGeneralParams.alarmDoor == EOnOff.On
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
@@ -108,7 +101,7 @@ class FragmentMaintenanceGeneralParametersMore : FragmentBase(), View.OnClickLis
                     {
 
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
 
                 val timer = object : CountDownTimer(5000, 1000)
                 {
@@ -213,14 +206,14 @@ class FragmentMaintenanceGeneralParametersMore : FragmentBase(), View.OnClickLis
                 paramGeneralParams.DispersancyIndexList[index].temp = humiture.temp
                 paramGeneralParams.DispersancyIndexList[index].humi = humiture.humi
                 FileUtils.saveGeneralParameters(paramGeneralParams, true)
-                fullScreen()
+                fullScreen(activity)
             }
 
             override fun cancel()
             {
-                fullScreen()
+                fullScreen(activity)
             }
-        }).show(fragmentManager, null)
+        }).show(parentFragmentManager, null)
     }
 
     private fun saveAndRefreshSwitches()

@@ -9,24 +9,18 @@ import android.widget.Button
 import android.widget.Toast
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramScale
-import kotlinx.android.synthetic.main.fragment_maintenance_scale.*
+import com.superh2.p8.databinding.FragmentMaintenanceScaleBinding
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  *@Description 工程师界面（scale比例值界面）
  *@Author  Noddy
  */
-class FragmentMaintenanceScale : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceScale : FragmentBase<FragmentMaintenanceScaleBinding>(FragmentMaintenanceScaleBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceScale()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_scale, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -35,38 +29,38 @@ class FragmentMaintenanceScale : FragmentBase(), View.OnClickListener
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
 
-        btn_save.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
         refreshControls()
     }
 
     private fun refreshControls()
     {
-        et_x.setText(paramScale.x.toString())
-        et_y.setText(paramScale.y.toString())
-        et_z.setText(paramScale.z.toString())
-        et_p.setText(paramScale.p.toString())
-        et_m.setText(paramScale.m.toString())
-        et_w.setText(paramScale.w.toString())
-        et_n.setText(paramScale.n.toString())
+        binding.etX.setText(paramScale.x.toString())
+        binding.etY.setText(paramScale.y.toString())
+        binding.etZ.setText(paramScale.z.toString())
+        binding.etP.setText(paramScale.p.toString())
+        binding.etM.setText(paramScale.m.toString())
+        binding.etW.setText(paramScale.w.toString())
+        binding.etN.setText(paramScale.n.toString())
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMaintenance.newInstance(), "FragmentMaintenance")
             R.id.btn_save ->
             {
-                paramScale.x = if (et_x.text.toString().isNullOrEmpty()) 0.0 else et_x.text.toString().toDouble()
-                paramScale.y = if (et_y.text.toString().isNullOrEmpty()) 0.0 else et_y.text.toString().toDouble()
-                paramScale.z = if (et_z.text.toString().isNullOrEmpty()) 0.0 else et_z.text.toString().toDouble()
-                paramScale.p = if (et_p.text.toString().isNullOrEmpty()) 0.0 else et_p.text.toString().toDouble()
-                paramScale.m = if (et_m.text.toString().isNullOrEmpty()) 0.0 else et_m.text.toString().toDouble()
-                paramScale.w = if (et_w.text.toString().isNullOrEmpty()) 0.0 else et_w.text.toString().toDouble()
-                paramScale.n = if (et_n.text.toString().isNullOrEmpty()) 0.0 else et_n.text.toString().toDouble()
+                paramScale.x = if (binding.etX.text.toString().isNullOrEmpty()) 0.0 else binding.etX.text.toString().toDouble()
+                paramScale.y = if (binding.etY.text.toString().isNullOrEmpty()) 0.0 else binding.etY.text.toString().toDouble()
+                paramScale.z = if (binding.etZ.text.toString().isNullOrEmpty()) 0.0 else binding.etZ.text.toString().toDouble()
+                paramScale.p = if (binding.etP.text.toString().isNullOrEmpty()) 0.0 else binding.etP.text.toString().toDouble()
+                paramScale.m = if (binding.etM.text.toString().isNullOrEmpty()) 0.0 else binding.etM.text.toString().toDouble()
+                paramScale.w = if (binding.etW.text.toString().isNullOrEmpty()) 0.0 else binding.etW.text.toString().toDouble()
+                paramScale.n = if (binding.etN.text.toString().isNullOrEmpty()) 0.0 else binding.etN.text.toString().toDouble()
 
                if( FileUtils.saveScale(paramScale, true))
                    Toast.makeText(mActivity, getString(R.string.info_save_successfully), Toast.LENGTH_SHORT).show()

@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myInterface.WarnPromptListener
 import com.superh2.library.utils.ViewUtils
 import com.superh2.p8.R
@@ -41,7 +41,7 @@ class DialogFragment_Warn_Prompt : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_prompt, null)
 
         val tv_info = v.findViewById<View>(R.id.tv_info) as TextView
@@ -75,7 +75,7 @@ class DialogFragment_Warn_Prompt : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -88,7 +88,7 @@ class DialogFragment_Warn_Prompt : DialogFragment()
         if(!this.mIsAboveRunningDialog)
         {
             // 禁止底部控件点击事件
-            val view = activity.window.decorView as FrameLayout
+            val view = requireActivity().window.decorView as FrameLayout
             ViewUtils.setSubControlsClickable(view, false)
         }
     }
@@ -102,7 +102,7 @@ class DialogFragment_Warn_Prompt : DialogFragment()
         if(!this.mIsAboveRunningDialog)
         {
             // 恢复底部控件点击事件
-            val view = activity.window.decorView as FrameLayout
+            val view = requireActivity().window.decorView as FrameLayout
             ViewUtils.setSubControlsClickable(view, true)
         }
     }
@@ -118,7 +118,7 @@ class DialogFragment_Warn_Prompt : DialogFragment()
         if(!this.mIsAboveRunningDialog)
         {
             // 恢复底部控件点击事件
-            val view = activity.window.decorView as FrameLayout
+            val view = requireActivity().window.decorView as FrameLayout
             ViewUtils.setSubControlsClickable(view, true)
         }
     }

@@ -1,19 +1,16 @@
 package com.superh2.p8
 
-
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper
 import com.superh2.library.utils.ParamsHelper.paramPosOther
 import com.superh2.p8.FragmentMain.Companion.selectedMethodParams
+import com.superh2.p8.databinding.FragmentHardwareIoBinding
 import com.superh2.p8.utils.CmdHelper
-import kotlinx.android.synthetic.main.fragment_hardware_io.*
+import com.superh2.p8.utils.ViewUtils.fullScreen
 import kotlin.concurrent.thread
 
 
@@ -21,17 +18,11 @@ import kotlin.concurrent.thread
  *@Description 硬件测试界面
  *@Author  Noddy
  */
-class FragmentHardwareIO : FragmentBase(), View.OnClickListener
+class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardwareIoBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentHardwareIO()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_hardware_io, container, false)
-        return rootView as View
     }
 
     override fun onResume()
@@ -64,23 +55,22 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
         val btnNext = mActivity?.findViewById(R.id.btnFunctionRight) as Button
         btnNext.visibility = View.GONE
 
-        btn_spray_time.setOnClickListener(this)
-        btn_spray_liquid_addition.setOnClickListener(this)
-        btn_fixative_volume.setOnClickListener(this)
-        btn_fixative_liquid_spit_out.setOnClickListener(this)
-        //        btn_humid_blow_open.setOnClickListener(this)
-        //        btn_humid_blow_close.setOnClickListener(this)
+        binding.btnSprayTime.setOnClickListener(this)
+        binding.btnSprayLiquidAddition.setOnClickListener(this)
+        binding.btnFixativeVolume.setOnClickListener(this)
+        binding.btnFixativeLiquidSpitOut.setOnClickListener(this)
+        //        binding.btnHumidBlowOpen.setOnClickListener(this)
+        //        binding.btnHumidBlowClose.setOnClickListener(this)
 
-
-        et_replace_pos_x.setText(paramPosOther.replaceSealingRingPos.x.toString())
-        et_replace_pos_y.setText(paramPosOther.replaceSealingRingPos.y.toString())
-        et_replace_pos_z.setText(paramPosOther.replaceSealingRingHeight.toString())
-        et_replace_pos_x.addTextChangedListener(object : TextWatcher
+        binding.etReplacePosX.setText(paramPosOther.replaceSealingRingPos.x.toString())
+        binding.etReplacePosY.setText(paramPosOther.replaceSealingRingPos.y.toString())
+        binding.etReplacePosZ.setText(paramPosOther.replaceSealingRingHeight.toString())
+        binding.etReplacePosX.addTextChangedListener(object : TextWatcher
         {
             override fun afterTextChanged(p0: Editable?)
             {
                 var value = 0.0
-                if (et_replace_pos_x.text.toString().isNotEmpty()) value = et_replace_pos_x.text.toString().toDouble()
+                if (binding.etReplacePosX.text.toString().isNotEmpty()) value = binding.etReplacePosX.text.toString().toDouble()
                 paramPosOther.replaceSealingRingPos.x = value
                 FileUtils.saveOtherPos(paramPosOther, true)
             }
@@ -93,12 +83,12 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
             {
             }
         })
-        et_replace_pos_y.addTextChangedListener(object : TextWatcher
+        binding.etReplacePosY.addTextChangedListener(object : TextWatcher
         {
             override fun afterTextChanged(p0: Editable?)
             {
                 var value = 0.0
-                if (et_replace_pos_y.text.toString().isNotEmpty()) value = et_replace_pos_y.text.toString().toDouble()
+                if (binding.etReplacePosY.text.toString().isNotEmpty()) value = binding.etReplacePosY.text.toString().toDouble()
                 paramPosOther.replaceSealingRingPos.y = value
                 FileUtils.saveOtherPos(paramPosOther, true)
             }
@@ -111,12 +101,12 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
             {
             }
         })
-        et_replace_pos_z.addTextChangedListener(object : TextWatcher
+        binding.etReplacePosZ.addTextChangedListener(object : TextWatcher
         {
             override fun afterTextChanged(p0: Editable?)
             {
                 var value = 0.0
-                if (et_replace_pos_z.text.toString().isNotEmpty()) value = et_replace_pos_z.text.toString().toDouble()
+                if (binding.etReplacePosZ.text.toString().isNotEmpty()) value = binding.etReplacePosZ.text.toString().toDouble()
                 paramPosOther.replaceSealingRingHeight = value
                 FileUtils.saveOtherPos(paramPosOther, true)
             }
@@ -129,19 +119,19 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
             {
             }
         })
-        btn_replace_pos_x_y.setOnClickListener(this)
-        btn_replace_pos_z.setOnClickListener(this)
+        binding.btnReplacePosXY.setOnClickListener(this)
+        binding.btnReplacePosZ.setOnClickListener(this)
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMain.newInstance(), "FragmentMain")
             R.id.btn_spray_time ->
             {
-                val sec = et_spray_time.text.toString()
+                val sec = binding.etSprayTime.text.toString()
                 if (!sec.isNullOrEmpty())
                 {
                     thread {
@@ -152,11 +142,11 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
             }
             R.id.btn_spray_liquid_addition ->
             {
-                CmdHelper.sprayAddLiquid(et_spray_liquid_addition.text.toString().toInt(), true)
+                CmdHelper.sprayAddLiquid(binding.etSprayLiquidAddition.text.toString().toInt(), true)
             }
             R.id.btn_fixative_volume ->
             {
-                val vol = et_fixative_volume.text.toString()
+                val vol = binding.etFixativeVolume.text.toString()
                 if (!vol.isNullOrEmpty())
                 {
                     thread {
@@ -186,11 +176,11 @@ class FragmentHardwareIO : FragmentBase(), View.OnClickListener
             //            }
             R.id.btn_replace_pos_x_y ->
             {
-                CmdHelper.xaya(et_replace_pos_x.text.toString().toDouble(), et_replace_pos_y.text.toString().toDouble(), true)
+                CmdHelper.xaya(binding.etReplacePosX.text.toString().toDouble(), binding.etReplacePosY.text.toString().toDouble(), true)
             }
             R.id.btn_replace_pos_z ->
             {
-                CmdHelper.za(et_replace_pos_z.text.toString().toDouble(), true)
+                CmdHelper.za(binding.etReplacePosZ.text.toString().toDouble(), true)
             }
         }
     }

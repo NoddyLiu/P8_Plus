@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -14,6 +13,7 @@ import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.library.utils.ViewUtils
 import com.superh2.p8.R
 import android.view.WindowManager
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myView.FloatingKeyboardViewNotDragable
 
 
@@ -41,7 +41,7 @@ class DialogFragment_Params_Groups_Rename : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_params_groups_rename, null)
 
         // 原组名
@@ -98,7 +98,7 @@ class DialogFragment_Params_Groups_Rename : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -109,7 +109,7 @@ class DialogFragment_Params_Groups_Rename : DialogFragment()
         isShow = true
 
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
     }
 
@@ -120,7 +120,7 @@ class DialogFragment_Params_Groups_Rename : DialogFragment()
         isShow = false
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 
@@ -133,7 +133,7 @@ class DialogFragment_Params_Groups_Rename : DialogFragment()
         dismiss()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

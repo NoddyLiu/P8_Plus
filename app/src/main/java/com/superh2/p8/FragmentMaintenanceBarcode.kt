@@ -15,25 +15,20 @@ import com.superh2.library.utils.ConstantsUtils
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramPosBarcode
 import com.superh2.p8.MainActivity.Companion.mSerialClientScanner
+import com.superh2.p8.databinding.FragmentMaintenanceBarcodeBinding
 import com.superh2.p8.utils.CmdHelper
+import com.superh2.p8.utils.ViewUtils.fullScreen
 import info.hoang8f.widget.FButton
-import kotlinx.android.synthetic.main.fragment_maintenance_barcode.*
 
 /**
  *@Description 工程师界面（二维码识别界面）
  *@Author  Noddy
  */
-class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceBarcode : FragmentBase<FragmentMaintenanceBarcodeBinding>(FragmentMaintenanceBarcodeBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceBarcode()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_barcode, container, false)
-        return rootView as View
     }
 
     override fun onResume()
@@ -52,17 +47,17 @@ class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
 
-        btn_first_point_x.setOnClickListener(this)
-        btn_first_point_y.setOnClickListener(this)
-        btn_left_1mm.setOnClickListener(this)
-        btn_right_1mm.setOnClickListener(this)
-        btn_top_1mm.setOnClickListener(this)
-        btn_bottom_1mm.setOnClickListener(this)
-        btn_save.setOnClickListener(this)
-        btn_scan.setOnClickListener(this)
+        binding.btnFirstPointX.setOnClickListener(this)
+        binding.btnFirstPointY.setOnClickListener(this)
+        binding.btnLeft1mm.setOnClickListener(this)
+        binding.btnRight1mm.setOnClickListener(this)
+        binding.btnTop1mm.setOnClickListener(this)
+        binding.btnBottom1mm.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
+        binding.btnScan.setOnClickListener(this)
 
         // 64个位置按钮
-        val layout_btn_group = rootView!!.findViewById<ViewGroup>(R.id.layout_btn_group) as GridLayout
+        val layout_btn_group = binding.layoutBtnGroup
         layout_btn_group.removeAllViews()
         for (row in 0..3)
         {
@@ -70,7 +65,7 @@ class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
             {
                 val btn = FButton(mActivity)
                 btn.text = ((col + 1) + row * 16).toString()
-                btn.buttonColor = ContextCompat.getColor(context, R.color.fbutton_default_color)
+                btn.buttonColor = ContextCompat.getColor(requireActivity(), R.color.fbutton_default_color)
                 btn.isShadowEnabled = true
                 btn.shadowHeight = 3
                 val rowSpec = GridLayout.spec(row, GridLayout.CENTER)
@@ -83,7 +78,7 @@ class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
                 layout_btn_group.addView(btn, layoutParams)
 
                 btn.setOnClickListener {
-                    fullScreen()
+                    fullScreen(activity)
                     CmdHelper.toBarcodePos(btn.text.toString().trim().toInt() - 1, true)
                 }
             }
@@ -94,35 +89,35 @@ class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
 
     private fun refreshControls()
     {
-        et_first_point_x.setText(paramPosBarcode.slides[0].x.toString())
-        et_first_point_y.setText(paramPosBarcode.slides[0].y.toString())
-        et_step_length_x.setText(paramPosBarcode.stepLengthX.toString())
-        et_step_length_y.setText(paramPosBarcode.stepLengthY.toString())
+        binding.etFirstPointX.setText(paramPosBarcode.slides[0].x.toString())
+        binding.etFirstPointY.setText(paramPosBarcode.slides[0].y.toString())
+        binding.etStepLengthX.setText(paramPosBarcode.stepLengthX.toString())
+        binding.etStepLengthY.setText(paramPosBarcode.stepLengthY.toString())
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMaintenance.newInstance(), "FragmentMaintenance")
-            R.id.btn_first_point_x -> CmdHelper.xa(et_first_point_x.text.toString().toDouble(), true)
-            R.id.btn_first_point_y -> CmdHelper.ya(et_first_point_y.text.toString().toDouble(), true)
+            R.id.btn_first_point_x -> CmdHelper.xa(binding.etFirstPointX.text.toString().toDouble(), true)
+            R.id.btn_first_point_y -> CmdHelper.ya(binding.etFirstPointY.text.toString().toDouble(), true)
             R.id.btn_left_1mm -> CmdHelper.xs(-1.0, true)
             R.id.btn_right_1mm -> CmdHelper.xs(1.0, true)
             R.id.btn_top_1mm -> CmdHelper.ys(-1.0, true)
             R.id.btn_bottom_1mm -> CmdHelper.ys(1.0, true)
             R.id.btn_save ->
             {
-                val firstPosX = if (et_first_point_x.text.toString().isNullOrEmpty()) 0.0
-                else et_first_point_x.text.toString().toDouble()
-                val firstPosY = if (et_first_point_y.text.toString().isNullOrEmpty()) 0.0
-                else et_first_point_y.text.toString().toDouble()
-                val stepLengthX = if (et_step_length_x.text.toString().isNullOrEmpty()) 0.0
-                else et_step_length_x.text.toString().toDouble()
-                val stepLengthY = if (et_step_length_y.text.toString().isNullOrEmpty()) 0.0
-                else et_step_length_y.text.toString().toDouble()
+                val firstPosX = if (binding.etFirstPointX.text.toString().isNullOrEmpty()) 0.0
+                else binding.etFirstPointX.text.toString().toDouble()
+                val firstPosY = if (binding.etFirstPointY.text.toString().isNullOrEmpty()) 0.0
+                else binding.etFirstPointY.text.toString().toDouble()
+                val stepLengthX = if (binding.etStepLengthX.text.toString().isNullOrEmpty()) 0.0
+                else binding.etStepLengthX.text.toString().toDouble()
+                val stepLengthY = if (binding.etStepLengthY.text.toString().isNullOrEmpty()) 0.0
+                else binding.etStepLengthY.text.toString().toDouble()
 
                 for (i in 0..63)
                 {
@@ -145,7 +140,7 @@ class FragmentMaintenanceBarcode : FragmentBase(), View.OnClickListener
                     {
                         override fun success(info: String)
                         {
-                            tv_scan_result.text = info
+                            binding.tvScanResult.text = info
                         }
 
                         override fun timeOut()

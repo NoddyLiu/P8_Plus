@@ -2,6 +2,7 @@ package com.superh2.p8.utils
 
 import android.app.Activity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.superh2.library.myEntityJson.MethodParams
 import com.superh2.library.myEnum.EAngle
 import com.superh2.library.myEnum.EOnOff
@@ -553,7 +554,7 @@ object CmdHelper
                     {
                         ViewUtils.closeRunningDialog() // 模拟“停止”按钮
                     }
-                }).show((MainActivity.mContext as Activity).fragmentManager, null)
+                }).show((MainActivity.mContext as AppCompatActivity).supportFragmentManager, null)
                 manualPause()
             }
 
@@ -1224,7 +1225,7 @@ object CmdHelper
                 {
                     ViewUtils.closeRunningDialog() // 模拟“停止”按钮
                 }
-            }).show((MainActivity.mContext as Activity).fragmentManager, null)
+            }).show((MainActivity.mContext as AppCompatActivity).supportFragmentManager, null)
             manualPause()
         }
 
@@ -1305,7 +1306,7 @@ object CmdHelper
                     {
                         ViewUtils.closeRunningDialog() // 模拟“停止”按钮
                     }
-                }).show((MainActivity.mContext as Activity).fragmentManager, null)
+                }).show((MainActivity.mContext as AppCompatActivity).supportFragmentManager, null)
                 manualPause()
             }
         }

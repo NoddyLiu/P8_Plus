@@ -1,10 +1,10 @@
 package com.superh2.p8
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 
 /**
  * 参数界面 父类
@@ -34,7 +34,7 @@ abstract class FragmentMethodParametersBase : Fragment()
         mActivity = context as Activity
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,6 +53,6 @@ abstract class FragmentMethodParametersBase : Fragment()
      */
     fun replaceFragment(newFragment: Fragment, newFragmentTag: String)
     {
-        mActivity!!.fragmentManager.beginTransaction().replace(R.id.framelayout_method_parameters_container, newFragment, newFragmentTag).commit()
+        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framelayout_method_parameters_container, newFragment, newFragmentTag).commit()
     }
 }

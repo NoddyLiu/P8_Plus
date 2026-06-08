@@ -32,12 +32,12 @@ class SerialClientHumiture
 
     var mContext: Context? = null
 
-    private var serialttyS1: SerialPort? = null
-    // 设备节点号
-    private var serialttySNum = "ttyS2"
-    // 输入输出
-    var ttyS1InputStream: InputStream? = null
-    var ttyS1OutputStream: OutputStream? = null
+    private val SERIAL_PORT = "ttyS2"
+
+    private var serialttyS: SerialPort? = null
+    private var ttySInputStream: InputStream? = null
+    private var ttySOutputStream: OutputStream? = null
+
     // 是否已经连接串口
     var isConnected = false
     // 数据接收buffer
@@ -91,9 +91,9 @@ class SerialClientHumiture
     {
         try
         {
-            serialttyS1 = SerialPort(File("/dev/$serialttySNum"), 115200, 0)
-            ttyS1InputStream = serialttyS1?.inputStream
-            ttyS1OutputStream = serialttyS1?.outputStream
+            serialttyS = SerialPort(File("/dev/$SERIAL_PORT"), 115200, 0)
+            ttySInputStream = serialttyS?.inputStream
+            ttySOutputStream = serialttyS?.outputStream
             isConnected = true
 
             // 开启发送指令线程
@@ -171,7 +171,7 @@ class SerialClientHumiture
     {
         try
         {
-            serialttyS1?.close()
+            serialttyS?.close()
             isConnected = false
         }
         catch (e: Exception)
@@ -203,13 +203,13 @@ class SerialClientHumiture
                         Log.i(TAG, "正在发送指令到串口")
 
                         // 发送数据
-                        ttyS1OutputStream?.write(data)
+                        ttySOutputStream?.write(data)
 
                         // 接收数据
                         var totalWaitMs = 0 // 一共等待的毫秒数
                         while (true)
                         {
-                            if (ttyS1InputStream!!.available() <= 0)
+                            if (ttySInputStream!!.available() <= 0)
                             {
                                 totalWaitMs += 10
                                 Thread.sleep(10)
@@ -227,7 +227,7 @@ class SerialClientHumiture
                         Thread.sleep(150)
 
                         // 读取数据
-                        val num = ttyS1InputStream!!.read(dataReceivedBuffer)
+                        val num = ttySInputStream!!.read(dataReceivedBuffer)
                         if (num > 0)
                         {
                             val buffer2 = dataReceivedBuffer.copyOfRange(0, num)
@@ -297,6 +297,10 @@ class SerialClientHumiture
                                     isAlarmDoor = DataHelper.isChecked(buffer2[13].toInt(), 0)
                                     callback?.success()
                                 }
+                                else ->
+                                {
+
+                                }
                             }
                         }
                     }
@@ -304,7 +308,7 @@ class SerialClientHumiture
                     {
                         try
                         {
-                            ttyS1InputStream?.close()
+                            ttySInputStream?.close()
                             this.closeSerial()
                         }
                         catch (ex: Exception)

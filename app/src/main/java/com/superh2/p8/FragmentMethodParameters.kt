@@ -1,10 +1,7 @@
 package com.superh2.p8
 
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.superh2.library.myEnum.EAngle
 import com.superh2.library.myEnum.EOnOff
 import com.superh2.library.myEnum.ESpreadingMode
@@ -13,36 +10,24 @@ import com.superh2.library.myInterface.ParamsNumSetListener
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.p8.FragmentMain.Companion.selectedMethodParams
+import com.superh2.p8.databinding.FragmentMethodParametersBinding
 import com.superh2.p8.dialogs.DialogFragment_Params_Setting_Decimal
 import com.superh2.p8.dialogs.DialogFragment_Params_Setting_Number
-import kotlinx.android.synthetic.main.fragment_method_parameters.*
-import kotlinx.android.synthetic.main.fragment_method_parameters.btn_delay_time_after_sample_dropping
-import kotlinx.android.synthetic.main.fragment_method_parameters.btn_delay_time_before_sample_dropping
-import kotlinx.android.synthetic.main.fragment_method_parameters.btn_fixative_volumn_per_drop
-import kotlinx.android.synthetic.main.fragment_method_parameters.btn_spray_liquid_addition_interval
-import kotlinx.android.synthetic.main.fragment_method_parameters.btn_y_speed_when_spraying
 
 /**
  *@Description 方法参数设置界面首页
  *@Author  Noddy
  */
-class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickListener
+class FragmentMethodParameters : FragmentBase<FragmentMethodParametersBinding>(FragmentMethodParametersBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMethodParameters()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_method_parameters, container, false)
-        return rootView as View
-    }
-
     override fun initWidget()
     {
-        rg_spreading_mode.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgSpreadingMode.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId)
             {
                 R.id.rbtn_dry_slide ->
@@ -58,27 +43,27 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
             }
         }
 
-        switchbtn_barcode.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnBarcode.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
             {
                 selectedMethodParams.barcode = EOnOff.On
-                layout_tube_quantity.visibility = View.INVISIBLE
+                binding.layoutTubeQuantity.visibility = View.INVISIBLE
             }
             else
             {
                 selectedMethodParams.barcode = EOnOff.Off
-                layout_tube_quantity.visibility = View.VISIBLE
+                binding.layoutTubeQuantity.visibility = View.VISIBLE
             }
             saveAndRefresh()
         }
 
-        switchbtn_slide_automatic.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnSlideAutomatic.setOnCheckedChangeListener { view, isChecked ->
             if(isChecked) selectedMethodParams.slideAutomatic = EOnOff.On
             else selectedMethodParams.slideAutomatic = EOnOff.Off
             saveAndRefresh()
         }
 
-        rg_angle_of_slide.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgAngleOfSlide.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId)
             {
                 R.id.rbtn_angle_of_slide_zero ->
@@ -99,25 +84,25 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
             }
         }
 
-        btn_slide_quantity.setOnClickListener(this)
-        btn_tube_quantity.setOnClickListener(this)
-        btn_slide_per_tube.setOnClickListener(this)
-        btn_spot_per_slide.setOnClickListener(this)
+        binding.btnSlideQuantity.setOnClickListener(this)
+        binding.btnTubeQuantity.setOnClickListener(this)
+        binding.btnSlidePerTube.setOnClickListener(this)
+        binding.btnSpotPerSlide.setOnClickListener(this)
 
-        btn_fixative_volumn_before_spray.setOnClickListener(this)
-        btn_delay_time_after_spray.setOnClickListener(this)
-        btn_fixative_volumn_after_spray.setOnClickListener(this)
-        btn_fixative_dispense_pressure.setOnClickListener(this)
-        btn_volumn_per_drop.setOnClickListener(this)
-        btn_dispense_height.setOnClickListener(this)
-        btn_dispense_speed.setOnClickListener(this)
-        btn_next.setOnClickListener(this)
+        binding.btnFixativeVolumnBeforeSpray.setOnClickListener(this)
+        binding.btnDelayTimeAfterSpray.setOnClickListener(this)
+        binding.btnFixativeVolumnAfterSpray.setOnClickListener(this)
+        binding.btnFixativeDispensePressure.setOnClickListener(this)
+        binding.btnVolumnPerDrop.setOnClickListener(this)
+        binding.btnDispenseHeight.setOnClickListener(this)
+        binding.btnDispenseSpeed.setOnClickListener(this)
+        binding.btnNext.setOnClickListener(this)
 
-        btn_delay_time_before_sample_dropping.setOnClickListener(this)
-        btn_delay_time_after_sample_dropping.setOnClickListener(this)
-        btn_fixative_volumn_per_drop.setOnClickListener(this)
-        btn_y_speed_when_spraying.setOnClickListener(this)
-        btn_spray_liquid_addition_interval.setOnClickListener(this)
+        binding.btnDelayTimeBeforeSampleDropping.setOnClickListener(this)
+        binding.btnDelayTimeAfterSampleDropping.setOnClickListener(this)
+        binding.btnFixativeVolumnPerDrop.setOnClickListener(this)
+        binding.btnYSpeedWhenSpraying.setOnClickListener(this)
+        binding.btnSprayLiquidAdditionInterval.setOnClickListener(this)
 
         refreshControls()
     }
@@ -125,51 +110,51 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
     private fun refreshControls()
     {
         if (selectedMethodParams.spreadingMode == ESpreadingMode.Dry)
-            rbtn_dry_slide.isChecked = true
+            binding.rbtnDrySlide.isChecked = true
         else
-            rbtn_wet_slide.isChecked = true
+            binding.rbtnWetSlide.isChecked = true
 
-        switchbtn_barcode.isChecked = selectedMethodParams.barcode != EOnOff.Off
+        binding.switchbtnBarcode.isChecked = selectedMethodParams.barcode != EOnOff.Off
 
         if(selectedMethodParams.barcode == EOnOff.On)
         {
-            layout_slide_quantity.visibility = View.VISIBLE
-            tv_slide_quantity.text  = selectedMethodParams.slideQuantity.toString()
-            layout_tube_quantity.visibility = View.INVISIBLE
+            binding.layoutSlideQuantity.visibility = View.VISIBLE
+            binding.tvSlideQuantity.text  = selectedMethodParams.slideQuantity.toString()
+            binding.layoutTubeQuantity.visibility = View.INVISIBLE
         }
         else
         {
-            layout_slide_quantity.visibility = View.INVISIBLE
-            layout_tube_quantity.visibility = View.VISIBLE
-            tv_tube_quantity.text = selectedMethodParams.tubeQuantity.toString()
+            binding.layoutSlideQuantity.visibility = View.INVISIBLE
+            binding.layoutTubeQuantity.visibility = View.VISIBLE
+            binding.tvTubeQuantity.text = selectedMethodParams.tubeQuantity.toString()
         }
 
-        switchbtn_slide_automatic.isChecked = selectedMethodParams.slideAutomatic == EOnOff.On
+        binding.switchbtnSlideAutomatic.isChecked = selectedMethodParams.slideAutomatic == EOnOff.On
 
-        tv_slide_per_tube.text = selectedMethodParams.slidePerTube.toString()
-        tv_spot_per_slide.text = selectedMethodParams.spotPerSlide.toString()
+        binding.tvSlidePerTube.text = selectedMethodParams.slidePerTube.toString()
+        binding.tvSpotPerSlide.text = selectedMethodParams.spotPerSlide.toString()
 
         when (selectedMethodParams.angleOfSlide)
         {
-            EAngle.Zero -> rbtn_angle_of_slide_zero.isChecked = true
-            EAngle.Five -> rbtn_angle_of_slide_5.isChecked = true
-            EAngle.Ten -> rbtn_angle_of_slide_10.isChecked = true
+            EAngle.Zero -> binding.rbtnAngleOfSlideZero.isChecked = true
+            EAngle.Five -> binding.rbtnAngleOfSlide5.isChecked = true
+            EAngle.Ten -> binding.rbtnAngleOfSlide10.isChecked = true
         }
 
-        tv_fixative_volumn_before_spray.text = selectedMethodParams.paramsSlideMode.fixativeVolumnBeforeSpray.toString()
-        tv_delay_time_after_spray.text = selectedMethodParams.paramsSlideMode.delayTimeAfterSpray.toString()
-        tv_fixative_volumn_after_spray.text = selectedMethodParams.paramsSlideMode.fixativeVolumnAfterSpray.toString()
-        tv_fixative_dispense_pressure.text = selectedMethodParams.paramsSlideMode.fixativeDispensePressure.toString()
-        tv_volumn_per_drop.text = selectedMethodParams.paramsSlideMode.volumnPerDrop.toString()
-        tv_dispense_height.text = selectedMethodParams.paramsSlideMode.dispenseHeight.toString()
-        tv_dispense_speed.text = selectedMethodParams.paramsSlideMode.dispenseSpeed.toString()
+        binding.tvFixativeVolumnBeforeSpray.text = selectedMethodParams.paramsSlideMode.fixativeVolumnBeforeSpray.toString()
+        binding.tvDelayTimeAfterSpray.text = selectedMethodParams.paramsSlideMode.delayTimeAfterSpray.toString()
+        binding.tvFixativeVolumnAfterSpray.text = selectedMethodParams.paramsSlideMode.fixativeVolumnAfterSpray.toString()
+        binding.tvFixativeDispensePressure.text = selectedMethodParams.paramsSlideMode.fixativeDispensePressure.toString()
+        binding.tvVolumnPerDrop.text = selectedMethodParams.paramsSlideMode.volumnPerDrop.toString()
+        binding.tvDispenseHeight.text = selectedMethodParams.paramsSlideMode.dispenseHeight.toString()
+        binding.tvDispenseSpeed.text = selectedMethodParams.paramsSlideMode.dispenseSpeed.toString()
 
-        tv_delay_time_before_sample_dropping.text =   selectedMethodParams.paramsSlideMode.delayTimeBeforeSampleDropping.toString()
-        tv_delay_time_after_sample_dropping.text = selectedMethodParams.paramsSlideMode.delayTimeAfterSampleDropping.toString()
-        tv_fixative_volumn_per_drop.text =
+        binding.tvDelayTimeBeforeSampleDropping.text =   selectedMethodParams.paramsSlideMode.delayTimeBeforeSampleDropping.toString()
+        binding.tvDelayTimeAfterSampleDropping.text = selectedMethodParams.paramsSlideMode.delayTimeAfterSampleDropping.toString()
+        binding.tvFixativeVolumnPerDrop.text =
             selectedMethodParams.paramsSlideMode.fixativeVolumnPerDrop.toString()
-        tv_y_speed_when_spraying.text = selectedMethodParams.paramsSlideMode.ySpeedWhenSpray.toString()
-        tv_spray_liquid_addition_interval.text = selectedMethodParams.paramsSlideMode.sprayLiquidAdditionInterval.toString()
+        binding.tvYSpeedWhenSpraying.text = selectedMethodParams.paramsSlideMode.ySpeedWhenSpray.toString()
+        binding.tvSprayLiquidAdditionInterval.text = selectedMethodParams.paramsSlideMode.sprayLiquidAdditionInterval.toString()
     }
 
     private fun saveAndRefresh()
@@ -182,7 +167,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
     {
         when (v.id)
         {
-            R.id.btn_next -> replaceFragment(FragmentMethodParametersMore.newInstance(), "FragmentMethodParametersMore")
+            R.id.btn_next -> this.replaceFragment(R.id.framelayout_method_parameters_container, FragmentMethodParametersMore.newInstance(), "FragmentMethodParametersMore")
             R.id.btn_slide_quantity -> // 玻片数量
             {
                 DialogFragment_Params_Setting_Number.newInstance().setDialogParams(getString(R.string.method_params_slide_quantity), 2, selectedMethodParams.slideQuantity, 1, 64, object : ParamsNumSetListener
@@ -192,7 +177,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.slideQuantity = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_tube_quantity -> // 试管数量
             {
@@ -203,7 +188,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.tubeQuantity = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_slide_per_tube -> // 滴片数量
             {
@@ -214,7 +199,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.slidePerTube = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_spot_per_slide -> // 滴片点数
             {
@@ -225,7 +210,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.spotPerSlide = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_fixative_volumn_before_spray -> // 雾化前固定
             {
@@ -236,7 +221,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.fixativeVolumnBeforeSpray = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_delay_time_after_spray -> // 雾化后等待
             {
@@ -247,7 +232,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.delayTimeAfterSpray = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_fixative_volumn_after_spray -> // 雾化后固定
             {
@@ -258,7 +243,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.fixativeVolumnAfterSpray = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_fixative_dispense_pressure -> // 固定液压力
             {
@@ -269,7 +254,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.fixativeDispensePressure = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_volumn_per_drop -> // 滴样体积
             {
@@ -280,7 +265,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.volumnPerDrop = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_dispense_height -> // 滴液高度
             {
@@ -291,7 +276,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.dispenseHeight = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             R.id.btn_dispense_speed -> // 滴液速度
             {
@@ -302,7 +287,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                         selectedMethodParams.paramsSlideMode.dispenseSpeed = number
                         saveAndRefresh()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
 
             R.id.btn_delay_time_before_sample_dropping -> // 滴样前等待时间
@@ -317,7 +302,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
             R.id.btn_delay_time_after_sample_dropping -> // 滴样后等待时间
             {
@@ -331,7 +316,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
             R.id.btn_fixative_volumn_per_drop -> // 追加固定
             {
@@ -344,7 +329,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
             R.id.btn_y_speed_when_spraying -> // 喷雾时Y轴速度
             {
@@ -357,7 +342,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
             R.id.btn_spray_liquid_addition_interval -> // 喷雾加液间隔
             {
@@ -370,7 +355,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
             R.id.btn_spray_liquid_time_before_move -> // 喷雾移动前固定时间
             {
@@ -383,7 +368,7 @@ class FragmentMethodParameters : FragmentMethodParametersBase(), View.OnClickLis
                                 saveAndRefresh()
                             }
                         })
-                        .show(fragmentManager, null)
+                        .show(parentFragmentManager, null)
             }
         }
     }

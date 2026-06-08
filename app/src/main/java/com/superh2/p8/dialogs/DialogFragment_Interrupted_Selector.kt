@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
@@ -13,6 +12,7 @@ import com.superh2.p8.R
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myInterface.INewIndexSelectedListener
 
 
@@ -41,7 +41,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_interrupted_selector, null)
 
         var tv_old_item_name = v.findViewById<TextView>(R.id.tv_old_item_name)
@@ -53,7 +53,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
         tv_pos_interrupted.text = (this.mOldIndex + 1).toString()
         // 设置 Spinner 的数据范围为 1 到 64
         val options = (1..64).map { it.toString() }
-        val adapter = ArrayAdapter(activity, R.layout.spinner_item, options)
+        val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_pos_continued.adapter = adapter
         spinner_pos_continued.setSelection(this.mOldIndex)
@@ -91,7 +91,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -102,7 +102,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
         isShow = true
 
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
     }
 
@@ -113,7 +113,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
         isShow = false
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 
@@ -126,7 +126,7 @@ class DialogFragment_Interrupted_Selector : DialogFragment()
         dismiss()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

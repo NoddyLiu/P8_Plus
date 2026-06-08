@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
@@ -18,6 +17,7 @@ import com.superh2.p8.R
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.LinearLayout
+import androidx.fragment.app.DialogFragment
 
 
 /**
@@ -64,7 +64,7 @@ class DialogFragment_Params_Setting_Number : DialogFragment(), View.OnClickListe
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_params_setting_number, null)
 
         layout_hundred = v.findViewById<View>(R.id.layout_hundred) as RelativeLayout
@@ -147,7 +147,7 @@ class DialogFragment_Params_Setting_Number : DialogFragment(), View.OnClickListe
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -155,7 +155,7 @@ class DialogFragment_Params_Setting_Number : DialogFragment(), View.OnClickListe
     {
         super.onResume()
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
 
         // 确定按钮（如未超出范围，自动dimiss，否则提示范围）
@@ -187,7 +187,7 @@ class DialogFragment_Params_Setting_Number : DialogFragment(), View.OnClickListe
     {
         super.onDestroy()
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

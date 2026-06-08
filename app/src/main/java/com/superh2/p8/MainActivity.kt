@@ -9,7 +9,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -27,7 +26,6 @@ import com.superh2.library.utils.ViewUtils.changeAlertdialogTextSize
 import com.superh2.p8.serial.SerialClientHumiture
 import com.superh2.p8.serial.SerialClientScanner
 import com.superh2.p8.utils.CmdHelper
-import kotlinx.android.synthetic.main.activity_main.view.*
 import pub.devrel.easypermissions.EasyPermissions
 import kotlin.concurrent.thread
 
@@ -129,16 +127,16 @@ class MainActivity : AppCompatActivity()
 
             waitDialog!!.setOnDismissListener {
                 // 恢复控件点击事件
-                val view = (mContext as Activity).window.decorView.rootView.framelayout_container as FrameLayout
+                val view = (mContext as Activity).findViewById<FrameLayout>(R.id.framelayout_container)
                 ViewUtils.setSubControlsClickable(view, true)
-                val layoutParamsGroup = (mContext as Activity).window.decorView.rootView.layout_params_group as LinearLayout
+                val layoutParamsGroup = (mContext as Activity).findViewById<LinearLayout>(R.id.layout_params_group)
                 layoutParamsGroup.isEnabled = true
             }
             waitDialog!!.setOnShowListener {
                 // 禁止控件点击事件
-                val view = (mContext as Activity).window.decorView.rootView.framelayout_container as FrameLayout
+                val view = (mContext as Activity).findViewById<FrameLayout>(R.id.framelayout_container)
                 ViewUtils.setSubControlsClickable(view, false)
-                val layoutParamsGroup = (mContext as Activity).window.decorView.rootView.layout_params_group as LinearLayout
+                val layoutParamsGroup = (mContext as Activity).findViewById<LinearLayout>(R.id.layout_params_group)
                 layoutParamsGroup.isEnabled = false
             }
 
@@ -177,7 +175,7 @@ class MainActivity : AppCompatActivity()
             mSerialClientScanner.openSerial()
         }, 1500)
 
-        fragmentManager.beginTransaction().replace(R.id.framelayout_container, FragmentMain.newInstance(), "FragmentMain").commit()
+        supportFragmentManager.beginTransaction().replace(R.id.framelayout_container, FragmentMain.newInstance(), "FragmentMain").commit()
     }
 
     override fun onResume()

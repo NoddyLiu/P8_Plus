@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myInterface.TipBoxSelectorListener
 import com.superh2.library.myView.CircleView
 import com.superh2.library.utils.ViewUtils
@@ -49,7 +49,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_tipbox_selector, null)
 
         gridLayoutTipBox = v.findViewById(R.id.gridLayout_tipBox)
@@ -66,7 +66,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -77,7 +77,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
         initWidget()
 
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
 
         // 确定按钮
@@ -106,7 +106,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
         // 枪头
         for (i in 0..95)
         {
-            var tip = CircleView(context)
+            var tip = CircleView(requireActivity())
             tip.text = (i + 1).toString()
             tip.textSize = 23f
             tip.radius = 25f
@@ -145,7 +145,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
         super.onDestroy()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 
@@ -157,7 +157,7 @@ class DialogFragment_TipBox_Selector : DialogFragment()
         dismiss()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

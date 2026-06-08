@@ -11,24 +11,19 @@ import com.superh2.library.myEnum.EDirection
 import com.superh2.library.utils.ConstantsUtils
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramPosTips
+import com.superh2.p8.databinding.FragmentMaintenanceTipsBinding
 import com.superh2.p8.utils.CmdHelper
-import kotlinx.android.synthetic.main.fragment_maintenance_tips.*
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  *@Description 工程师界面（枪头界面）
  *@Author  Noddy
  */
-class FragmentMaintenanceTips : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(FragmentMaintenanceTipsBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceTips()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_tips, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -37,97 +32,97 @@ class FragmentMaintenanceTips : FragmentBase(), View.OnClickListener
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
 
-        btn_first_point_x.setOnClickListener(this)
-        btn_first_point_y.setOnClickListener(this)
-        btn_pre_take_tip_height.setOnClickListener(this)
-        btn_take_tip_height.setOnClickListener(this)
-        btn_release_tip_x.setOnClickListener(this)
-        btn_release_tip_y.setOnClickListener(this)
-        btn_release_tip_height.setOnClickListener(this)
-        btn_release_tip_offset.setOnClickListener(this)
-        btn_release_tip_channel_1_y.setOnClickListener(this)
-        btn_release_tip_box_point_1.setOnClickListener(this)
-        btn_release_tip_box_point_2.setOnClickListener(this)
-        btn_additional_air_height.setOnClickListener(this)
-        btn_retracted_pos.setOnClickListener(this)
-        btn_extended_pos.setOnClickListener(this)
-        btn_tip_check_pos.setOnClickListener(this)
-        btn_tip_check_height.setOnClickListener(this)
-        btn_save.setOnClickListener(this)
+        binding.btnFirstPointX.setOnClickListener(this)
+        binding.btnFirstPointY.setOnClickListener(this)
+        binding.btnPreTakeTipHeight.setOnClickListener(this)
+        binding.btnTakeTipHeight.setOnClickListener(this)
+        binding.btnReleaseTipX.setOnClickListener(this)
+        binding.btnReleaseTipY.setOnClickListener(this)
+        binding.btnReleaseTipHeight.setOnClickListener(this)
+        binding.btnReleaseTipOffset.setOnClickListener(this)
+        binding.btnReleaseTipChannel1Y.setOnClickListener(this)
+        binding.btnReleaseTipBoxPoint1.setOnClickListener(this)
+        binding.btnReleaseTipBoxPoint2.setOnClickListener(this)
+        binding.btnAdditionalAirHeight.setOnClickListener(this)
+        binding.btnRetractedPos.setOnClickListener(this)
+        binding.btnExtendedPos.setOnClickListener(this)
+        binding.btnTipCheckPos.setOnClickListener(this)
+        binding.btnTipCheckHeight.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
         refreshControls()
     }
 
     private fun refreshControls()
     {
-        et_first_point_x.setText(paramPosTips.tips[0].x.toString())
-        et_first_point_y.setText(paramPosTips.tips[0].y.toString())
+        binding.etFirstPointX.setText(paramPosTips.tips[0].x.toString())
+        binding.etFirstPointY.setText(paramPosTips.tips[0].y.toString())
 
-        et_pre_take_tip_height.setText(paramPosTips.preTakeTipHeight.toString())
-        et_take_tip_height.setText(paramPosTips.takeTipHeight.toString())
-        et_step_length.setText(paramPosTips.stepLength.toString())
-        et_release_tip_x.setText(paramPosTips.releaseTipPos.x.toString())
-        et_release_tip_y.setText(paramPosTips.releaseTipPos.y.toString())
-        et_release_tip_height.setText(paramPosTips.releaseTipHeight.toString())
-        et_release_tip_offset.setText(paramPosTips.releaseTipOffset.toString())
-        et_release_tip_channel_1_y.setText(paramPosTips.releaseTipChannel1Y.toString())
-        et_release_tip_box_point_1_x.setText(paramPosTips.releaseTipBoxPoint1X.toString())
-        et_release_tip_box_point_1_y.setText(paramPosTips.releaseTipBoxPoint1Y.toString())
-        et_release_tip_box_point_2_x.setText(paramPosTips.releaseTipBoxPoint2X.toString())
-        et_release_tip_box_point_2_y.setText(paramPosTips.releaseTipBoxPoint2Y.toString())
-        et_additional_air_height.setText(paramPosTips.additionalAirHeight.toString())
-        et_retracted_pos.setText(paramPosTips.plateRetractedPos.toString())
-        et_extended_pos.setText(paramPosTips.plateExtendedPos.toString())
-        et_tip_check_pos_x.setText(paramPosTips.tipCheckPos.x.toString())
-        et_tip_check_pos_y.setText(paramPosTips.tipCheckPos.y.toString())
-        et_tip_check_height.setText(paramPosTips.tipCheckHeight.toString())
+        binding.etPreTakeTipHeight.setText(paramPosTips.preTakeTipHeight.toString())
+        binding.etTakeTipHeight.setText(paramPosTips.takeTipHeight.toString())
+        binding.etStepLength.setText(paramPosTips.stepLength.toString())
+        binding.etReleaseTipX.setText(paramPosTips.releaseTipPos.x.toString())
+        binding.etReleaseTipY.setText(paramPosTips.releaseTipPos.y.toString())
+        binding.etReleaseTipHeight.setText(paramPosTips.releaseTipHeight.toString())
+        binding.etReleaseTipOffset.setText(paramPosTips.releaseTipOffset.toString())
+        binding.etReleaseTipChannel1Y.setText(paramPosTips.releaseTipChannel1Y.toString())
+        binding.etReleaseTipBoxPoint1X.setText(paramPosTips.releaseTipBoxPoint1X.toString())
+        binding.etReleaseTipBoxPoint1Y.setText(paramPosTips.releaseTipBoxPoint1Y.toString())
+        binding.etReleaseTipBoxPoint2X.setText(paramPosTips.releaseTipBoxPoint2X.toString())
+        binding.etReleaseTipBoxPoint2Y.setText(paramPosTips.releaseTipBoxPoint2Y.toString())
+        binding.etAdditionalAirHeight.setText(paramPosTips.additionalAirHeight.toString())
+        binding.etRetractedPos.setText(paramPosTips.plateRetractedPos.toString())
+        binding.etExtendedPos.setText(paramPosTips.plateExtendedPos.toString())
+        binding.etTipCheckPosX.setText(paramPosTips.tipCheckPos.x.toString())
+        binding.etTipCheckPosY.setText(paramPosTips.tipCheckPos.y.toString())
+        binding.etTipCheckHeight.setText(paramPosTips.tipCheckHeight.toString())
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMaintenance.newInstance(), "FragmentMaintenance")
-            R.id.btn_first_point_x -> CmdHelper.xa(et_first_point_x.text.toString().toDouble(), true)
-            R.id.btn_first_point_y -> CmdHelper.ya(et_first_point_y.text.toString().toDouble(), true)
-            R.id.btn_pre_take_tip_height -> CmdHelper.za(et_pre_take_tip_height.text.toString().toDouble(), true)
-            R.id.btn_take_tip_height -> CmdHelper.za(et_take_tip_height.text.toString().toDouble(), true)
-            R.id.btn_release_tip_x -> CmdHelper.xa(et_release_tip_x.text.toString().toDouble(), true)
-            R.id.btn_release_tip_y -> CmdHelper.ya(et_release_tip_y.text.toString().toDouble(), true)
-            R.id.btn_release_tip_height -> CmdHelper.za(et_release_tip_height.text.toString().toDouble(), true)
-            R.id.btn_release_tip_offset -> CmdHelper.za(et_release_tip_height.text.toString().toDouble() - et_release_tip_offset.text.toString().toDouble(), true)
-            R.id.btn_release_tip_channel_1_y -> CmdHelper.ya(et_release_tip_channel_1_y.text.toString().toDouble(), true)
-            R.id.btn_release_tip_box_point_1 -> CmdHelper.xaya(et_release_tip_box_point_1_x.text.toString().toDouble(), et_release_tip_box_point_1_y.text.toString().toDouble(), true)
-            R.id.btn_release_tip_box_point_2 -> CmdHelper.xaya(et_release_tip_box_point_2_x.text.toString().toDouble(), et_release_tip_box_point_2_y.text.toString().toDouble(), true)
-            R.id.btn_additional_air_height -> CmdHelper.za(et_additional_air_height.text.toString().toDouble(), true)
-            R.id.btn_retracted_pos -> CmdHelper.ma(et_retracted_pos.text.toString().toDouble(), true)
-            R.id.btn_extended_pos -> CmdHelper.ma(et_extended_pos.text.toString().toDouble(), true)
-            R.id.btn_tip_check_pos -> CmdHelper.xaya(et_tip_check_pos_x.text.toString().toDouble(), et_tip_check_pos_y.text.toString().toDouble(), true)
-            R.id.btn_tip_check_height -> CmdHelper.za(et_tip_check_height.text.toString().toDouble(), true)
+            R.id.btn_first_point_x -> CmdHelper.xa(binding.etFirstPointX.text.toString().toDouble(), true)
+            R.id.btn_first_point_y -> CmdHelper.ya(binding.etFirstPointY.text.toString().toDouble(), true)
+            R.id.btn_pre_take_tip_height -> CmdHelper.za(binding.etPreTakeTipHeight.text.toString().toDouble(), true)
+            R.id.btn_take_tip_height -> CmdHelper.za(binding.etTakeTipHeight.text.toString().toDouble(), true)
+            R.id.btn_release_tip_x -> CmdHelper.xa(binding.etReleaseTipX.text.toString().toDouble(), true)
+            R.id.btn_release_tip_y -> CmdHelper.ya(binding.etReleaseTipY.text.toString().toDouble(), true)
+            R.id.btn_release_tip_height -> CmdHelper.za(binding.etReleaseTipHeight.text.toString().toDouble(), true)
+            R.id.btn_release_tip_offset -> CmdHelper.za(binding.etReleaseTipHeight.text.toString().toDouble() - binding.etReleaseTipOffset.text.toString().toDouble(), true)
+            R.id.btn_release_tip_channel_1_y -> CmdHelper.ya(binding.etReleaseTipChannel1Y.text.toString().toDouble(), true)
+            R.id.btn_release_tip_box_point_1 -> CmdHelper.xaya(binding.etReleaseTipBoxPoint1X.text.toString().toDouble(), binding.etReleaseTipBoxPoint1Y.text.toString().toDouble(), true)
+            R.id.btn_release_tip_box_point_2 -> CmdHelper.xaya(binding.etReleaseTipBoxPoint2X.text.toString().toDouble(), binding.etReleaseTipBoxPoint2Y.text.toString().toDouble(), true)
+            R.id.btn_additional_air_height -> CmdHelper.za(binding.etAdditionalAirHeight.text.toString().toDouble(), true)
+            R.id.btn_retracted_pos -> CmdHelper.ma(binding.etRetractedPos.text.toString().toDouble(), true)
+            R.id.btn_extended_pos -> CmdHelper.ma(binding.etExtendedPos.text.toString().toDouble(), true)
+            R.id.btn_tip_check_pos -> CmdHelper.xaya(binding.etTipCheckPosX.text.toString().toDouble(), binding.etTipCheckPosY.text.toString().toDouble(), true)
+            R.id.btn_tip_check_height -> CmdHelper.za(binding.etTipCheckHeight.text.toString().toDouble(), true)
             R.id.btn_save ->
             {
-                val firstPosX = if (et_first_point_x.text.toString().isNullOrEmpty()) 0.0 else et_first_point_x.text.toString().toDouble()
-                val firstPosY = if (et_first_point_y.text.toString().isNullOrEmpty()) 0.0 else et_first_point_y.text.toString().toDouble()
-                val preTakeTipHeight = if (et_pre_take_tip_height.text.toString().isNullOrEmpty()) 0.0 else et_pre_take_tip_height.text.toString().toDouble()
-                val takeTipHeight = if (et_take_tip_height.text.toString().isNullOrEmpty()) 0.0 else et_take_tip_height.text.toString().toDouble()
-                val stepLength = if (et_step_length.text.toString().isNullOrEmpty()) 0.0 else et_step_length.text.toString().toDouble()
-                val releaseTipX = if (et_release_tip_x.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_x.text.toString().toDouble()
-                val releaseTipY = if (et_release_tip_y.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_y.text.toString().toDouble()
-                val releaseTipHeight = if (et_release_tip_height.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_height.text.toString().toDouble()
-                val releaseTipOffset = if (et_release_tip_offset.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_offset.text.toString().toDouble()
-                val releaseTipChannel1Y = if (et_release_tip_channel_1_y.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_channel_1_y.text.toString().toDouble()
-                val releaseTipBoxPoint1X = if (et_release_tip_box_point_1_x.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_box_point_1_x.text.toString().toDouble()
-                val releaseTipBoxPoint1Y = if (et_release_tip_box_point_1_y.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_box_point_1_y.text.toString().toDouble()
-                val releaseTipBoxPoint2X = if (et_release_tip_box_point_2_x.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_box_point_2_x.text.toString().toDouble()
-                val releaseTipBoxPoint2Y = if (et_release_tip_box_point_2_y.text.toString().isNullOrEmpty()) 0.0 else et_release_tip_box_point_2_y.text.toString().toDouble()
-                val additionalAirHeight = if (et_additional_air_height.text.toString().isNullOrEmpty()) 0.0 else et_additional_air_height.text.toString().toDouble()
-                val plateRetractedPos = if (et_retracted_pos.text.toString().isNullOrEmpty()) 0.0 else et_retracted_pos.text.toString().toDouble()
-                val plateExtendedPos = if (et_extended_pos.text.toString().isNullOrEmpty()) 0.0 else et_extended_pos.text.toString().toDouble()
-                val tipCheckPosX = if (et_tip_check_pos_x.text.toString().isNullOrEmpty()) 0.0 else et_tip_check_pos_x.text.toString().toDouble()
-                val tipCheckPosY = if (et_tip_check_pos_y.text.toString().isNullOrEmpty()) 0.0 else et_tip_check_pos_y.text.toString().toDouble()
-                val tipCheckHeight = if (et_tip_check_height.text.toString().isNullOrEmpty()) 0.0 else et_tip_check_height.text.toString().toDouble()
+                val firstPosX = if (binding.etFirstPointX.text.toString().isNullOrEmpty()) 0.0 else binding.etFirstPointX.text.toString().toDouble()
+                val firstPosY = if (binding.etFirstPointY.text.toString().isNullOrEmpty()) 0.0 else binding.etFirstPointY.text.toString().toDouble()
+                val preTakeTipHeight = if (binding.etPreTakeTipHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etPreTakeTipHeight.text.toString().toDouble()
+                val takeTipHeight = if (binding.etTakeTipHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etTakeTipHeight.text.toString().toDouble()
+                val stepLength = if (binding.etStepLength.text.toString().isNullOrEmpty()) 0.0 else binding.etStepLength.text.toString().toDouble()
+                val releaseTipX = if (binding.etReleaseTipX.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipX.text.toString().toDouble()
+                val releaseTipY = if (binding.etReleaseTipY.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipY.text.toString().toDouble()
+                val releaseTipHeight = if (binding.etReleaseTipHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipHeight.text.toString().toDouble()
+                val releaseTipOffset = if (binding.etReleaseTipOffset.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipOffset.text.toString().toDouble()
+                val releaseTipChannel1Y = if (binding.etReleaseTipChannel1Y.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipChannel1Y.text.toString().toDouble()
+                val releaseTipBoxPoint1X = if (binding.etReleaseTipBoxPoint1X.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint1X.text.toString().toDouble()
+                val releaseTipBoxPoint1Y = if (binding.etReleaseTipBoxPoint1Y.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint1Y.text.toString().toDouble()
+                val releaseTipBoxPoint2X = if (binding.etReleaseTipBoxPoint2X.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint2X.text.toString().toDouble()
+                val releaseTipBoxPoint2Y = if (binding.etReleaseTipBoxPoint2Y.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint2Y.text.toString().toDouble()
+                val additionalAirHeight = if (binding.etAdditionalAirHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etAdditionalAirHeight.text.toString().toDouble()
+                val plateRetractedPos = if (binding.etRetractedPos.text.toString().isNullOrEmpty()) 0.0 else binding.etRetractedPos.text.toString().toDouble()
+                val plateExtendedPos = if (binding.etExtendedPos.text.toString().isNullOrEmpty()) 0.0 else binding.etExtendedPos.text.toString().toDouble()
+                val tipCheckPosX = if (binding.etTipCheckPosX.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckPosX.text.toString().toDouble()
+                val tipCheckPosY = if (binding.etTipCheckPosY.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckPosY.text.toString().toDouble()
+                val tipCheckHeight = if (binding.etTipCheckHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckHeight.text.toString().toDouble()
 
                 for (i in 0..95)
                 {

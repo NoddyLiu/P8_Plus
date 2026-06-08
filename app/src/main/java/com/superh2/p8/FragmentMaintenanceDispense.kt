@@ -13,26 +13,20 @@ import com.superh2.library.myEnum.EDirection
 import com.superh2.library.utils.ConstantsUtils
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramPosDispense
+import com.superh2.p8.databinding.FragmentMaintenanceDispenseBinding
 import com.superh2.p8.utils.CmdHelper
+import com.superh2.p8.utils.ViewUtils.fullScreen
 import info.hoang8f.widget.FButton
-import kotlinx.android.synthetic.main.fragment_maintenance_dispense.*
 
 /**
  *@Description 工程师界面（滴液界面）
  *@Author  Noddy
  */
-class FragmentMaintenanceDispense : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceDispense : FragmentBase<FragmentMaintenanceDispenseBinding>(FragmentMaintenanceDispenseBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceDispense()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_dispense, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -41,13 +35,13 @@ class FragmentMaintenanceDispense : FragmentBase(), View.OnClickListener
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
 
-        btn_first_point_x.setOnClickListener(this)
-        btn_first_point_y.setOnClickListener(this)
-        btn_height_range.setOnClickListener(this)
-        btn_save.setOnClickListener(this)
+        binding.btnFirstPointX.setOnClickListener(this)
+        binding.btnFirstPointY.setOnClickListener(this)
+        binding.btnHeightRange.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
         // 64个位置按钮
-        val layout_btn_group = rootView!!.findViewById<ViewGroup>(R.id.layout_btn_group) as GridLayout
+        val layout_btn_group = binding.layoutBtnGroup
         layout_btn_group.removeAllViews()
         for (row in 0..3)
         {
@@ -55,7 +49,7 @@ class FragmentMaintenanceDispense : FragmentBase(), View.OnClickListener
             {
                 val btn = FButton(mActivity)
                 btn.text = ((col + 1) + row * 16).toString()
-                btn.buttonColor = ContextCompat.getColor(context, R.color.fbutton_default_color)
+                btn.buttonColor = ContextCompat.getColor(requireActivity(), R.color.fbutton_default_color)
                 btn.isShadowEnabled = true
                 btn.shadowHeight = 3
                 val rowSpec = GridLayout.spec(row, GridLayout.CENTER)
@@ -68,7 +62,7 @@ class FragmentMaintenanceDispense : FragmentBase(), View.OnClickListener
                 layout_btn_group.addView(btn, layoutParams)
 
                 btn.setOnClickListener {
-                    fullScreen()
+                    fullScreen(activity)
                     CmdHelper.toDispensePos(btn.text.toString().trim().toInt() - 1, 0, true)
                 }
             }
@@ -79,32 +73,32 @@ class FragmentMaintenanceDispense : FragmentBase(), View.OnClickListener
 
     private fun refreshControls()
     {
-        et_first_point_x.setText(paramPosDispense.slides[0].x.toString())
-        et_first_point_y.setText(paramPosDispense.slides[0].y.toString())
-        et_point_y_step.setText((paramPosDispense.yDistance).toString())
-        et_height_range.setText(paramPosDispense.heightRange.toString())
-        et_step_length_x.setText(paramPosDispense.stepLengthX.toString())
-        et_step_length_y.setText(paramPosDispense.stepLengthY.toString())
+        binding.etFirstPointX.setText(paramPosDispense.slides[0].x.toString())
+        binding.etFirstPointY.setText(paramPosDispense.slides[0].y.toString())
+        binding.etPointYStep.setText((paramPosDispense.yDistance).toString())
+        binding.etHeightRange.setText(paramPosDispense.heightRange.toString())
+        binding.etStepLengthX.setText(paramPosDispense.stepLengthX.toString())
+        binding.etStepLengthY.setText(paramPosDispense.stepLengthY.toString())
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
             R.id.btnReturn -> replaceFragment(FragmentMaintenance.newInstance(), "FragmentMaintenance")
-            R.id.btn_first_point_x -> CmdHelper.xa(et_first_point_x.text.toString().toDouble(), true)
-            R.id.btn_first_point_y -> CmdHelper.ya(et_first_point_y.text.toString().toDouble(), true)
-            R.id.btn_height_range -> CmdHelper.za(et_height_range.text.toString().toDouble(), true)
+            R.id.btn_first_point_x -> CmdHelper.xa(binding.etFirstPointX.text.toString().toDouble(), true)
+            R.id.btn_first_point_y -> CmdHelper.ya(binding.etFirstPointY.text.toString().toDouble(), true)
+            R.id.btn_height_range -> CmdHelper.za(binding.etHeightRange.text.toString().toDouble(), true)
             R.id.btn_save ->
             {
-                val firstPosX = if (et_first_point_x.text.toString().isNullOrEmpty()) 0.0 else et_first_point_x.text.toString().toDouble()
-                val firstPosY = if (et_first_point_y.text.toString().isNullOrEmpty()) 0.0 else et_first_point_y.text.toString().toDouble()
-                val yDistance = if (et_point_y_step.text.toString().isNullOrEmpty()) 0.0 else et_point_y_step.text.toString().toDouble()
-                val heightRange = if (et_height_range.text.toString().isNullOrEmpty()) 0.0 else et_height_range.text.toString().toDouble()
-                val stepLengthX = if (et_step_length_x.text.toString().isNullOrEmpty()) 0.0 else et_step_length_x.text.toString().toDouble()
-                val stepLengthY = if (et_step_length_y.text.toString().isNullOrEmpty()) 0.0 else et_step_length_y.text.toString().toDouble()
+                val firstPosX = if (binding.etFirstPointX.text.toString().isNullOrEmpty()) 0.0 else binding.etFirstPointX.text.toString().toDouble()
+                val firstPosY = if (binding.etFirstPointY.text.toString().isNullOrEmpty()) 0.0 else binding.etFirstPointY.text.toString().toDouble()
+                val yDistance = if (binding.etPointYStep.text.toString().isNullOrEmpty()) 0.0 else binding.etPointYStep.text.toString().toDouble()
+                val heightRange = if (binding.etHeightRange.text.toString().isNullOrEmpty()) 0.0 else binding.etHeightRange.text.toString().toDouble()
+                val stepLengthX = if (binding.etStepLengthX.text.toString().isNullOrEmpty()) 0.0 else binding.etStepLengthX.text.toString().toDouble()
+                val stepLengthY = if (binding.etStepLengthY.text.toString().isNullOrEmpty()) 0.0 else binding.etStepLengthY.text.toString().toDouble()
 
                 for (i in 0..63)
                 {

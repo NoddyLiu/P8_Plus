@@ -3,7 +3,6 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -18,7 +17,7 @@ import com.superh2.p8.R
 import android.widget.TextView
 import android.util.TypedValue
 import android.view.Gravity
-import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.myEntityCommon.Barcode
 import com.superh2.library.myEnum.ESlideStatus
 import com.superh2.library.myInterface.RenameListener
@@ -55,7 +54,7 @@ class DialogFragment_Slide_Frame : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         val v = inflater.inflate(R.layout.dialog_fragment_slide_frame, null)
 
         mGridLayout_slide = v.findViewById(R.id.gridLayout_slide) as GridLayout
@@ -93,7 +92,7 @@ class DialogFragment_Slide_Frame : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -125,7 +124,7 @@ class DialogFragment_Slide_Frame : DialogFragment()
                     override fun cancel()
                     {
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
                 true
             }
 

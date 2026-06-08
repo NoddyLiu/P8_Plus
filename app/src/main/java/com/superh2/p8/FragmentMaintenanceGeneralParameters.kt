@@ -15,53 +15,22 @@ import com.superh2.library.myInterface.IDispersancyIndexCallback
 import com.superh2.library.myInterface.ISelectedListener
 import com.superh2.library.myInterface.InfoPromptListener
 import com.superh2.library.utils.FileUtils
-import com.superh2.library.utils.ParamsHelper
 import com.superh2.library.utils.ParamsHelper.paramGeneralParams
+import com.superh2.p8.databinding.FragmentMaintenanceGeneralParametersBinding
 import com.superh2.p8.dialogs.DialogFragment_Dispersancy_Index
 import com.superh2.p8.dialogs.DialogFragment_Info_Prompt
 import com.superh2.p8.popup.PopupChoice
-import com.superh2.p8.utils.CmdHelper
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.*
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_1
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_10
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_11
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_12
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_13
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_14
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_15
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_16
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_17
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_18
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_2
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_3
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_4
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_5
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_6
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_7
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_8
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_dispersancy_index_9
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_remote_maintenance
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_reset
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.btn_save
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.et_speed_air_flow
-import kotlinx.android.synthetic.main.fragment_maintenance_general_parameters.switchbtn_alarm_door
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  *@Description 工程师界面1（通用参数设置界面1）
  *@Author  Noddy
  */
-class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListener
+class FragmentMaintenanceGeneralParameters : FragmentBase<FragmentMaintenanceGeneralParametersBinding>(FragmentMaintenanceGeneralParametersBinding::inflate), View.OnClickListener
 {
     companion object
     {
         fun newInstance() = FragmentMaintenanceGeneralParameters()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_maintenance_general_parameters, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -69,12 +38,12 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
         val btnReturn = mActivity?.findViewById(R.id.btnReturn) as Button
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
-        btn_next.setOnClickListener(this)
-        btn_remote_maintenance.setOnClickListener(this)
-        btn_reset.setOnClickListener(this)
-        btn_save.setOnClickListener(this)
+        binding.btnNext.setOnClickListener(this)
+        binding.btnRemoteMaintenance.setOnClickListener(this)
+        binding.btnReset.setOnClickListener(this)
+        binding.btnSave.setOnClickListener(this)
 
-        switchbtn_tube_base_manual_check.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnTubeBaseManualCheck.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
                 paramGeneralParams.tubeBaseManualCheck = EOnOff.On
             else
@@ -82,7 +51,7 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
             saveAndRefreshSwitches()
         }
 
-        switchbtn_run_immediately_after_scanned.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnRunImmediatelyAfterScanned.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
                 paramGeneralParams.runImmAfterScanned = EOnOff.On
             else
@@ -90,7 +59,7 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
             saveAndRefreshSwitches()
         }
 
-        switchbtn_alarm_tip_check.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnAlarmTipCheck.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
                 paramGeneralParams.alarmTipCheck = EOnOff.On
             else
@@ -98,7 +67,7 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
             saveAndRefreshSwitches()
         }
 
-        switchbtn_alarm_door.setOnCheckedChangeListener { view, isChecked ->
+        binding.switchbtnAlarmDoor.setOnCheckedChangeListener { view, isChecked ->
             if (isChecked)
                 paramGeneralParams.alarmDoor = EOnOff.On
             else
@@ -106,72 +75,72 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
             saveAndRefreshSwitches()
         }
 
-        btn_dispersancy_index_1.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_2.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_3.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_4.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_5.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_6.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_7.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_8.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_9.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_10.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_11.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_12.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_13.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_14.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_15.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_16.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_17.setOnClickListener(dispersancyIndexOnClickListener)
-        btn_dispersancy_index_18.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex1.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex2.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex3.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex4.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex5.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex6.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex7.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex8.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex9.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex10.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex11.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex12.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex13.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex14.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex15.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex16.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex17.setOnClickListener(dispersancyIndexOnClickListener)
+        binding.btnDispersancyIndex18.setOnClickListener(dispersancyIndexOnClickListener)
 
         refreshControls()
     }
 
     private fun refreshControls()
     {
-        et_additional_air_in_tip_before_absorb.setText(paramGeneralParams.additionalAirInTipBeforeAbsorb.toString())
-        et_additional_air_in_tip_after_absorb.setText(paramGeneralParams.additionalAirInTip.toString())
-        et_additional_air_in_tip_after_dispense.setText(paramGeneralParams.additionalAirInTipAfterDispense.toString())
-        et_number_of_sample_stir.setText(paramGeneralParams.numberOfSampleStir.toString())
-        et_volumn_of_sample_stir.setText(paramGeneralParams.volumnOfSampleStir.toString())
-        et_speed_of_sample_stir.setText(paramGeneralParams.speedOfSampleStir.toString())
+        binding.etAdditionalAirInTipBeforeAbsorb.setText(paramGeneralParams.additionalAirInTipBeforeAbsorb.toString())
+        binding.etAdditionalAirInTipAfterAbsorb.setText(paramGeneralParams.additionalAirInTip.toString())
+        binding.etAdditionalAirInTipAfterDispense.setText(paramGeneralParams.additionalAirInTipAfterDispense.toString())
+        binding.etNumberOfSampleStir.setText(paramGeneralParams.numberOfSampleStir.toString())
+        binding.etVolumnOfSampleStir.setText(paramGeneralParams.volumnOfSampleStir.toString())
+        binding.etSpeedOfSampleStir.setText(paramGeneralParams.speedOfSampleStir.toString())
 
         refreshSwitches()
 
-        et_pre_spray_time.setText(paramGeneralParams.preSprayTime.toString())
-        et_pre_spray_liquid_addition.setText(paramGeneralParams.preSprayLiquidAddition.toString())
-//        et_pre_spray_liquid_addition_reverse.setText(paramGeneralParams.preSprayLiquidAdditionReverse.toString())
-        et_spray_liquid_addition_init_speed.setText(paramGeneralParams.sprayLiquidAdditionSpeedInit.toString())
-        et_spray_liquid_addition_target_speed.setText(paramGeneralParams.sprayLiquidAdditionSpeedTarget.toString())
-        et_spray_liquid_addition_accelerated_speed.setText(paramGeneralParams.sprayLiquidAdditionSpeedAccelerated.toString())
+        binding.etPreSprayTime.setText(paramGeneralParams.preSprayTime.toString())
+        binding.etPreSprayLiquidAddition.setText(paramGeneralParams.preSprayLiquidAddition.toString())
+//        binding.etPreSprayLiquidAdditionReverse.setText(paramGeneralParams.preSprayLiquidAdditionReverse.toString())
+        binding.etSprayLiquidAdditionInitSpeed.setText(paramGeneralParams.sprayLiquidAdditionSpeedInit.toString())
+        binding.etSprayLiquidAdditionTargetSpeed.setText(paramGeneralParams.sprayLiquidAdditionSpeedTarget.toString())
+        binding.etSprayLiquidAdditionAcceleratedSpeed.setText(paramGeneralParams.sprayLiquidAdditionSpeedAccelerated.toString())
 
-        et_dispense_speed_max_init_speed.setText(paramGeneralParams.dispenseSpeedMaxInit.toString())
-        et_dispense_speed_max_target_speed.setText(paramGeneralParams.dispenseSpeedMaxTarget.toString())
-        et_dispense_speed_max_accelerated_speed.setText(paramGeneralParams.dispenseSpeedMaxAccelerated.toString())
+        binding.etDispenseSpeedMaxInitSpeed.setText(paramGeneralParams.dispenseSpeedMaxInit.toString())
+        binding.etDispenseSpeedMaxTargetSpeed.setText(paramGeneralParams.dispenseSpeedMaxTarget.toString())
+        binding.etDispenseSpeedMaxAcceleratedSpeed.setText(paramGeneralParams.dispenseSpeedMaxAccelerated.toString())
 
-        et_y_speed_max_when_spraying_init_speed.setText(paramGeneralParams.ySpeedMaxWhenSprayingInit.toString())
-        et_y_speed_max_when_spraying_target_speed.setText(paramGeneralParams.ySpeedMaxWhenSprayingTarget.toString())
-        et_y_speed_max_when_spraying_accelerated_speed.setText(paramGeneralParams.ySpeedMaxWhenSprayingAccelerated.toString())
+        binding.etYSpeedMaxWhenSprayingInitSpeed.setText(paramGeneralParams.ySpeedMaxWhenSprayingInit.toString())
+        binding.etYSpeedMaxWhenSprayingTargetSpeed.setText(paramGeneralParams.ySpeedMaxWhenSprayingTarget.toString())
+        binding.etYSpeedMaxWhenSprayingAcceleratedSpeed.setText(paramGeneralParams.ySpeedMaxWhenSprayingAccelerated.toString())
 
-        et_qr_code_scan_length.setText(paramGeneralParams.qrCodeScanLength.toString())
+        binding.etQrCodeScanLength.setText(paramGeneralParams.qrCodeScanLength.toString())
 
-        et_speed_air_flow.setText(4.toString())
+        binding.etSpeedAirFlow.setText(4.toString())
 
-        et_humiture_stability_threshold.setText(paramGeneralParams.humitureStabilityThreshold.toString())
+        binding.etHumitureStabilityThreshold.setText(paramGeneralParams.humitureStabilityThreshold.toString())
     }
 
     private fun refreshSwitches()
     {
-        switchbtn_tube_base_manual_check.isChecked = paramGeneralParams.tubeBaseManualCheck != EOnOff.Off
-        switchbtn_run_immediately_after_scanned.isChecked = paramGeneralParams.runImmAfterScanned != EOnOff.Off
-        switchbtn_alarm_tip_check.isChecked = paramGeneralParams.alarmTipCheck == EOnOff.On
-        switchbtn_alarm_door.isChecked = paramGeneralParams.alarmDoor == EOnOff.On
+        binding.switchbtnTubeBaseManualCheck.isChecked = paramGeneralParams.tubeBaseManualCheck != EOnOff.Off
+        binding.switchbtnRunImmediatelyAfterScanned.isChecked = paramGeneralParams.runImmAfterScanned != EOnOff.Off
+        binding.switchbtnAlarmTipCheck.isChecked = paramGeneralParams.alarmTipCheck == EOnOff.On
+        binding.switchbtnAlarmDoor.isChecked = paramGeneralParams.alarmDoor == EOnOff.On
     }
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {
@@ -187,7 +156,7 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
                     {
 
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
 
                 val timer = object : CountDownTimer(5000, 1000)
                 {
@@ -204,26 +173,26 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
             }
             R.id.btn_save ->
             {
-                paramGeneralParams.additionalAirInTipBeforeAbsorb = if (et_additional_air_in_tip_before_absorb.text.toString().isNullOrEmpty()) 0 else et_additional_air_in_tip_before_absorb.text.toString().toInt()
-                paramGeneralParams.additionalAirInTip = if (et_additional_air_in_tip_after_absorb.text.toString().isNullOrEmpty()) 0 else et_additional_air_in_tip_after_absorb.text.toString().toInt()
-                paramGeneralParams.additionalAirInTipAfterDispense = if (et_additional_air_in_tip_after_dispense.text.toString().isNullOrEmpty()) 0 else et_additional_air_in_tip_after_dispense.text.toString().toInt()
-                paramGeneralParams.numberOfSampleStir = if (et_number_of_sample_stir.text.toString().isNullOrEmpty()) 0 else et_number_of_sample_stir.text.toString().toInt()
-                paramGeneralParams.volumnOfSampleStir = if (et_volumn_of_sample_stir.text.toString().isNullOrEmpty()) 0 else et_volumn_of_sample_stir.text.toString().toInt()
-                paramGeneralParams.speedOfSampleStir = if (et_speed_of_sample_stir.text.toString().isNullOrEmpty()) 0 else et_speed_of_sample_stir.text.toString().toInt()
-                paramGeneralParams.preSprayTime = if (et_pre_spray_time.text.toString().isNullOrEmpty()) 0 else et_pre_spray_time.text.toString().toInt()
-                paramGeneralParams.preSprayLiquidAddition = if (et_pre_spray_liquid_addition.text.toString().isNullOrEmpty()) 0 else et_pre_spray_liquid_addition.text.toString().toInt()
-//                paramGeneralParams.preSprayLiquidAdditionReverse = if(et_pre_spray_liquid_addition_reverse.text.toString().isNullOrEmpty()) 0 else et_pre_spray_liquid_addition_reverse.text.toString().toInt()
-                paramGeneralParams.sprayLiquidAdditionSpeedInit = if (et_spray_liquid_addition_init_speed.text.toString().isNullOrEmpty()) 0 else et_spray_liquid_addition_init_speed.text.toString().toInt()
-                paramGeneralParams.sprayLiquidAdditionSpeedTarget = if (et_spray_liquid_addition_target_speed.text.toString().isNullOrEmpty()) 0 else et_spray_liquid_addition_target_speed.text.toString().toInt()
-                paramGeneralParams.sprayLiquidAdditionSpeedAccelerated = if (et_spray_liquid_addition_accelerated_speed.text.toString().isNullOrEmpty()) 0 else et_spray_liquid_addition_accelerated_speed.text.toString().toInt()
-                paramGeneralParams.dispenseSpeedMaxInit = if (et_dispense_speed_max_init_speed.text.toString().isNullOrEmpty()) 0 else et_dispense_speed_max_init_speed.text.toString().toInt()
-                paramGeneralParams.dispenseSpeedMaxTarget = if (et_dispense_speed_max_target_speed.text.toString().isNullOrEmpty()) 0 else et_dispense_speed_max_target_speed.text.toString().toInt()
-                paramGeneralParams.dispenseSpeedMaxAccelerated = if (et_dispense_speed_max_accelerated_speed.text.toString().isNullOrEmpty()) 0 else et_dispense_speed_max_accelerated_speed.text.toString().toInt()
-                paramGeneralParams.ySpeedMaxWhenSprayingInit = if (et_y_speed_max_when_spraying_init_speed.text.toString().isNullOrEmpty()) 0 else et_y_speed_max_when_spraying_init_speed.text.toString().toInt()
-                paramGeneralParams.ySpeedMaxWhenSprayingTarget = if (et_y_speed_max_when_spraying_target_speed.text.toString().isNullOrEmpty()) 0 else et_y_speed_max_when_spraying_target_speed.text.toString().toInt()
-                paramGeneralParams.ySpeedMaxWhenSprayingAccelerated = if (et_y_speed_max_when_spraying_accelerated_speed.text.toString().isNullOrEmpty()) 0 else et_y_speed_max_when_spraying_accelerated_speed.text.toString().toInt()
-                paramGeneralParams.qrCodeScanLength = if (et_qr_code_scan_length.text.toString().isNullOrEmpty()) 20 else et_qr_code_scan_length.text.toString().toInt()
-                paramGeneralParams.humitureStabilityThreshold = if (et_humiture_stability_threshold.text.toString().isNullOrEmpty()) 0.5f else et_humiture_stability_threshold.text.toString().toFloat()
+                paramGeneralParams.additionalAirInTipBeforeAbsorb = if (binding.etAdditionalAirInTipBeforeAbsorb.text.toString().isNullOrEmpty()) 0 else binding.etAdditionalAirInTipBeforeAbsorb.text.toString().toInt()
+                paramGeneralParams.additionalAirInTip = if (binding.etAdditionalAirInTipAfterAbsorb.text.toString().isNullOrEmpty()) 0 else binding.etAdditionalAirInTipAfterAbsorb.text.toString().toInt()
+                paramGeneralParams.additionalAirInTipAfterDispense = if (binding.etAdditionalAirInTipAfterDispense.text.toString().isNullOrEmpty()) 0 else binding.etAdditionalAirInTipAfterDispense.text.toString().toInt()
+                paramGeneralParams.numberOfSampleStir = if (binding.etNumberOfSampleStir.text.toString().isNullOrEmpty()) 0 else binding.etNumberOfSampleStir.text.toString().toInt()
+                paramGeneralParams.volumnOfSampleStir = if (binding.etVolumnOfSampleStir.text.toString().isNullOrEmpty()) 0 else binding.etVolumnOfSampleStir.text.toString().toInt()
+                paramGeneralParams.speedOfSampleStir = if (binding.etSpeedOfSampleStir.text.toString().isNullOrEmpty()) 0 else binding.etSpeedOfSampleStir.text.toString().toInt()
+                paramGeneralParams.preSprayTime = if (binding.etPreSprayTime.text.toString().isNullOrEmpty()) 0 else binding.etPreSprayTime.text.toString().toInt()
+                paramGeneralParams.preSprayLiquidAddition = if (binding.etPreSprayLiquidAddition.text.toString().isNullOrEmpty()) 0 else binding.etPreSprayLiquidAddition.text.toString().toInt()
+//                paramGeneralParams.preSprayLiquidAdditionReverse = if(binding.etPreSprayLiquidAdditionReverse.text.toString().isNullOrEmpty()) 0 else binding.etPreSprayLiquidAdditionReverse.text.toString().toInt()
+                paramGeneralParams.sprayLiquidAdditionSpeedInit = if (binding.etSprayLiquidAdditionInitSpeed.text.toString().isNullOrEmpty()) 0 else binding.etSprayLiquidAdditionInitSpeed.text.toString().toInt()
+                paramGeneralParams.sprayLiquidAdditionSpeedTarget = if (binding.etSprayLiquidAdditionTargetSpeed.text.toString().isNullOrEmpty()) 0 else binding.etSprayLiquidAdditionTargetSpeed.text.toString().toInt()
+                paramGeneralParams.sprayLiquidAdditionSpeedAccelerated = if (binding.etSprayLiquidAdditionAcceleratedSpeed.text.toString().isNullOrEmpty()) 0 else binding.etSprayLiquidAdditionAcceleratedSpeed.text.toString().toInt()
+                paramGeneralParams.dispenseSpeedMaxInit = if (binding.etDispenseSpeedMaxInitSpeed.text.toString().isNullOrEmpty()) 0 else binding.etDispenseSpeedMaxInitSpeed.text.toString().toInt()
+                paramGeneralParams.dispenseSpeedMaxTarget = if (binding.etDispenseSpeedMaxTargetSpeed.text.toString().isNullOrEmpty()) 0 else binding.etDispenseSpeedMaxTargetSpeed.text.toString().toInt()
+                paramGeneralParams.dispenseSpeedMaxAccelerated = if (binding.etDispenseSpeedMaxAcceleratedSpeed.text.toString().isNullOrEmpty()) 0 else binding.etDispenseSpeedMaxAcceleratedSpeed.text.toString().toInt()
+                paramGeneralParams.ySpeedMaxWhenSprayingInit = if (binding.etYSpeedMaxWhenSprayingInitSpeed.text.toString().isNullOrEmpty()) 0 else binding.etYSpeedMaxWhenSprayingInitSpeed.text.toString().toInt()
+                paramGeneralParams.ySpeedMaxWhenSprayingTarget = if (binding.etYSpeedMaxWhenSprayingTargetSpeed.text.toString().isNullOrEmpty()) 0 else binding.etYSpeedMaxWhenSprayingTargetSpeed.text.toString().toInt()
+                paramGeneralParams.ySpeedMaxWhenSprayingAccelerated = if (binding.etYSpeedMaxWhenSprayingAcceleratedSpeed.text.toString().isNullOrEmpty()) 0 else binding.etYSpeedMaxWhenSprayingAcceleratedSpeed.text.toString().toInt()
+                paramGeneralParams.qrCodeScanLength = if (binding.etQrCodeScanLength.text.toString().isNullOrEmpty()) 20 else binding.etQrCodeScanLength.text.toString().toInt()
+                paramGeneralParams.humitureStabilityThreshold = if (binding.etHumitureStabilityThreshold.text.toString().isNullOrEmpty()) 0.5f else binding.etHumitureStabilityThreshold.text.toString().toFloat()
                 if (FileUtils.saveGeneralParameters(paramGeneralParams, true))
                     Toast.makeText(mActivity, getString(R.string.info_save_successfully), Toast.LENGTH_SHORT).show()
             }
@@ -260,13 +229,13 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
                             Toast.makeText(mActivity, getString(R.string.info_reset_successfully), Toast.LENGTH_SHORT).show()
                             refreshControls()
 
-                            fullScreen()
+                            fullScreen(activity)
                         }
                     }
 
                     override fun cancel()
                     {
-                        fullScreen()
+                        fullScreen(activity)
                     }
                 }).showPopupWindow()
             }
@@ -308,14 +277,14 @@ class FragmentMaintenanceGeneralParameters : FragmentBase(), View.OnClickListene
                 paramGeneralParams.DispersancyIndexList[index].temp = humiture.temp
                 paramGeneralParams.DispersancyIndexList[index].humi = humiture.humi
                 FileUtils.saveGeneralParameters(paramGeneralParams, true)
-                fullScreen()
+                fullScreen(activity)
             }
 
             override fun cancel()
             {
-                fullScreen()
+                fullScreen(activity)
             }
-        }).show(fragmentManager, null)
+        }).show(parentFragmentManager, null)
     }
 
     private fun saveAndRefreshSwitches()

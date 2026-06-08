@@ -3,15 +3,15 @@ package com.superh2.p8.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.fragment.app.DialogFragment
 import com.superh2.library.utils.ViewUtils
 import com.superh2.p8.R
 import com.superh2.library.myInterface.IDispersancyIndexCallback
 import com.superh2.library.utils.ParamsHelper
-import kotlinx.android.synthetic.main.dialog_fragment_dispersancy_index.view.*
 
 
 /**
@@ -39,12 +39,12 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
     {
         val builder = AlertDialog.Builder(activity)
 
-        val inflater = activity.layoutInflater
+        val inflater = requireActivity().layoutInflater
         rootView = inflater.inflate(R.layout.dialog_fragment_dispersancy_index, null)
 
         var humiture = ParamsHelper.paramGeneralParams.DispersancyIndexList[mSelectedIndex]
-        rootView.et_dispersancy_index_temp.setText(humiture.temp.toString())
-        rootView.et_dispersancy_index_humi.setText(humiture.humi.toString())
+        rootView.findViewById<EditText>(R.id.et_dispersancy_index_temp).setText(humiture.temp.toString())
+        rootView.findViewById<EditText>(R.id.et_dispersancy_index_humi).setText(humiture.humi.toString())
         builder.setIcon(android.R.drawable.ic_dialog_info).setTitle(this.mTitle).setView(rootView).setCancelable(false)
                 .setPositiveButton(this.mPositiveBtnStr, null)
                 .setNegativeButton(this.mNegativeBtnStr) { _, _ ->
@@ -58,8 +58,8 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
             // 确定按钮
             val posButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
             posButton.setOnClickListener {
-                humiture.temp = rootView.et_dispersancy_index_temp.text.toString().toFloat()
-                humiture.humi = rootView.et_dispersancy_index_humi.text.toString().toFloat()
+                humiture.temp = rootView.findViewById<EditText>(R.id.et_dispersancy_index_temp).text.toString().toFloat()
+                humiture.humi = rootView.findViewById<EditText>(R.id.et_dispersancy_index_humi).text.toString().toFloat()
                 mCallback?.confirm(humiture)
                 dismissDialog()
             }
@@ -78,7 +78,7 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // 点击弹出框外部不消失
-        dialog.setCanceledOnTouchOutside(false)
+        requireDialog().setCanceledOnTouchOutside(false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -89,7 +89,7 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
         isShow = true
 
         // 禁止底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, false)
     }
 
@@ -100,7 +100,7 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
         isShow = false
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 
@@ -113,7 +113,7 @@ class DialogFragment_Dispersancy_Index : DialogFragment()
         dismiss()
 
         // 恢复底部控件点击事件
-        val view = activity.window.decorView as FrameLayout
+        val view = requireActivity().window.decorView as FrameLayout
         ViewUtils.setSubControlsClickable(view, true)
     }
 

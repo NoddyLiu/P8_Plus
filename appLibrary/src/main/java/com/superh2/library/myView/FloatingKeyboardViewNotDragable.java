@@ -20,7 +20,6 @@
 package com.superh2.library.myView;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
@@ -36,6 +35,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import androidx.fragment.app.DialogFragment;
+
 import com.superh2.library.R;
 
 /**
@@ -537,13 +539,13 @@ public class FloatingKeyboardViewNotDragable extends KeyboardView
             }
             else if (primaryCode == CodePrev)
             {
-                View focusNew = edittext.focusSearch(View.FOCUS_BACKWARD);
+                View focusNew = edittext.focusSearch(View.FOCUS_LEFT);
                 if (focusNew != null)
                     focusNew.requestFocus();
             }
             else if (primaryCode == CodeNext)
             {
-                View focusNew = edittext.focusSearch(View.FOCUS_FORWARD);
+                View focusNew = edittext.focusSearch(View.FOCUS_RIGHT);
                 if (focusNew != null)
                     focusNew.requestFocus();
                 else if (primaryCode == CodeCellUp || primaryCode == CodeCellDown || primaryCode == CodeCellLeft || primaryCode == CodeCellRight)

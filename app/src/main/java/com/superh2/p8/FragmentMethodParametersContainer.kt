@@ -2,7 +2,6 @@ package com.superh2.p8
 
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,15 @@ import com.superh2.library.myInterface.RenameListener
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.p8.FragmentMain.Companion.selectedMethodParams
+import com.superh2.p8.databinding.FragmentMethodParametersContainerBinding
 import com.superh2.p8.dialogs.DialogFragment_Params_Groups_Rename
-import kotlinx.android.synthetic.main.fragment_method_parameters_container.*
-
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  *@Description 方法参数设置容器界面
  *@Author  Noddy
  */
-class FragmentMethodParametersContainer : FragmentBase(), View.OnClickListener, View.OnLongClickListener
+class FragmentMethodParametersContainer : FragmentBase<FragmentMethodParametersContainerBinding>(FragmentMethodParametersContainerBinding::inflate), View.OnClickListener, View.OnLongClickListener
 {
     private var imgLogo: ImageView? = null
 
@@ -31,12 +30,6 @@ class FragmentMethodParametersContainer : FragmentBase(), View.OnClickListener, 
     companion object
     {
         fun newInstance() = FragmentMethodParametersContainer()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        rootView = inflater.inflate(R.layout.fragment_method_parameters_container, container, false)
-        return rootView as View
     }
 
     override fun initWidget()
@@ -59,7 +52,7 @@ class FragmentMethodParametersContainer : FragmentBase(), View.OnClickListener, 
             val parent = LayoutInflater.from(context).inflate(R.layout.custom_tab_title, null)
             val tv = parent.findViewById<TextView>(R.id.tv_tab_title)
             tv.text = "$i." + paramMethodParamsGroup.methodParamsGroup[selectedIndex].groupName
-            tabLayout.addTab(tabLayout.newTab().setCustomView(parent))
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setCustomView(parent))
 
             // 长按事件
             parent.setOnLongClickListener {
@@ -70,18 +63,18 @@ class FragmentMethodParametersContainer : FragmentBase(), View.OnClickListener, 
                         paramMethodParamsGroup.methodParamsGroup[index].groupName = newValue
                         FileUtils.saveMethodParametersGroup(paramMethodParamsGroup, true)
                         // 刷新界面
-                        tabLayout.getTabAt(index)?.customView?.findViewById<TextView>(R.id.tv_tab_title)?.text = "$i.$newValue"
+                        binding.tabLayout.getTabAt(index)?.customView?.findViewById<TextView>(R.id.tv_tab_title)?.text = "$i.$newValue"
                     }
 
                     override fun cancel()
                     {
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
                 true
             }
             // 点击事件
             parent.setOnClickListener {
-                val tab = tabLayout.getTabAt(selectedIndex)
+                val tab = binding.tabLayout.getTabAt(selectedIndex)
                 tab?.select()
 
                 if (selectedIndex != selectedMethodParamsIndex)
@@ -107,7 +100,7 @@ class FragmentMethodParametersContainer : FragmentBase(), View.OnClickListener, 
 
     override fun onClick(v: View)
     {
-        fullScreen()
+        fullScreen(activity)
 
         when (v.id)
         {

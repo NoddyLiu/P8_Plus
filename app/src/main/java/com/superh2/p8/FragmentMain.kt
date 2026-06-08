@@ -47,13 +47,14 @@ import com.superh2.p8.MainActivity.Companion.rnHideWaitDialog
 import com.superh2.p8.MainActivity.Companion.rnShowWaitDialog
 import com.superh2.p8.database.DBHelper
 import com.superh2.p8.database.RunStateEntity
+import com.superh2.p8.databinding.FragmentMainBinding
 import com.superh2.p8.dialogs.*
 import com.superh2.p8.utils.CmdHelper
 import com.superh2.p8.utils.CmdHelper.ResetYAndWSpeed
 import com.superh2.p8.utils.ViewUtils
 import com.superh2.p8.utils.ViewUtils.exitCurrentLauncher
+import com.superh2.p8.utils.ViewUtils.fullScreen
 import com.superh2.p8.utils.ViewUtils.showWarningDialogAutoPause
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.cancel
 import java.lang.Thread.sleep
 import java.text.SimpleDateFormat
@@ -66,7 +67,7 @@ import kotlin.concurrent.thread
  *@Description 主界面（增加：①先吸放玻片，再扫码；②扫码不成功手动修正）
  *@Author  Noddy
  */
-class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLongClickListener
+class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::inflate), BarcodeScanListener, OnClickListener, OnLongClickListener
 {
     private val TAG = "FragmentMain"
 
@@ -116,12 +117,6 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
     {
         super.onDetach()
         (context as MainActivity).barcodeScanListener = null // 清空二维码枪扫描监听回调
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
-    {
-        rootView = inflater.inflate(R.layout.fragment_main, container, false)
-        return rootView as View
     }
 
     override fun onDestroyView()
@@ -188,7 +183,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                     }
                                 }
                             })
-                            dialogPromptPutTube.show(fragmentManager, null)
+                            dialogPromptPutTube.show(parentFragmentManager, null)
 
                             // 不断发送检测试管摆放指令，直到检测有为止
                             rnCheckTubeLed = Runnable {
@@ -241,17 +236,17 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
 
         // 先查询一次温湿度开启状态
         mSerialClientHumiture.queryStatus(null)
-        switchbtn_toggle_humiture_power.isChecked = mSerialClientHumiture.isSysStart
-        switchbtn_toggle_humiture_power.tag = false
-        switchbtn_toggle_humiture_power.setOnCheckedChangeListener(switchButtonOnCheckedChangeListener)
+        binding.switchbtnToggleHumiturePower.isChecked = mSerialClientHumiture.isSysStart
+        binding.switchbtnToggleHumiturePower.tag = false
+        binding.switchbtnToggleHumiturePower.setOnCheckedChangeListener(switchButtonOnCheckedChangeListener)
 
         // 分散指数
-        spinner_dispersancy_index.setSelection(paramGeneralParams.DispersancyIndexIndex)
-        switchbtn_dispersancy_index.isChecked = paramGeneralParams.DispersancyIndexEnable
-        switchbtn_dispersancy_index.setOnCheckedChangeListener(switchButtonOnCheckedChangeListener)
+        binding.spinnerDispersancyIndex.setSelection(paramGeneralParams.DispersancyIndexIndex)
+        binding.switchbtnDispersancyIndex.isChecked = paramGeneralParams.DispersancyIndexEnable
+        binding.switchbtnDispersancyIndex.setOnCheckedChangeListener(switchButtonOnCheckedChangeListener)
 
-        tv_environment_temp.text = mSerialClientHumiture.tempValueRealTime.toString()
-        tv_relative_humidity.text = mSerialClientHumiture.humValueRealTime.toString()
+        binding.tvEnvironmentTemp.text = mSerialClientHumiture.tempValueRealTime.toString()
+        binding.tvRelativeHumidity.text = mSerialClientHumiture.humValueRealTime.toString()
 
         // 默认打开照明
         toggleLight(EOnOff.On, runImmediately = true)
@@ -324,27 +319,27 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
             {
                 // TODO 再次确认是否运行
 
-                fullScreen()
+                fullScreen(activity)
                 DialogFragment_Warn_Prompt.newInstance().setDialogContent(null, getString(R.string.question_confirm_recovery_again), getString(R.string.yes), getString(R.string.no), true, false, object : WarnPromptListener
                 {
                     override fun clickedOk()
                     {
-                        fullScreen()
+                        fullScreen(activity)
                     }
 
                     override fun clickedCancel()
                     {
-                        fullScreen()
+                        fullScreen(activity)
                     }
-                }).show((mContext as Activity).fragmentManager, null)
+                }).show(parentFragmentManager, null)
 
             }
 
             override fun cancel()
             {
-                fullScreen()
+                fullScreen(activity)
             }
-        }).show(fragmentManager, null)
+        }).show(parentFragmentManager, null)
     }
 
     override fun onPause()
@@ -379,11 +374,11 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         // 试管
         for (i in 0..63)
         {
-            var tube = CircleView(context)
+            var tube = CircleView(requireActivity())
             tube.text = (i + 1).toString()
             val row = i / 8
             val col = i % 8
-            gridLayout_tube.addView(tube, GridLayout.LayoutParams(GridLayout.spec(row, GridLayout.CENTER), GridLayout.spec(col, GridLayout.CENTER)))
+            binding.gridLayoutTube.addView(tube, GridLayout.LayoutParams(GridLayout.spec(row, GridLayout.CENTER), GridLayout.spec(col, GridLayout.CENTER)))
 
             listTubeHole64.add(tube)
         }
@@ -391,11 +386,11 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         // 玻片
         for (posIndex in 0..63)
         {
-            var slide = SlideView(context)
+            var slide = SlideView(requireActivity())
             slide.text = (posIndex + 1).toString()
             val row = posIndex / 16
             val col = posIndex % 16
-            gridLayout_slide.addView(slide, GridLayout.LayoutParams(GridLayout.spec(row, GridLayout.CENTER), GridLayout.spec(col, GridLayout.CENTER)))
+            binding.gridLayoutSlide.addView(slide, GridLayout.LayoutParams(GridLayout.spec(row, GridLayout.CENTER), GridLayout.spec(col, GridLayout.CENTER)))
 
             listSlide64.add(slide)
 
@@ -409,8 +404,8 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         val dispersancy_index_array = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18")
         val adapter: ArrayAdapter<String> = ArrayAdapter(mContext!!, android.R.layout.simple_spinner_item, dispersancy_index_array)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_dispersancy_index.adapter = adapter
-        spinner_dispersancy_index.onItemSelectedListener = object : OnItemSelectedListener
+        binding.spinnerDispersancyIndex.adapter = adapter
+        binding.spinnerDispersancyIndex.onItemSelectedListener = object : OnItemSelectedListener
         {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, position: Int, id: Long)
             {
@@ -420,12 +415,12 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 resetHumiture()
                 showHumitureSet()
 
-                fullScreen()
+                fullScreen(activity)
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?)
             {
-                fullScreen()
+                fullScreen(activity)
             }
         }
 
@@ -440,15 +435,15 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
 
         (mActivity?.findViewById<SwitchButton>(R.id.switch_auto_run)!!).setOnCheckedChangeListener(switchButtonOnCheckedChangeListener)
         layoutParamsGroup.setOnClickListener(this)
-        btn_method_parameters.setOnClickListener(this)
+        binding.btnMethodParameters.setOnClickListener(this)
 
-        btn_temp_set.setOnClickListener(this)
-        btn_hum_set.setOnClickListener(this)
+        binding.btnTempSet.setOnClickListener(this)
+        binding.btnHumSet.setOnClickListener(this)
 
-        btn_run.setOnClickListener(this)
-        btn_scan_tube_barcode.setOnClickListener(this)
-        btn_hardware_io.setOnClickListener(this)
-        btn_home.setOnClickListener(this)
+        binding.btnRun.setOnClickListener(this)
+        binding.btnScanTubeBarcode.setOnClickListener(this)
+        binding.btnHardwareIo.setOnClickListener(this)
+        binding.btnHome.setOnClickListener(this)
     }
 
     /**
@@ -498,12 +493,12 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 {
                     override fun confirm(selectedIndex: Int)
                     {
-                        fullScreen()
+                        fullScreen(activity)
                         DialogFragment_Warn_Prompt.newInstance().setDialogContent(null, getString(R.string.question_confirm_recovery_again), getString(R.string.yes), getString(R.string.no), true, false, object : WarnPromptListener
                         {
                             override fun clickedOk()
                             {
-                                fullScreen()
+                                fullScreen(activity)
                                 // 赋值给alreadyScannedTubeListFromScannerGun 和 alreadyScannedBarcodeFromCamera
                                 if (runState.scannedTubesJson != null)
                                 {
@@ -527,18 +522,18 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
 
                             override fun clickedCancel()
                             {
-                                fullScreen()
+                                fullScreen(activity)
                                 // 用户取消恢复，标记程序为正常完成
                                 DBHelper.markRunCompleted(false)
                             }
-                        }).show((mContext as Activity).fragmentManager, null)
+                        }).show(parentFragmentManager, null)
                     }
 
                     override fun cancel()
                     {
 
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
 
             override fun clickedCancel()
@@ -546,7 +541,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 // 用户取消恢复，标记程序为正常完成
                 DBHelper.markRunCompleted(false)
             }
-        }).show(fragmentManager, null)
+        }).show(parentFragmentManager, null)
     }
 
     /**
@@ -564,10 +559,10 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                     if (isRefreshHumiture)
                     {
                         mHandlerMain.post {
-                            if (switchbtn_toggle_humiture_power.isChecked != mSerialClientHumiture.isSysStart)
+                            if (binding.switchbtnToggleHumiturePower.isChecked != mSerialClientHumiture.isSysStart)
                             {
-                                switchbtn_toggle_humiture_power.tag = true
-                                switchbtn_toggle_humiture_power.isChecked = mSerialClientHumiture.isSysStart
+                                binding.switchbtnToggleHumiturePower.tag = true
+                                binding.switchbtnToggleHumiturePower.isChecked = mSerialClientHumiture.isSysStart
                             }
                         }
                     }
@@ -591,7 +586,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                     if (isRefreshHumiture)
                     {
                         mHandlerMain.post {
-                            tv_environment_temp.text = mSerialClientHumiture.tempValueRealTime.toString()
+                            binding.tvEnvironmentTemp.text = mSerialClientHumiture.tempValueRealTime.toString()
                         }
                     }
                 }
@@ -613,7 +608,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                     if (isRefreshHumiture)
                     {
                         mHandlerMain.post {
-                            tv_relative_humidity.text = mSerialClientHumiture.humValueRealTime.toString()
+                            binding.tvRelativeHumidity.text = mSerialClientHumiture.humValueRealTime.toString()
                         }
                     }
                 }
@@ -646,18 +641,18 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
             // 温湿度设定值（如果分散指数使能，就显示该分散指数值，否则，显示单独设置的值）
             var tempSet = 0.0f
             var humiSet = 0.0f
-            if (switchbtn_dispersancy_index.isChecked)
+            if (binding.switchbtnDispersancyIndex.isChecked)
             {
-                tempSet = paramGeneralParams.DispersancyIndexList[this.spinner_dispersancy_index.selectedItemPosition].temp
-                humiSet = paramGeneralParams.DispersancyIndexList[this.spinner_dispersancy_index.selectedItemPosition].humi
+                tempSet = paramGeneralParams.DispersancyIndexList[this.binding.spinnerDispersancyIndex.selectedItemPosition].temp
+                humiSet = paramGeneralParams.DispersancyIndexList[this.binding.spinnerDispersancyIndex.selectedItemPosition].humi
             }
             else
             {
                 tempSet = selectedMethodParams.paramsSlideMode.temp
                 humiSet = selectedMethodParams.paramsSlideMode.hum
             }
-            btn_temp_set.text = "$tempSet°C"
-            btn_hum_set.text = "$humiSet%"
+            binding.btnTempSet.text = "$tempSet°C"
+            binding.btnHumSet.text = "$humiSet%"
         }
     }
 
@@ -739,14 +734,14 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         {
             R.id.btn_temp_set -> // 温度设置
             {
-                if (switchbtn_dispersancy_index.isChecked)
+                if (binding.switchbtnDispersancyIndex.isChecked)
                 {
                     DialogFragment_Info_Prompt.newInstance().setDialogContent(null, getString(R.string.info_disabled_dispersancy_index), getString(R.string.ok), 0, 0, object : InfoPromptListener
                     {
                         override fun clicked()
                         {
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                     return
                 }
 
@@ -759,19 +754,19 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         resetHumiture()
                         showHumitureSet()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
 
             R.id.btn_hum_set -> // 湿度设置
             {
-                if (switchbtn_dispersancy_index.isChecked)
+                if (binding.switchbtnDispersancyIndex.isChecked)
                 {
                     DialogFragment_Info_Prompt.newInstance().setDialogContent(null, getString(R.string.info_disabled_dispersancy_index), getString(R.string.ok), 0, 0, object : InfoPromptListener
                     {
                         override fun clicked()
                         {
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                     return
                 }
 
@@ -784,7 +779,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         resetHumiture()
                         showHumitureSet()
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             // 方法参数
             R.id.btn_method_parameters ->
@@ -802,7 +797,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         override fun clicked()
                         {
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                     return
                 }
 
@@ -817,7 +812,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                             override fun clicked()
                             {
                             }
-                        }).show(fragmentManager, null)
+                        }).show(parentFragmentManager, null)
 
                         return
                     }
@@ -851,7 +846,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                             {
                                                 runProcedure(0, 0, isInterrupted = false)
                                             }
-                                        }).show(fragmentManager, null)
+                                        }).show(parentFragmentManager, null)
                                     }
                                     else runProcedure(0, 0, isInterrupted = false)
                                 }
@@ -859,13 +854,13 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                 override fun clickedCancel()
                                 {
                                 }
-                            }).show(fragmentManager, null)
+                            }).show(parentFragmentManager, null)
                         }
 
                         override fun clickedCancel()
                         {
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                 }
                 // 二维码纠正模式
                 else if (barcodeRunMode == EBarcodeRunMode.Correct)
@@ -886,7 +881,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                             override fun clicked()
                             {
                             }
-                        }).show(fragmentManager, null)
+                        }).show(parentFragmentManager, null)
 
                     }
                     // 已经全部纠正
@@ -903,7 +898,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                             override fun clickedCancel()
                             {
                             }
-                        }).show(fragmentManager, null)
+                        }).show(parentFragmentManager, null)
                     }
                 }
             }
@@ -924,7 +919,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                     override fun clickedCancel()
                     {
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
 
             R.id.layout_params_group ->
@@ -943,7 +938,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         }
                     }
 
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             // 硬件测试
             R.id.btn_hardware_io ->
@@ -978,7 +973,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
             // 长按左上角退出程序
             R.id.view_exit ->
             {
-                exitCurrentLauncher(activity)
+                exitCurrentLauncher(mContext)
                 android.os.Process.killProcess(android.os.Process.myPid())
             }
         }
@@ -989,7 +984,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
      * toggle监听器
      */
     var switchButtonOnCheckedChangeListener = SwitchButton.OnCheckedChangeListener { view, isChecked ->
-        if (view == switchbtn_toggle_humiture_power)
+        if (view == binding.switchbtnToggleHumiturePower)
         {
             // 用tag属性来控制代码切换状态还是界面手动切换状态
             if (view.tag != true)
@@ -1011,7 +1006,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 view.tag = false
             }
         }
-        else if (view == switchbtn_dispersancy_index)
+        else if (view == binding.switchbtnDispersancyIndex)
         {
             paramGeneralParams.DispersancyIndexEnable = isChecked
             FileUtils.saveGeneralParameters(paramGeneralParams, true)
@@ -1060,10 +1055,10 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         // 温湿度设定值（如果分散指数使能，就设置该分散指数值，否则，设置单独的值）
         var tempSet = 0.0f
         var humiSet = 0.0f
-        if (switchbtn_dispersancy_index.isChecked)
+        if (binding.switchbtnDispersancyIndex.isChecked)
         {
-            tempSet = paramGeneralParams.DispersancyIndexList[this.spinner_dispersancy_index.selectedItemPosition].temp
-            humiSet = paramGeneralParams.DispersancyIndexList[this.spinner_dispersancy_index.selectedItemPosition].humi
+            tempSet = paramGeneralParams.DispersancyIndexList[binding.spinnerDispersancyIndex.selectedItemPosition].temp
+            humiSet = paramGeneralParams.DispersancyIndexList[binding.spinnerDispersancyIndex.selectedItemPosition].humi
         }
         else
         {
@@ -1135,10 +1130,10 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
         mHandlerMain.post(rnShowWaitDialog)
         mHandlerRunTh.post(createRnDoWork(startSlideIndex, tubeIndex, isInterrupted))
 
-        fullScreen()
+        fullScreen(activity)
 
         // 运行时禁止点击底部按钮
-        var view = this.rootView as FrameLayout
+        var view = activity?.window?.decorView as? FrameLayout ?: return
         com.superh2.library.utils.ViewUtils.setSubControlsClickable(view, false)
 
         // 初始化界面
@@ -1223,7 +1218,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                     {
                         barcodeRunMode = EBarcodeRunMode.Correct
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
             // 中断异常
             catch (e: InterruptedException)
@@ -1495,7 +1490,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 {
                     // 弹出玻片扫码确认框，确认---继续执行程序；取消---终止程序；重新扫描---再一次扫描玻片二维码
                     ViewUtils.pauseRunningDialog() // 模拟“暂停”按钮
-                    DialogFragment_Slide_Frame.newInstance().setDialogContent(context, getString(R.string.question_makesure_slide_frame_scan_completed), getString(R.string.confirm), getString(R.string.rescan), getString(R.string.cancel), alreadyScannedBarcodeFromCamera, object : SlideFrameConfirmListener
+                    DialogFragment_Slide_Frame.newInstance().setDialogContent(mContext, getString(R.string.question_makesure_slide_frame_scan_completed), getString(R.string.confirm), getString(R.string.rescan), getString(R.string.cancel), alreadyScannedBarcodeFromCamera, object : SlideFrameConfirmListener
                     {
                         // 继续执行程序
                         override fun clickedOk()
@@ -1513,7 +1508,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         {
                             ViewUtils.closeRunningDialog() // 模拟“停止”按钮
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
 
                     CmdHelper.manualPause()
 
@@ -1659,7 +1654,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
 
                                                 ViewUtils.continueRunningDialog()
                                             }
-                                        }).show(fragmentManager, null)
+                                        }).show(parentFragmentManager, null)
                                     }
 
                                     // 点击"取消"
@@ -1669,7 +1664,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                         ViewUtils.continueRunningDialog()
                                         isContinueRun = false
                                     }
-                                }).show(fragmentManager, null)
+                                }).show(parentFragmentManager, null)
                             }
 
                             // 暂停当前线程
@@ -1828,7 +1823,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                             // 初始化玻片状态信息
                                             initAllSlideStatus()
                                         }
-                                    }).show(fragmentManager, null)
+                                    }).show(parentFragmentManager, null)
                                 }
 
                                 override fun clickedCancel()
@@ -1837,7 +1832,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                     ViewUtils.continueRunningDialog()
                                     isContinueRun = false
                                 }
-                            }).show(fragmentManager, null)
+                            }).show(parentFragmentManager, null)
                         }
 
                         // 暂停当前线程
@@ -1989,7 +1984,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
 
                         // 显示当前二维码内容
                         mHandlerMain.post {
-                            tv_current_qr_code.text = currentScannedBarcode
+                            binding.tvCurrentQrCode.text = currentScannedBarcode
                         }
                         isScannedSuccess = true
                     }
@@ -2062,7 +2057,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                 {
                     TODO("Not yet implemented")
                 }
-            }).show(fragmentManager, null)
+            }).show(parentFragmentManager, null)
         }
     }
 
@@ -2089,9 +2084,9 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                                 currentTakeTipIndex = 0
                                 ViewUtils.continueRunningDialog()
                             }
-                        }).show(fragmentManager, null)
+                        }).show(parentFragmentManager, null)
                     }
-                }).show(fragmentManager, null)
+                }).show(parentFragmentManager, null)
             }
 
             // 暂停当前线程
@@ -2625,7 +2620,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         {
                             ViewUtils.continueRunningDialog()
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                 }
 
                 // 暂停当前线程
@@ -2668,7 +2663,7 @@ class FragmentMain : FragmentBase(), BarcodeScanListener, OnClickListener, OnLon
                         {
                             ViewUtils.continueRunningDialog()
                         }
-                    }).show(fragmentManager, null)
+                    }).show(parentFragmentManager, null)
                 }
 
                 // 暂停当前线程

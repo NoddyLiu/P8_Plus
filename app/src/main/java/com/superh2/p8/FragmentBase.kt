@@ -1,26 +1,30 @@
 package com.superh2.p8
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import com.superh2.library.utils.ViewUtils
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.superh2.p8.MainActivity.Companion.isManualPause
 import com.superh2.p8.MainActivity.Companion.isManualStop
 import com.superh2.p8.MainActivity.Companion.isProcedureRunning
+import com.superh2.p8.utils.ViewUtils.fullScreen
 
 /**
  * Fragment 父类
  * A simple [Fragment] subclass.
  */
-abstract class FragmentBase : Fragment()
+abstract class FragmentBase<VB : ViewBinding>(private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB) : Fragment()
 {
     protected var mActivity: Activity? = null
-    protected var rootView: View? = null // 根视图，即需要显示的界面
+
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
 
     companion object
     {
@@ -41,11 +45,17 @@ abstract class FragmentBase : Fragment()
         mActivity = context as Activity
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
+        _binding = bindingInflater.invoke(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        fullScreen()
+        fullScreen(mActivity)
 
         // 默认隐藏顶部右功能键
         val btnFunctionRight = mActivity?.findViewById(R.id.btnFunctionRight) as Button
@@ -64,23 +74,6 @@ abstract class FragmentBase : Fragment()
     }
 
     /**
-     * 全屏
-     */
-    fun fullScreen()
-    {
-        rootView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
-
-        mActivity?.window?.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
-        ViewUtils.hideSoftKeyboard(activity)
-    }
-
-    /**
      * 初始化控件
      */
     protected abstract fun initWidget()
@@ -92,7 +85,18 @@ abstract class FragmentBase : Fragment()
      */
     fun replaceFragment(newFragment: Fragment, newFragmentTag: String)
     {
-        mActivity!!.fragmentManager.beginTransaction().replace(R.id.framelayout_container, newFragment, newFragmentTag).commit()
+        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framelayout_container, newFragment, newFragmentTag).commit()
+    }
+
+    /**
+     * 切换Fragment界面
+     * @param newFragment 新Fragment
+     * @param newFragmentTag Fragment Tag
+     */
+    fun replaceFragment(newFragment: Fragment, newFragmentTag: String, bundle: Bundle)
+    {
+        newFragment.arguments=bundle
+        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framelayout_container, newFragment, newFragmentTag).commit()
     }
 
     /**
@@ -103,6 +107,11 @@ abstract class FragmentBase : Fragment()
      */
     fun replaceFragment(containerId: Int, newFragment: Fragment, newFragmentTag: String)
     {
-        mActivity!!.fragmentManager.beginTransaction().replace(containerId, newFragment, newFragmentTag).commit()
+        requireActivity().supportFragmentManager.beginTransaction().replace(containerId, newFragment, newFragmentTag).commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
