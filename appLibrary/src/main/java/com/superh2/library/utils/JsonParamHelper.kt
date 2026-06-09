@@ -10,7 +10,6 @@ import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.library.utils.ParamsHelper.paramPosBarcode
 import com.superh2.library.utils.ParamsHelper.paramPosDispense
 import com.superh2.library.utils.ParamsHelper.paramPosFixative
-import com.superh2.library.utils.ParamsHelper.paramPosHumidBlow
 import com.superh2.library.utils.ParamsHelper.paramPosOther
 import com.superh2.library.utils.ParamsHelper.paramPosSlide
 import com.superh2.library.utils.ParamsHelper.paramPosSpray
@@ -112,30 +111,6 @@ object JsonParamHelper
                     paramPosTips.tips.add(pos)
                 }
                 FileUtils.saveTipsPos(paramPosTips, false)
-            }
-        }
-        catch (ex: Exception)
-        {
-        }
-    }
-
-    /**
-     * 湿气吹风位置
-     */
-    fun loadHumidBlowPos()
-    {
-        try
-        {
-            val json = FileUtils.getJsonFromSD(ConstantsUtils.FOLDER_MAINTENANCE, ConstantsUtils.FILE_HUMID_BLOW_POS)
-            if (json != null && json != "") paramPosHumidBlow = JSON.parseObject<PosHumidBlow>(json, object : TypeReference<PosHumidBlow>()
-            {}.type)
-            else
-            {
-                for (i in 0..3)
-                {
-                    paramPosHumidBlow.humidBlows.add(i.toDouble())
-                }
-                FileUtils.saveHumidBlowPos(paramPosHumidBlow, false)
             }
         }
         catch (ex: Exception)

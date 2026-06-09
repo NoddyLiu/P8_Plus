@@ -31,6 +31,7 @@ import com.superh2.p8.MainActivity.Companion.mDataCommunication
 import com.superh2.p8.MainActivity.Companion.mSerialClientHumiture
 import com.superh2.p8.R
 import com.superh2.p8.dialogs.DialogFragment_Warn_Prompt
+import com.superh2.p8.serial.PipetteCompat
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 import kotlin.math.roundToInt
@@ -52,8 +53,8 @@ object CmdHelper
         // y轴和w轴恢复默认速度
         ResetYAndWSpeed()
 
-        if (!doCmd("WI", false, 15000))  // W轴：喷雾轴
-            throw InitException()
+        // W轴：喷雾轴
+        if (!doCmd("WI", false, 15000)) throw InitException()
 
         manualPause()
 
@@ -61,10 +62,12 @@ object CmdHelper
 
         manualPause()
 
+        // M轴：防漏挡板
         if (!doCmd("MI", false, 15000)) throw InitException()
 
         manualPause()
 
+        // 吸玻片
         if (!doCmd("AO10", false, 10000)) throw InitException()
 
         manualPause()
@@ -73,7 +76,9 @@ object CmdHelper
 
         manualPause()
 
-        if (!doCmd("PI", false, 10000)) throw InitException()
+        // 吸喷液
+//        if (!doCmd("PI", false, 10000)) throw InitException()
+        pi(false)
 
         // Q轴虚拟复位，防止喷雾加液泵步数溢出
         if (!doCmd("QI 0", false, 10000)) throw InitException()
@@ -442,19 +447,6 @@ object CmdHelper
         wa(paramPosSlide.walkingHeight, isAsync)
     }
 
-    //    /**
-    //     * 吹风位置
-    //     * @param index 位置0~63
-    //     * @param isAsync 是否异步
-    //     */
-    //    fun humidBlowsPos(index: Int, isAsync: Boolean)
-    //    {
-    //        manualPause()
-    //
-    //        val mLength = paramPosHumidBlow.humidBlows[index]
-    //        ma(mLength, isAsync)
-    //    }
-
     /**
      * 喷雾时间
      * @param tsec 十分之一秒（0：停止执行）
@@ -569,7 +561,11 @@ object CmdHelper
      */
     private fun stirSpeed(speed: Int, isAsync: Boolean)
     {
-        doCmd("PF 50 1500 $speed", isAsync)
+//        doCmd("PF 50 1500 $speed", isAsync)
+        runPipette(isAsync) {
+            PipetteCompat.driver.setAspirateSpeed(speed)
+            PipetteCompat.driver.setDispenseSpeed(speed)
+        }
     }
 
     /**
@@ -603,7 +599,10 @@ object CmdHelper
         manualPause()
 
         // 吸液容积
-        ps(liquidVolume, isAsync)
+//        ps(liquidVolume, isAsync)
+        runPipette(isAsync) {
+            PipetteCompat.driver.aspirate(liquidVolume)
+        }
     }
 
 
@@ -619,7 +618,8 @@ object CmdHelper
         za(paramPosTips.additionalAirHeight, isAsync)
 
         //Tip头预吸空气体积
-        ps(paramGeneralParams.additionalAirInTipBeforeAbsorb, isAsync)
+//        ps(paramGeneralParams.additionalAirInTipBeforeAbsorb, isAsync)
+        psBeforeAbsorb(paramGeneralParams.additionalAirInTipBeforeAbsorb, isAsync)
     }
 
 
@@ -635,7 +635,8 @@ object CmdHelper
         za(paramPosTips.additionalAirHeight, isAsync)
 
         //Tip头隔离空气体积
-        ps(paramGeneralParams.additionalAirInTip, isAsync)
+//        ps(paramGeneralParams.additionalAirInTip, isAsync)
+        psAfterAbsorb(paramGeneralParams.additionalAirInTip, isAsync)
     }
 
     /** 滴液
@@ -648,9 +649,13 @@ object CmdHelper
         manualPause()
 
         // 滴液速度
-        dispenseSpeed(methodParams.paramsSlideMode.dispenseSpeed, isAsync)
+//        dispenseSpeed(methodParams.paramsSlideMode.dispenseSpeed, isAsync)
+//        ps(liquidVolume * -1, isAsync)
 
-        ps(liquidVolume * -1, isAsync)
+        runPipette(isAsync) {
+            PipetteCompat.driver.setDispenseSpeed(methodParams.paramsSlideMode.dispenseSpeed)
+            PipetteCompat.driver.dispense(liquidVolume)
+        }
     }
 
     /**
@@ -719,7 +724,7 @@ object CmdHelper
      * @param time 次数
      * @param isAsync 是否异步
      */
-    fun fixativeLiquid(methodParams: MethodParams,  fixativeVol: Int, time: Int, isAsync: Boolean)
+    fun fixativeLiquid(methodParams: MethodParams, fixativeVol: Int, time: Int, isAsync: Boolean)
     {
         for (i in 0 until time)
         {
@@ -747,71 +752,6 @@ object CmdHelper
         if (acceleratedSpeed <= 0) acceleratedSpeed = 1
         doCmd("PF $initSpeed $targetSpeed $acceleratedSpeed", isAsync)
     }
-
-    //    /**
-    //     * 打开吹风（必须同步）
-    //     * @param level 风档
-    //     * @param dryMachine 干燥机是否开启
-    //     */
-    //    fun openHumidBlows(level: Int, dryMachine: EOnOff)
-    //    {
-    //        if (dryMachine == EOnOff.On)
-    //        {
-    //            doCmd("AF $level", false)
-    //            doCmd("AC1", false)
-    //        }
-    //        else
-    //        {
-    //            doCmd("AF $level", false)
-    //            doCmd("AC0", false)
-    //        }
-    //    }
-
-    //    /**
-    //     * 关闭吹风（必须同步）
-    //     */
-    //    fun closeHumidBlows()
-    //    {
-    //        // 先关闭干燥机，在关闭风机，否则会有关闭不成功的情况
-    //        doCmd("AC0", false)
-    //        doCmd("AF0", false)
-    //    }
-
-    //    /**
-    //     * 温湿度设置
-    //     * @param methodParams 参数组
-    //     * @param isAsync 是否异步
-    //     */
-    //    fun setHumiture(methodParams: MethodParams, isAsync: Boolean)
-    //    {
-    //        // 底板温度（20~35）
-    //        val baseTemp = (methodParams.paramsSlideMode.baseTemp * 10).toInt()
-    //        doCmd("AT $baseTemp", isAsync)
-    //        // 蒸汽温度（室温~100）
-    //        val steamTemp = (methodParams.paramsSlideMode.steamTemp * 10).toInt()
-    //        doCmd("AU $steamTemp", isAsync)
-    //    }
-
-    //    /**
-    //     * 温湿度查询
-    //     * @param isAsync 是否异步
-    //     */
-    //    fun getHumiture(isAsync: Boolean, callback: ICommandResultCallback)
-    //    {
-    //        // 底板温度、蒸汽温度、环境温度、相对湿度
-    //        doCmdAsync("AT9999,AU9999,AV9999,AW9999", object : ICommandResultCallback
-    //        {
-    //            override fun success()
-    //            {
-    //                callback.success()
-    //            }
-    //
-    //            override fun fail(ex: Exception)
-    //            {
-    //                callback.fail(ex)
-    //            }
-    //        })
-    //    }
 
     /**
      * 点亮试管摆放指示灯
@@ -873,8 +813,6 @@ object CmdHelper
      */
     fun closeAllMachine()
     {
-        //        // 关闭吹风
-        //        closeHumidBlows()
         // 关闭喷雾
         closeSpray()
         // y轴和w轴恢复默认速度
@@ -909,17 +847,26 @@ object CmdHelper
      */
     fun checkTakeTipStatus(): Boolean
     {
-        var result = false
-        mDataCommunication.tipExist = false
+//        var result = false
+//        mDataCommunication.tipExist = false
+//
+//        // 检测5次，只要有1次成功则认为取枪头成功
+//        for (i in 0 until 5)
+//        {
+//            doCmd("AA2", isAsync = false)
+//            result = result || mDataCommunication.tipExist
+//            if (result) break
+//        }
+//
+//        LogHelper.info(mContext.getString(R.string.tip_take_check) + "：" + result)
+//        return result
 
-        // 检测5次，只要有1次成功则认为取枪头成功
+        var result = false
         for (i in 0 until 5)
         {
-            doCmd("AA2", isAsync = false)
-            result = result || mDataCommunication.tipExist
+            result = result || PipetteCompat.driver.hasTip()
             if (result) break
         }
-
         LogHelper.info(mContext.getString(R.string.tip_take_check) + "：" + result)
         return result
     }
@@ -930,17 +877,26 @@ object CmdHelper
      */
     fun checkReleaseTipStatus(): Boolean
     {
-        var result = true
-        mDataCommunication.tipExist = false
+//        var result = true
+//        mDataCommunication.tipExist = false
+//
+//        // 检测3次，全部成功则认为退枪头成功
+//        for (i in 0 until 3)
+//        {
+//            doCmd("AA2", isAsync = false)
+//            result = result && !mDataCommunication.tipExist
+//            if (!result) break
+//        }
+//
+//        LogHelper.info(mContext.getString(R.string.tip_release_check) + "：" + result)
+//        return result
 
-        // 检测3次，全部成功则认为退枪头成功
+        var result = true
         for (i in 0 until 3)
         {
-            doCmd("AA2", isAsync = false)
-            result = result && !mDataCommunication.tipExist
+            result = result && !PipetteCompat.driver.hasTip()
             if (!result) break
         }
-
         LogHelper.info(mContext.getString(R.string.tip_release_check) + "：" + result)
         return result
     }
@@ -1120,8 +1076,41 @@ object CmdHelper
      */
     fun pa(length: Double, isAsync: Boolean)
     {
-        var mStep = (length * paramScale.p).toInt()
-        doCmd("PA$mStep", isAsync)
+//        var mStep = (length * paramScale.p).toInt()
+//        doCmd("PA$mStep", isAsync)
+
+        val volume = length.roundToInt()
+        runPipette(isAsync) {
+            when {
+                volume > 0 -> PipetteCompat.driver.aspirate(volume)
+                volume < 0 -> PipetteCompat.driver.dispense(-volume)
+                else -> PipetteCompat.driver.dispense(0)
+            }
+        }
+    }
+
+    /**
+     * PS指令（吸液前预吸空气）
+     * @param volume 体积
+     * @param isAsync 是否异步
+     */
+    fun psBeforeAbsorb(volume: Int, isAsync: Boolean)
+    {
+        runPipette(isAsync) {
+            PipetteCompat.driver.firstAspirateBackAir(volume)
+        }
+    }
+
+    /**
+     * PS指令（吸液后气封）
+     * @param volume 体积
+     * @param isAsync 是否异步
+     */
+    fun psAfterAbsorb(volume: Int, isAsync: Boolean)
+    {
+        runPipette(isAsync) {
+            PipetteCompat.driver.secondAspirateBackAir(volume)
+        }
     }
 
     /**
@@ -1131,8 +1120,16 @@ object CmdHelper
      */
     fun ps(volume: Int, isAsync: Boolean)
     {
-        val pStep = (volume * paramScale.p).toInt()
-        doCmd("PS$pStep", isAsync)
+//        val pStep = (volume * paramScale.p).toInt()
+//        doCmd("NS$pStep", isAsync)
+
+        runPipette(isAsync) {
+            when {
+                volume > 0 -> PipetteCompat.driver.aspirate(volume)
+                volume < 0 -> PipetteCompat.driver.dispense(volume)
+                else -> Unit
+            }
+        }
     }
 
     /**
@@ -1338,6 +1335,23 @@ object CmdHelper
             {
                 throw InterruptedException()
             }
+        }
+    }
+
+    /**
+     * 运行移液器操作
+     * @param isAsync 是否异步执行
+     * @param block 执行的操作
+     */
+    private fun runPipette(isAsync: Boolean, block: () -> Unit)
+    {
+        if (isAsync)
+        {
+            thread(isDaemon = true) { block() }
+        }
+        else
+        {
+            block()
         }
     }
 }

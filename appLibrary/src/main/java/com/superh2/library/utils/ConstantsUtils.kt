@@ -29,7 +29,6 @@ object ConstantsUtils
     val FILE_SCALE = "scale.json" // 步转毫米scale值
     val FILE_TUBES_POS = "tubes_pos.json" // 试管位置
     val FILE_TIPS_POS = "tips_pos.json" // 枪头位置
-    val FILE_HUMID_BLOW_POS = "humid_blow_pos.json" // 湿气吹风位置
     val FILE_SPRAY_POS = "spray_pos.json" // 喷雾位置
     val FILE_DISPENSE_POS = "dispense_pos.json" // 滴液位置
     val FILE_BARCODE_POS = "barcode_pos.json" // 二维码位置

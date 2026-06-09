@@ -197,33 +197,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-<!--            &lt;!&ndash;蒸汽吹风位置信息&ndash;&gt;-->
-<!--            <LinearLayout style="@style/GridCellStyle">-->
-
-<!--                <LinearLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                            android:layout_width="@dimen/maintenance_tv_title_item_layout_width"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/humid_blow_pos"/>-->
-
-<!--                    <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text=":"/>-->
-
-<!--                    <info.hoang8f.widget.FButton-->
-<!--                            style="@style/ButtonStyle"-->
-<!--                            android:id="@+id/btn_humid_blow_pos"-->
-<!--                            android:layout_marginLeft="10dp"-->
-<!--                            android:text="@string/setting"/>-->
-<!--                </LinearLayout>-->
-<!--            </LinearLayout>-->
-
             <!--二维码识别位置信息-->
             <LinearLayout style="@style/GridCellStyle">
 

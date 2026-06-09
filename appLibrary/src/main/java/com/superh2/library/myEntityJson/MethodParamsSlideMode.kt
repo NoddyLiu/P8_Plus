@@ -51,13 +51,4 @@ class MethodParamsSlideMode
 
     // 喷雾移动前固定时间（即在玻片开始位置喷雾n秒后再移动）
     var sprayLiquidTimeBeforeMove:Int = 0
-
-//    // 吹风时间
-//    var humidBlowTime:Int = 0
-//
-//    // 吹风风量
-//    var humidBlowLevel:Int = 50
-//
-//    // 干燥机
-//    var dryingMachine = EOnOff.On
 }

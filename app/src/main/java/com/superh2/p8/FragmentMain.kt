@@ -2489,7 +2489,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         {
             // 滴片后延迟1s再反吸
             sleep(1000)
-            CmdHelper.ps(paramGeneralParams.additionalAirInTipAfterDispense, false)
+//            CmdHelper.ps(paramGeneralParams.additionalAirInTipAfterDispense, false)
+            CmdHelper.psAfterAbsorb(paramGeneralParams.additionalAirInTipAfterDispense, false)
         }
 
         // 回到0位
@@ -2596,8 +2597,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     {
         if (paramGeneralParams.alarmTipCheck == EOnOff.On)
         {
-            CmdHelper.toTipCheckPos(false)
-            sleep(200)
+//            CmdHelper.toTipCheckPos(false)
+//            sleep(200)
 
             if (!CmdHelper.checkTakeTipStatus())
             {
@@ -2640,8 +2641,9 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     {
         if (paramGeneralParams.alarmTipCheck == EOnOff.On)
         {
-            CmdHelper.toTipCheckPos(false)
-            sleep(200)
+//            CmdHelper.toTipCheckPos(false)
+//            sleep(200)
+
             if (!CmdHelper.checkReleaseTipStatus())
             {
                 // 是否重新退枪头

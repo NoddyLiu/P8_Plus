@@ -38,16 +38,6 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
 
     override fun initWidget()
     {
-        // 软键盘
-        //        val mCustomKeyboard = find<FloatingKeyboardViewNotDragable>(R.id.keyboardview)
-        //        mCustomKeyboard.setKeyboard(R.xml.keyboard_number) // 设置键盘
-        //        mCustomKeyboard.isPreviewEnabled = false
-
-        // 注册控件
-        //        mCustomKeyboard.registerEditText(et_spray_time)
-        //        mCustomKeyboard.registerEditText(et_fixative_volume)
-        //        mCustomKeyboard.registerEditText(et_humid_blow)
-
         val btnReturn = mActivity?.findViewById(R.id.btnReturn) as Button
         btnReturn.visibility = View.VISIBLE
         btnReturn.setOnClickListener(this)
@@ -59,8 +49,6 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
         binding.btnSprayLiquidAddition.setOnClickListener(this)
         binding.btnFixativeVolume.setOnClickListener(this)
         binding.btnFixativeLiquidSpitOut.setOnClickListener(this)
-        //        binding.btnHumidBlowOpen.setOnClickListener(this)
-        //        binding.btnHumidBlowClose.setOnClickListener(this)
 
         binding.etReplacePosX.setText(paramPosOther.replaceSealingRingPos.x.toString())
         binding.etReplacePosY.setText(paramPosOther.replaceSealingRingPos.y.toString())
@@ -162,18 +150,6 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
                     CmdHelper.ns(200, false)
                 }
             }
-            //            R.id.btn_humid_blow_open ->
-            //            {
-            //                val level = et_humid_blow.text.toString()
-            //                if (!level.isNullOrEmpty() && level.toInt() <= 100)
-            //                {
-            //                    openHumidBlows(level.toInt(), EOnOff.On)
-            //                }
-            //            }
-            //            R.id.btn_humid_blow_close ->
-            //            {
-            //                closeHumidBlows()
-            //            }
             R.id.btn_replace_pos_x_y ->
             {
                 CmdHelper.xaya(binding.etReplacePosX.text.toString().toDouble(), binding.etReplacePosY.text.toString().toDouble(), true)

@@ -203,16 +203,6 @@ object FileUtils
     }
 
     /**
-     * 保存湿气吹风位置
-     * @param jsonObj json实体类
-     * @param isDeleteOld 是否删除旧版本
-     */
-    fun saveHumidBlowPos(jsonObj: PosHumidBlow, isDeleteOld: Boolean): Boolean
-    {
-        return FileUtils.saveJsonToSD(JSON.toJSONString(jsonObj, true), ConstantsUtils.FOLDER_MAINTENANCE, ConstantsUtils.FILE_HUMID_BLOW_POS, isDeleteOld)
-    }
-
-    /**
      * 保存喷雾位置
      * @param jsonObj json实体类
      * @param isDeleteOld 是否删除旧版本

@@ -41,7 +41,6 @@
     <string name="barcode_scan_pos">二维码扫描位置</string>
     <string name="spray_pos">喷雾位置</string>
     <string name="dispense_pos">滴液位置</string>
-    <string name="humid_blow_pos">蒸汽吹管位置</string>
     <string name="fixative_pos">固定液位置</string>
     <string name="slide_pos">玻片位置</string>
     <string name="x">X</string>
@@ -138,8 +137,6 @@
     <string name="method_params_spray_liquid_time_before_move">喷雾移动前固定时间</string>
     <string name="method_params_base_temp">底板温度</string>
     <string name="method_params_steam_temp">蒸汽温度</string>
-    <string name="method_params_humid_blow_time">吹风时间</string>
-    <string name="method_params_humid_blow_level">吹风量</string>
     <string name="method_params_drying_machine">干燥机</string>
     <string name="method_params_dry_slide">干片法</string>
     <string name="method_params_wet_slide">湿片法</string>
@@ -200,7 +197,6 @@
     <string name="hardware_io_two_lines">硬件\n输入输出</string>
     <string name="hardware_io_spray">喷雾</string>
     <string name="hardware_io_fixative">固定液</string>
-    <string name="hardware_io_humid_blow">吹风</string>
     <string name="hardware_io_sealing_ring">密封圈</string>
     <string name="spray_time">喷雾时间</string>
     <string name="liquid_addition">加液</string>

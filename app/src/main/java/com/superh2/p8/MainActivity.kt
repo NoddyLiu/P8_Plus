@@ -23,6 +23,7 @@ import com.superh2.library.utils.ParamsHelper
 import com.superh2.library.utils.ParamsHelper.loadAllParams
 import com.superh2.library.utils.ViewUtils
 import com.superh2.library.utils.ViewUtils.changeAlertdialogTextSize
+import com.superh2.p8.serial.SerialClientAdp
 import com.superh2.p8.serial.SerialClientHumiture
 import com.superh2.p8.serial.SerialClientScanner
 import com.superh2.p8.utils.CmdHelper
@@ -150,6 +151,7 @@ class MainActivity : AppCompatActivity()
         // 串口通信
         val mSerialClientHumiture = SerialClientHumiture()
         val mSerialClientScanner = SerialClientScanner()
+        val mSerialClientAdp = SerialClientAdp()
 
         // 是否首次进入主界面
         var isFirstIn = true
@@ -173,6 +175,8 @@ class MainActivity : AppCompatActivity()
             mSerialClientHumiture.openSerial()
             // 打开扫码模块串口
             mSerialClientScanner.openSerial()
+            // 打开 ADP 串口
+            mSerialClientAdp.openSerial()
         }, 1500)
 
         supportFragmentManager.beginTransaction().replace(R.id.framelayout_container, FragmentMain.newInstance(), "FragmentMain").commit()
@@ -213,6 +217,9 @@ class MainActivity : AppCompatActivity()
 
         // 扫码模块
         if (mSerialClientScanner.isConnected) mSerialClientScanner.closeSerial()
+
+        // 大肯ADP
+        if (mSerialClientAdp.isConnected) mSerialClientAdp.closeSerial()
     }
 
     /**

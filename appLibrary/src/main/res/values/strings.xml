@@ -41,7 +41,6 @@
     <string name="barcode_scan_pos">Barcode Scan Position</string>
     <string name="spray_pos">Spray Position</string>
     <string name="dispense_pos">Dispense Position</string>
-    <string name="humid_blow_pos">Blow Position</string>
     <string name="fixative_pos">Fixative Position</string>
     <string name="slide_pos">Slide Position</string>
     <string name="x">X</string>
@@ -138,8 +137,6 @@
     <string name="method_params_spray_liquid_time_before_move">Spray Liquid Time Before Move</string>
     <string name="method_params_base_temp">Base Temp</string>
     <string name="method_params_steam_temp">Steam Temp</string>
-    <string name="method_params_humid_blow_time">Blow Time</string>
-    <string name="method_params_humid_blow_level">Blow Level</string>
     <string name="method_params_drying_machine">Drying Machine</string>
     <string name="method_params_dry_slide">Dry</string>
     <string name="method_params_wet_slide">Wet</string>
@@ -200,7 +197,6 @@
     <string name="hardware_io_two_lines">Hardware\nI/O</string>
     <string name="hardware_io_spray">Spray</string>
     <string name="hardware_io_fixative">Fixative</string>
-    <string name="hardware_io_humid_blow">Blow</string>
     <string name="hardware_io_sealing_ring">Sealing Ring</string>
     <string name="spray_time">Spray Time</string>
     <string name="liquid_addition">Liquid Addition</string>

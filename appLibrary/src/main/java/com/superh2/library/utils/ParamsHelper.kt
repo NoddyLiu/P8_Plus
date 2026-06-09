@@ -5,7 +5,6 @@ import com.superh2.library.utils.JsonParamHelper.loadBarcodePos
 import com.superh2.library.utils.JsonParamHelper.loadDispensePos
 import com.superh2.library.utils.JsonParamHelper.loadFixativePos
 import com.superh2.library.utils.JsonParamHelper.loadGeneralParams
-import com.superh2.library.utils.JsonParamHelper.loadHumidBlowPos
 import com.superh2.library.utils.JsonParamHelper.loadMethodParamsGroup
 import com.superh2.library.utils.JsonParamHelper.loadOtherPos
 import com.superh2.library.utils.JsonParamHelper.loadScale
@@ -31,8 +30,6 @@ object ParamsHelper
     var paramPosTubes: PosTubes = PosTubes()
     // 枪头位置
     var paramPosTips: PosTips = PosTips()
-    // 湿气吹风位置
-    var paramPosHumidBlow: PosHumidBlow = PosHumidBlow()
     // 喷雾位置
     var paramPosSpray: PosSpray = PosSpray()
     // 滴液位置
@@ -62,8 +59,6 @@ object ParamsHelper
         loadTubesPos()
         // 枪头位置
         loadTipsPos()
-        // 湿气吹风位置
-        loadHumidBlowPos()
         // 喷雾位置
         loadSprayPos()
         // 滴液位置

@@ -18,6 +18,7 @@ import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * @Description 大肯ADP串口通信客户端
@@ -52,6 +53,7 @@ class SerialClientAdp
             serialttyS = SerialPort(File("/dev/${SERIAL_PORT}"), 115200, 0)
             ttySInputStream = serialttyS!!.inputStream
             ttySOutputStream = serialttyS!!.outputStream
+            isConnected = true
         }
         catch (e: java.lang.Exception)
         {
@@ -98,7 +100,7 @@ class SerialClientAdp
     suspend fun executeCommand(cmd: String, data: String = "", timeoutMs: Long = 2000L): String
     {
         return mutex.withLock {
-            withTimeout(timeoutMs) {
+            withTimeout(timeoutMs.milliseconds) {
                 val out = ttySOutputStream ?: throw IOException("串口未打开")
                 val input = ttySInputStream ?: throw IOException("串口未打开")
 
@@ -217,9 +219,9 @@ class SerialClientAdp
     // 业务数据结构体定义
     // ==========================================
     data class VolumeInfo(val usedNl: Long, val unusedNl: Long)
-    data class Thresholds(val suckBlock: Int, val spitBlock: Int, val detect: Int, val suckEmpty: Int)
-    data class MonitorStatus(val suckSpit: Int, val suckEmpty: Int)
-    data class InitSuckBackParams(val firstSuck: Int, val ejectTip: Int, val spitCut: Int)
+    data class Thresholds(val aspirateBlock: Int, val dispenseBlock: Int, val detect: Int, val aspirateEmpty: Int)
+    data class MonitorStatus(val aspirateDispense: Int, val aspirateEmpty: Int)
+    data class InitAspirateBackParams(val firstAspirate: Int, val releaseTip: Int, val dispenseCut: Int)
     data class CalibrationSegment(val targetUl: Int, val compensationNl: Int)
     data class RecipeAndSeq(val recipe: Int, val seq: Int)
 
@@ -232,13 +234,13 @@ class SerialClientAdp
     suspend fun readVersion(): String = executeCommand("A")
 
     // 2. B 设置吐液速度
-    suspend fun setSpitSpeed(speed: Int)
+    suspend fun setDispenseSpeed(speed: Int)
     {
         executeCommand("B", speed.toHex(4))
     }
 
     // 3. b 读取吐液速度
-    suspend fun readSpitSpeed(): Int = executeCommand("b").parseHexInt16()
+    suspend fun readDispenseSpeed(): Int = executeCommand("b").parseHexInt16()
 
     // 4. C 设置电容探测阈值
     suspend fun setCapacitanceThreshold(threshold: Int)
@@ -275,9 +277,9 @@ class SerialClientAdp
     suspend fun queryInitStatus(): Int = executeCommand("g").parseHexInt8()
 
     // 12. H 设置报警/探测阈值
-    suspend fun setThresholds(recipe: Int, seq: Int, suckBlock: Int, spitBlock: Int, detect: Int, suckEmpty: Int)
+    suspend fun setThresholds(recipe: Int, seq: Int, aspirateBlock: Int, dispenseBlock: Int, detect: Int, aspirateEmpty: Int)
     {
-        val data = "${recipe.toHex(4)}${seq.toHex(1)}${suckBlock.toHex(4)}${spitBlock.toHex(4)}${detect.toHex(4)}${suckEmpty.toHex(4)}"
+        val data = "${recipe.toHex(4)}${seq.toHex(1)}${aspirateBlock.toHex(4)}${dispenseBlock.toHex(4)}${detect.toHex(4)}${aspirateEmpty.toHex(4)}"
         executeCommand("H", data)
     }
 
@@ -289,9 +291,9 @@ class SerialClientAdp
     }
 
     // 14. I 气压监测开关
-    suspend fun setPressureMonitor(suckSpitSwitch: Int, suckEmptySwitch: Int)
+    suspend fun setPressureMonitor(aspirateDispenseSwitch: Int, aspirateEmptySwitch: Int)
     {
-        executeCommand("I", "${suckSpitSwitch.toHex(2)}${suckEmptySwitch.toHex(2)}")
+        executeCommand("I", "${aspirateDispenseSwitch.toHex(2)}${aspirateEmptySwitch.toHex(2)}")
     }
 
     // 15. i 读取气压监测开关
@@ -302,32 +304,32 @@ class SerialClientAdp
     }
 
     // 16. J 设置首次回吸等参数
-    suspend fun setInitSuckBack(firstSuck: Int, nc1: Int, nc2: Int, ejectTip: Int, nc3: Int, spitCut: Int)
+    suspend fun setInitAspirateBack(firstAspirate: Int, nc1: Int, nc2: Int, releaseTip: Int, nc3: Int, dispenseCut: Int)
     {
-        executeCommand("J", "${firstSuck.toHex(4)}${nc1.toHex(4)}${nc2.toHex(4)}${ejectTip.toHex(4)}${nc3.toHex(4)}${spitCut.toHex(4)}")
+        executeCommand("J", "${firstAspirate.toHex(4)}${nc1.toHex(4)}${nc2.toHex(4)}${releaseTip.toHex(4)}${nc3.toHex(4)}${dispenseCut.toHex(4)}")
     }
 
     // 17. j 读取首次回吸等参数
-    suspend fun readInitSuckBack(): InitSuckBackParams
+    suspend fun readInitAspirateBack(): InitAspirateBackParams
     {
         val res = executeCommand("j")
-        return InitSuckBackParams(res.substring(0, 4).parseHexInt16(), res.substring(12, 16).parseHexInt16(), res.substring(20, 24).parseHexInt16())
+        return InitAspirateBackParams(res.substring(0, 4).parseHexInt16(), res.substring(12, 16).parseHexInt16(), res.substring(20, 24).parseHexInt16())
     }
 
     // 18. K 设置6段补偿值 (根据手册范例，参数实为32位即8字符的Hex)
-    suspend fun setSixSegmentComp(recipe: Int, seq: Int, isSpit: Boolean, segments: List<CalibrationSegment>)
+    suspend fun setSixSegmentComp(recipe: Int, seq: Int, isDispense: Boolean, segments: List<CalibrationSegment>)
     {
         require(segments.size == 6) { "必须恰好提供 6 段校准数据" }
         val sb = StringBuilder()
-        sb.append(recipe.toHex(4)).append(seq.toHex(1)).append(if (isSpit) "1" else "0")
+        sb.append(recipe.toHex(4)).append(seq.toHex(1)).append(if (isDispense) "1" else "0")
         segments.forEach { sb.append(it.targetUl.toHex(8)).append(it.compensationNl.toHex(8)) }
         executeCommand("K", sb.toString())
     }
 
     // 19. k 读取6段补偿值
-    suspend fun readSixSegmentComp(recipe: Int, seq: Int, isSpit: Boolean): List<CalibrationSegment>
+    suspend fun readSixSegmentComp(recipe: Int, seq: Int, isDispense: Boolean): List<CalibrationSegment>
     {
-        val res = executeCommand("k", "${recipe.toHex(4)}${seq.toHex(1)}${if (isSpit) "1" else "0"}")
+        val res = executeCommand("k", "${recipe.toHex(4)}${seq.toHex(1)}${if (isDispense) "1" else "0"}")
         val list = mutableListOf<CalibrationSegment>()
         var offset = 6
         for (i in 0 until 6)
@@ -339,13 +341,13 @@ class SerialClientAdp
     }
 
     // 20. M 首次回吸空气柱动作
-    suspend fun firstSuckBackAir(): Int = executeCommand("M").parseHexInt8()
+    suspend fun firstAspirateBackAir(): Int = executeCommand("M").parseHexInt8()
 
     // 21. N 气压探测液位动作 (01气压探测 02电容探测 00关闭探测)
     suspend fun detectLevel(mode: Int): Int = executeCommand("N", mode.toHex(2)).parseHexInt8()
 
     // 22. n 吸液动作指令
-    suspend fun suckLiquid(volumeUl: Int): Int = executeCommand("n", volumeUl.toHex(4)).parseHexInt8()
+    suspend fun aspirate(volumeUl: Int): Int = executeCommand("n", volumeUl.toHex(4)).parseHexInt8()
 
     // 23. O 设置配方类 (大写)
     suspend fun setRecipe(recipe: Int, seq: Int)
@@ -361,13 +363,13 @@ class SerialClientAdp
     }
 
     // 25. P 二次回吸空气柱动作
-    suspend fun secondSuckBackAir(): Int = executeCommand("P").parseHexInt8()
+    suspend fun secondAspirateBackAir(): Int = executeCommand("P").parseHexInt8()
 
     // 26. p 吐液动作
-    suspend fun spitLiquid(volumeUl: Int): Int = executeCommand("p", volumeUl.toHex(4)).parseHexInt8()
+    suspend fun dispense(volumeUl: Int): Int = executeCommand("p", volumeUl.toHex(4)).parseHexInt8()
 
     // 27. Q 退TIP动作
-    suspend fun ejectTip()
+    suspend fun releaseTip()
     {
         executeCommand("Q")
     }
@@ -429,26 +431,26 @@ class SerialClientAdp
     // 39. 3 读取切断速度
     suspend fun readCutSpeed(): Int = executeCommand("3").parseHexInt16()
 
-    // 40. 4 设置吸液速度
-    suspend fun setSuckSpeed(speed: Int)
+    // 40. 4 设置吸液速度 speed的单位是 μL/s
+    suspend fun setAspirateSpeed(speed: Int)
     {
         executeCommand("4", speed.toHex(4))
     }
 
     // 41. 5 读取吸液速度
-    suspend fun readSuckSpeed(): Int = executeCommand("5").parseHexInt16()
+    suspend fun readAspirateSpeed(): Int = executeCommand("5").parseHexInt16()
 
     // 42. 6 读取当前气压值 (有符号，范围 -8192~8192)
     suspend fun readCurrentPressure(): Int = executeCommand("6").parseHexInt16Signed()
 
     // 43. + 设置吸吐液比例
-    suspend fun setSuckSpitRatio(ratio: Int)
+    suspend fun setAspirateDispenseRatio(ratio: Int)
     {
         executeCommand("+", ratio.toHex(2))
     }
 
     // 44. - 读取吸吐液比例 (说明书打印缺失，由发送实例 CRC 反推得知)
-    suspend fun readSuckSpitRatio(): Int = executeCommand("-").parseHexInt8()
+    suspend fun readAspirateDispenseRatio(): Int = executeCommand("-").parseHexInt8()
 
     // 45. S 设置电容适应阈值
     suspend fun setCapacitanceAdaptThreshold(threshold: Int)
