@@ -75,6 +75,12 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     private var barcodeFromScannerGunLast = "" // 上次扫描的二维码
     private var alreadyScannedTubeListFromScannerGun: MutableList<Barcode> = mutableListOf()
     private var currentScannedIndexFromScannerGun = 0 // 当前摆放位置
+    // 8组抽拉条，每组8支试管二维码
+    private val tubeStripBarcodes: Array<Array<String?>> = Array(8) { arrayOfNulls(8) }
+    // 当前正在处理的抽拉条索引（0~7）
+    private var currentStripIndex = 0
+    // 当前条内正在处理的试管索引（0~7）
+    private var currentTubeIndexInStrip = 0
 
     // 摄像头扫描二维码（即扫码玻片扫码模块）
     private var alreadyScannedBarcodeFromCamera: MutableList<Barcode> = mutableListOf()
@@ -728,6 +734,182 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         currentScannedIndexFromScannerGun++
     }
 
+    /**
+     * 开始试管抽拉条扫码
+     */
+    private fun startTubeStripScan()
+    {
+        if (!mSerialClientScanner.isConnected)
+        {
+            mHandlerMain.post {
+                Toast.makeText(mActivity, getString(R.string.info_scanner_connect_error), Toast.LENGTH_LONG).show()
+            }
+            return
+        }
+
+        initAllTubeHoleStatus()
+        tubeStripBarcodes.forEach { it.fill(null) }
+        currentStripIndex = 0
+        currentTubeIndexInStrip = 0
+        promptPushStrip(0)
+    }
+
+    /**
+     * 提示用户推入抽拉条到扫码位
+     */
+    private fun promptPushStrip(stripIndex: Int)
+    {
+        mHandlerMain.post {
+            DialogFragment_Info_Prompt.newInstance()
+                    .setDialogContent(
+                            null,
+                            getString(R.string.info_pls_push_strip_to_scan_position, stripIndex + 1),
+                            getString(R.string.confirm),
+                            0,
+                            0,
+                            object : InfoPromptListener
+                            {
+                                override fun clicked()
+                                {
+                                    currentStripIndex = stripIndex
+                                    currentTubeIndexInStrip = 0
+                                    mHandlerOperationTh.post { scanCurrentStrip(stripIndex) }
+                                }
+                            }).show(parentFragmentManager, null)
+        }
+    }
+
+    /**
+     * 扫描当前抽拉条（串行）
+     */
+    private fun scanCurrentStrip(stripIndex: Int)
+    {
+        currentStripIndex = stripIndex
+        currentTubeIndexInStrip = 0
+        scanOneTube(stripIndex, 0)
+    }
+
+    /**
+     * 扫描单支试管（串行回调链）
+     */
+    private fun scanOneTube(stripIndex: Int, tubeIndex: Int)
+    {
+        if (tubeIndex >= 8)
+        {
+            onCurrentStripCompleted(stripIndex)
+            return
+        }
+
+        currentTubeIndexInStrip = tubeIndex
+        val globalIndex = stripIndex * 8 + tubeIndex
+        mHandlerMain.post {
+            refreshTubeHoleStatus(globalIndex, isBlink = true, isFill = false)
+        }
+
+        mSerialClientScanner.decodeStart(object : IScannerResultCallback
+        {
+            override fun success(info: String)
+            {
+                val barcode = info.trim()
+                if (barcode.isNotEmpty())
+                {
+                    tubeStripBarcodes[stripIndex][tubeIndex] = barcode
+                    alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
+                    currentScannedIndexFromScannerGun = globalIndex + 1
+                    mHandlerMain.post {
+                        refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
+                    }
+                }
+                else
+                {
+                    mHandlerMain.post {
+                        refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
+                    }
+                }
+                mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+            }
+
+            override fun timeOut()
+            {
+                mHandlerMain.post {
+                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
+                    DialogFragment_Input_Barcode_Manually.newInstance()
+                            .setDialogContent(
+                                    getString(R.string.info_input_tube_barcode_title, globalIndex + 1),
+                                    globalIndex,
+                                    getString(R.string.confirm),
+                                    getString(R.string.cancel),
+                                    object : RenameListener
+                                    {
+                                        override fun confirm(index: Int, newValue: String)
+                                        {
+                                            val barcode = newValue.trim()
+                                            if (barcode.isNotEmpty())
+                                            {
+                                                tubeStripBarcodes[stripIndex][tubeIndex] = barcode
+                                                alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
+                                                currentScannedIndexFromScannerGun = globalIndex + 1
+                                                mHandlerMain.post {
+                                                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
+                                                }
+                                            }
+                                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+                                        }
+
+                                        override fun cancel()
+                                        {
+                                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+                                        }
+                                    }).show(parentFragmentManager, null)
+                }
+            }
+        })
+    }
+
+    /**
+     * 当前抽拉条完成后处理
+     */
+    private fun onCurrentStripCompleted(stripIndex: Int)
+    {
+        if (stripIndex < 7)
+        {
+            mHandlerMain.post {
+                DialogFragment_Info_Prompt.newInstance()
+                        .setDialogContent(
+                                null,
+                                getString(R.string.info_strip_scan_completed_next, stripIndex + 1, stripIndex + 2),
+                                getString(R.string.confirm),
+                                0,
+                                0,
+                                object : InfoPromptListener
+                                {
+                                    override fun clicked()
+                                    {
+                                        promptPushStrip(stripIndex + 1)
+                                    }
+                                }).show(parentFragmentManager, null)
+            }
+        }
+        else
+        {
+            mHandlerMain.post {
+                DialogFragment_Info_Prompt.newInstance()
+                        .setDialogContent(
+                                null,
+                                getString(R.string.info_all_tube_scan_completed),
+                                getString(R.string.confirm),
+                                0,
+                                0,
+                                object : InfoPromptListener
+                                {
+                                    override fun clicked()
+                                    {
+                                    }
+                                }).show(parentFragmentManager, null)
+            }
+        }
+    }
+
     override fun onClick(v: View)
     {
         when (v.id)
@@ -909,11 +1091,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                 {
                     override fun clickedOk()
                     {
-                        // 初始化玻片、试管状态信息
                         initAllSlideStatus()
-                        initAllTubeHoleStatus()
-
-                        Toast.makeText(mActivity, getString(R.string.info_pls_scan_tube_barcode_first), Toast.LENGTH_SHORT).show()
+                        startTubeStripScan()
                     }
 
                     override fun clickedCancel()
@@ -2677,4 +2856,3 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         }
     }
 }
-
