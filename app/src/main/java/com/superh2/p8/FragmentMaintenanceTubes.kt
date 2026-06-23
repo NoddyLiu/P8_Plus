@@ -10,9 +10,11 @@ import android.widget.GridLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.superh2.library.myEnum.EDirection
+import com.superh2.library.myInterface.IScannerResultCallback
 import com.superh2.library.utils.ConstantsUtils
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramPosTubes
+import com.superh2.p8.MainActivity.Companion.mSerialClientScannerTube
 import com.superh2.p8.databinding.FragmentMaintenanceTubesBinding
 import com.superh2.p8.utils.CmdHelper
 import com.superh2.p8.utils.ViewUtils.fullScreen
@@ -39,16 +41,17 @@ class FragmentMaintenanceTubes : FragmentBase<FragmentMaintenanceTubesBinding>(F
         binding.btnFirstPointY.setOnClickListener(this)
         binding.btnSuckHeight.setOnClickListener(this)
         binding.btnSave.setOnClickListener(this)
+        binding.btnScan.setOnClickListener(this)
 
         // 64个位置按钮
         val layout_btn_group = binding.layoutBtnGroup as GridLayout
         layout_btn_group.removeAllViews()
-        for (row in 0..7)
+        for (col in 0..7)
         {
-            for (col in 0..7)
+            for (row in 0..7)
             {
                 val btn = FButton(mActivity)
-                btn.text = ((col + 1) + row * 8).toString()
+                btn.text  = ((row + 1) + col * 8).toString()
                 btn.buttonColor = ContextCompat.getColor(requireActivity(), R.color.fbutton_default_color)
                 btn.isShadowEnabled = true
                 btn.shadowHeight = 3
@@ -98,8 +101,8 @@ class FragmentMaintenanceTubes : FragmentBase<FragmentMaintenanceTubesBinding>(F
 
                 for (i in 0..63)
                 {
-                    val col = i % 8
-                    val row = i / 8
+                    val col = i / 8
+                    val row = i % 8
                     paramPosTubes.tubes[i].x = firstPosX + col * stepLength * if(ConstantsUtils.HEAD_POS == EDirection.Right) -1 else 1
                     paramPosTubes.tubes[i].y = firstPosY + row * stepLength
                 }
@@ -108,6 +111,28 @@ class FragmentMaintenanceTubes : FragmentBase<FragmentMaintenanceTubesBinding>(F
 
                 if (FileUtils.saveTubesPos(paramPosTubes, true))
                     Toast.makeText(mActivity, getString(R.string.info_save_successfully), Toast.LENGTH_SHORT).show()
+            }
+            R.id.btn_scan ->
+            {
+                if (mSerialClientScannerTube.isConnected)
+                {
+                    mSerialClientScannerTube.decodeStart(object : IScannerResultCallback
+                    {
+                        override fun success(info: String)
+                        {
+                            binding.tvScanResult.text = info
+                        }
+
+                        override fun timeOut()
+                        {
+                            Toast.makeText(mActivity, getString(R.string.info_scanner_scan_error), Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
+                else
+                {
+                    Toast.makeText(mActivity, getString(R.string.info_scanner_connect_error), Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

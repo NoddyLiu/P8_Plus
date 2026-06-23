@@ -1,15 +1,11 @@
 package com.superh2.p8
 
-import android.app.Activity
 import android.content.Context
-import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
-import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import com.suke.widget.SwitchButton
@@ -42,7 +38,8 @@ import com.superh2.p8.MainActivity.Companion.mHandlerMain
 import com.superh2.p8.MainActivity.Companion.mHandlerOperationTh
 import com.superh2.p8.MainActivity.Companion.mHandlerRunTh
 import com.superh2.p8.MainActivity.Companion.mSerialClientHumiture
-import com.superh2.p8.MainActivity.Companion.mSerialClientScanner
+import com.superh2.p8.MainActivity.Companion.mSerialClientScannerSlide
+import com.superh2.p8.MainActivity.Companion.mSerialClientScannerTube
 import com.superh2.p8.MainActivity.Companion.rnHideWaitDialog
 import com.superh2.p8.MainActivity.Companion.rnShowWaitDialog
 import com.superh2.p8.database.DBHelper
@@ -71,10 +68,16 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 {
     private val TAG = "FragmentMain"
 
-    // 扫描枪扫描二维码
+    // 试管架扫描枪扫描二维码
     private var barcodeFromScannerGunLast = "" // 上次扫描的二维码
     private var alreadyScannedTubeListFromScannerGun: MutableList<Barcode> = mutableListOf()
     private var currentScannedIndexFromScannerGun = 0 // 当前摆放位置
+
+    // ── 试管抽拉条扫码 ──────────────────────────────────────────────
+    // 8组 × 8支，存储每支试管的二维码（null表示该位置为空/跳过）
+    private val tubeStripBarcodes: Array<Array<String?>> = Array(8) { arrayOfNulls(8) }
+    // 当前正在扫码的抽拉条索引（0~7）
+    private var currentStripIndex = 0
 
     // 摄像头扫描二维码（即扫码玻片扫码模块）
     private var alreadyScannedBarcodeFromCamera: MutableList<Barcode> = mutableListOf()
@@ -125,104 +128,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
         // 取消所有协程
         DBHelper.coroutineScope.cancel()
-    }
-
-    // 扫描枪二维码扫描回调
-    override fun onBarcodeScanCallback(barcode: String)
-    {
-        // 禁用二维码时，提示
-        if (selectedMethodParams.barcode == EOnOff.Off)
-        {
-            Toast.makeText(mActivity, getString(R.string.info_barcode_reader_not_available_while_off), Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // 程序处于非运行状态，才识别二维码
-        if (!isProcedureRunning && barcodeFromScannerGunLast != barcode) // 避免扫描枪同时扫描多次同一个试管
-        {
-            barcodeFromScannerGunLast = barcode
-            val existBarcode = alreadyScannedTubeListFromScannerGun.find { barcode == it.barcode }
-            if (existBarcode == null)  // 排除重复的二维码
-            {
-                // 发送试管摆放指示灯指令（位置 = index+1）
-                val lightTubePosition = currentScannedIndexFromScannerGun + 1
-                // 闪烁试管孔
-                refreshTubeHoleStatus(currentScannedIndexFromScannerGun, true, false)
-
-                /**
-                 * 试管二维码手动确认（即不需要检测底座）
-                 */
-                if (paramGeneralParams.tubeBaseManualCheck == EOnOff.On)
-                {
-                    // 刷新试管孔状态信息
-                    refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = true)
-                    // 试管已摆放（且更新currentScannedIndexFromScannerGun）
-                    addTubeBarcode(barcode)
-                }
-                /**
-                 * 试管二维码自动确认
-                 */
-                else
-                {
-                    CmdHelper.lightTubeLed(lightTubePosition, object : ICommandResultCallback
-                    {
-                        override fun success()
-                        {
-                            // 弹出框提示用户摆放试管到底座
-                            var rnCheckTubeLed: Runnable? = null
-                            var dialogPromptPutTube = DialogFragment_Info_Prompt.newInstance().setDialogContent(null, getString(R.string.info_pls_put_tube_correct_to_tubes_base), getString(R.string.cancel), 300, 100, object : InfoPromptListener
-                            {
-                                override fun clicked()
-                                {
-                                    if (rnCheckTubeLed != null) mHandlerOperationTh.removeCallbacks(rnCheckTubeLed!!)
-
-                                    // 取消试管摆放提示（用户手动操作）
-                                    mHandlerMain.post {
-                                        refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = false)
-                                        barcodeFromScannerGunLast = ""
-                                    }
-                                }
-                            })
-                            dialogPromptPutTube.show(parentFragmentManager, null)
-
-                            // 不断发送检测试管摆放指令，直到检测有为止
-                            rnCheckTubeLed = Runnable {
-                                Log.i(TAG, "发送检测试管指令......")
-                                CmdHelper.checkTubeLed(lightTubePosition, object : ICommandResultCallback
-                                {
-                                    override fun success()
-                                    {
-                                        Log.i(TAG, "检测成功，有试管！！！")
-                                        mHandlerOperationTh.removeCallbacks(rnCheckTubeLed!!)
-                                        if (dialogPromptPutTube.isShow) mHandlerMain.post {
-                                            // 关闭弹窗
-                                            dialogPromptPutTube.dismissDialog()
-
-                                            // 刷新试管孔状态信息
-                                            refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = true)
-                                            // 试管已摆放（且更新currentScannedIndexFromScannerGun）
-                                            addTubeBarcode(barcode)
-                                        }
-                                    }
-
-                                    override fun fail(ex: Exception)
-                                    {
-                                    }
-                                })
-                                mHandlerOperationTh.postDelayed(rnCheckTubeLed!!, 500)
-                            }
-                            mHandlerOperationTh.postDelayed(rnCheckTubeLed, 10)
-
-                        }
-
-                        override fun fail(ex: Exception)
-                        {
-                        }
-                    })
-                }
-
-            }
-        }
     }
 
     override fun onResume()
@@ -351,6 +256,256 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         mRefreshTimerHumiture.cancel()
     }
 
+    // region 试管扫码
+    /**
+     * 试管架扫描枪二维码扫描回调（旧方法）
+     */
+    override fun onBarcodeScanCallback(barcode: String)
+    {
+        // 禁用二维码时，提示
+        if (selectedMethodParams.barcode == EOnOff.Off)
+        {
+            Toast.makeText(mActivity, getString(R.string.info_barcode_reader_not_available_while_off), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // 程序处于非运行状态，才识别二维码
+        if (!isProcedureRunning && barcodeFromScannerGunLast != barcode) // 避免扫描枪同时扫描多次同一个试管
+        {
+            barcodeFromScannerGunLast = barcode
+            val existBarcode = alreadyScannedTubeListFromScannerGun.find { barcode == it.barcode }
+            if (existBarcode == null)  // 排除重复的二维码
+            {
+                // 发送试管摆放指示灯指令（位置 = index+1）
+                val lightTubePosition = currentScannedIndexFromScannerGun + 1
+                // 闪烁试管孔
+                refreshTubeHoleStatus(currentScannedIndexFromScannerGun, true, false)
+
+                /**
+                 * 试管二维码手动确认（即不需要检测底座）
+                 */
+                if (paramGeneralParams.tubeBaseManualCheck == EOnOff.On)
+                {
+                    // 刷新试管孔状态信息
+                    refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = true)
+                    // 试管已摆放（且更新currentScannedIndexFromScannerGun）
+                    addTubeBarcode(barcode)
+                }
+                /**
+                 * 试管二维码自动确认
+                 */
+                else
+                {
+                    CmdHelper.lightTubeLed(lightTubePosition, object : ICommandResultCallback
+                    {
+                        override fun success()
+                        {
+                            // 弹出框提示用户摆放试管到底座
+                            var rnCheckTubeLed: Runnable? = null
+                            var dialogPromptPutTube = DialogFragment_Info_Prompt.newInstance().setDialogContent(null, getString(R.string.info_pls_put_tube_correct_to_tubes_base), getString(R.string.cancel), 300, 100, object : InfoPromptListener
+                            {
+                                override fun clicked()
+                                {
+                                    if (rnCheckTubeLed != null) mHandlerOperationTh.removeCallbacks(rnCheckTubeLed!!)
+
+                                    // 取消试管摆放提示（用户手动操作）
+                                    mHandlerMain.post {
+                                        refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = false)
+                                        barcodeFromScannerGunLast = ""
+                                    }
+                                }
+                            })
+                            dialogPromptPutTube.show(parentFragmentManager, null)
+
+                            // 不断发送检测试管摆放指令，直到检测有为止
+                            rnCheckTubeLed = Runnable {
+                                Log.i(TAG, "发送检测试管指令......")
+                                CmdHelper.checkTubeLed(lightTubePosition, object : ICommandResultCallback
+                                {
+                                    override fun success()
+                                    {
+                                        Log.i(TAG, "检测成功，有试管！！！")
+                                        mHandlerOperationTh.removeCallbacks(rnCheckTubeLed!!)
+                                        if (dialogPromptPutTube.isShow) mHandlerMain.post {
+                                            // 关闭弹窗
+                                            dialogPromptPutTube.dismissDialog()
+
+                                            // 刷新试管孔状态信息
+                                            refreshTubeHoleStatus(currentScannedIndexFromScannerGun, isBlink = false, isFill = true)
+                                            // 试管已摆放（且更新currentScannedIndexFromScannerGun）
+                                            addTubeBarcode(barcode)
+                                        }
+                                    }
+
+                                    override fun fail(ex: Exception)
+                                    {
+                                    }
+                                })
+                                mHandlerOperationTh.postDelayed(rnCheckTubeLed!!, 500)
+                            }
+                            mHandlerOperationTh.postDelayed(rnCheckTubeLed, 10)
+
+                        }
+
+                        override fun fail(ex: Exception)
+                        {
+                        }
+                    })
+                }
+
+            }
+        }
+    }
+
+    /**
+     * 开始抽拉条扫码流程入口
+     * 点击"扫试管二维码"按钮后调用
+     */
+    private fun startTubeStripScan()
+    {
+        if (!mSerialClientScannerTube.isConnected)
+        {
+            Toast.makeText(mActivity, getString(R.string.info_scanner_connect_error), Toast.LENGTH_LONG).show()
+            return
+        }
+
+        // 重置状态
+        initAllTubeHoleStatus()
+        for (strip in tubeStripBarcodes) strip.fill(null)
+        currentStripIndex = 0
+
+        // 提示推入第1组
+        promptPushStrip(0)
+    }
+
+    /**
+     * 提示用户推入第 stripIndex 组抽拉条
+     * 必须在主线程调用（因为要 show dialog）
+     */
+    private fun promptPushStrip(stripIndex: Int)
+    {
+        val msg = getString(R.string.info_pls_push_strip_to_scan_position, stripIndex + 1)
+        mHandlerMain.post {
+            DialogFragment_Info_Prompt.newInstance().setDialogContent(null, msg, getString(R.string.confirm), 0, 0, object : InfoPromptListener
+            {
+                override fun clicked()
+                {
+                    // 用户确认后，在操作线程开始扫该条
+                    mHandlerOperationTh.post { scanCurrentStrip(stripIndex) }
+                }
+            }).show(parentFragmentManager, null)
+        }
+    }
+
+    /**
+     * 顺序扫描第 stripIndex 条内的 8 支试管
+     * 在操作线程中调用，通过回调链串行驱动
+     */
+    private fun scanCurrentStrip(stripIndex: Int)
+    {
+        scanOneTube(stripIndex, 0)
+    }
+
+    /**
+     * 扫描第 stripIndex 条内第 tubeIndex 支试管
+     * 串行回调链：扫完/跳过后自动调用 tubeIndex+1，直到本条结束
+     */
+    private fun scanOneTube(stripIndex: Int, tubeIndex: Int)
+    {
+        // 本条8支全部扫完
+        if (tubeIndex >= 8)
+        {
+            onStripScanCompleted(stripIndex)
+            return
+        }
+
+        val globalIndex = stripIndex * 8 + tubeIndex
+
+        // 点亮该孔（闪烁提示）
+        mHandlerMain.post { refreshTubeHoleStatus(globalIndex, isBlink = true, isFill = false) }
+
+        // 触发扫码（decodeStart 内部阻塞等待，必须在非主线程调用）
+        mSerialClientScannerTube.decodeStart(object : IScannerResultCallback
+        {
+            override fun success(info: String)
+            {
+                val barcode = info.trim()
+                tubeStripBarcodes[stripIndex][tubeIndex] = barcode
+
+                // 记录到列表（与原有runProcedure兼容）
+                alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
+
+                // 刷新UI：填充该孔
+                mHandlerMain.post { refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true) }
+
+                // 继续下一支
+                mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+            }
+
+            override fun timeOut()
+            {
+                // 超时：熄灭该孔，弹出手动输入框
+                mHandlerMain.post {
+                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
+
+                    val title = getString(R.string.info_input_tube_barcode_title, globalIndex + 1)
+                    DialogFragment_Input_Barcode_Manually.newInstance().setDialogContent(title, globalIndex, getString(R.string.confirm), getString(R.string.cancel), object : RenameListener
+                    {
+                        override fun confirm(index: Int, name: String)
+                        {
+                            val input = name.trim()
+                            if (input.isNotEmpty())
+                            {
+                                tubeStripBarcodes[stripIndex][tubeIndex] = input
+                                alreadyScannedTubeListFromScannerGun.add(Barcode(input, globalIndex))
+                                mHandlerMain.post {
+                                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
+                                }
+                            }
+                            // 空输入 = 跳过，继续下一支
+                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+                        }
+
+                        override fun cancel()
+                        {
+                            // 用户取消 = 跳过该孔
+                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
+                        }
+                    }).show(parentFragmentManager, null)
+                }
+            }
+        })
+    }
+
+    /**
+     * 一条扫码完成后的处理
+     */
+    private fun onStripScanCompleted(stripIndex: Int)
+    {
+        if (stripIndex < 7)
+        {
+            // 提示推回并推入下一组
+            val msg = getString(R.string.info_strip_scan_completed_next, stripIndex + 1, stripIndex + 2)
+            mHandlerMain.post {
+                DialogFragment_Info_Prompt.newInstance().setDialogContent(null, msg, getString(R.string.confirm), 0, 0, object : InfoPromptListener
+                {
+                    override fun clicked()
+                    {
+                        promptPushStrip(stripIndex + 1)
+                    }
+                }).show(parentFragmentManager, null)
+            }
+        }
+        else
+        {
+            // 全部8组扫完
+            mHandlerMain.post {
+                Toast.makeText(mActivity, getString(R.string.info_all_tube_scan_completed), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    // endregion
+
     /**
      * 刷新温湿度
      */
@@ -376,8 +531,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         {
             var tube = CircleView(requireActivity())
             tube.text = (i + 1).toString()
-            val row = i / 8
-            val col = i % 8
+            val col = i / 8
+            val row = i % 8
             binding.gridLayoutTube.addView(tube, GridLayout.LayoutParams(GridLayout.spec(row, GridLayout.CENTER), GridLayout.spec(col, GridLayout.CENTER)))
 
             listTubeHole64.add(tube)
@@ -911,9 +1066,12 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                     {
                         // 初始化玻片、试管状态信息
                         initAllSlideStatus()
-                        initAllTubeHoleStatus()
 
-                        Toast.makeText(mActivity, getString(R.string.info_pls_scan_tube_barcode_first), Toast.LENGTH_SHORT).show()
+                        // 旧方法
+//                        initAllTubeHoleStatus()
+//                        Toast.makeText(mActivity, getString(R.string.info_pls_scan_tube_barcode_first), Toast.LENGTH_SHORT).show()
+                        // 新方法：抽拉条扫码
+                        startTubeStripScan()
                     }
 
                     override fun clickedCancel()
@@ -1962,7 +2120,7 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         // 同一位置识别1次
         for (i in 0 until 1)
         {
-            mSerialClientScanner.decodeStart(object : IScannerResultCallback
+            mSerialClientScannerSlide.decodeStart(object : IScannerResultCallback
             {
                 override fun success(info: String)
                 {

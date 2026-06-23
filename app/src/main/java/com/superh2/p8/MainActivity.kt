@@ -148,9 +148,16 @@ class MainActivity : AppCompatActivity()
             waitDialog!!.getButton(AlertDialog.BUTTON_POSITIVE).visibility = View.INVISIBLE
         }
 
-        // 串口通信
+        /**
+         * 串口通信
+         */
+        // 温湿度模块
         val mSerialClientHumiture = SerialClientHumiture()
-        val mSerialClientScanner = SerialClientScanner()
+        // 玻片扫码模块
+        val mSerialClientScannerSlide = SerialClientScanner()
+        // 试管扫码模块
+        val mSerialClientScannerTube = SerialClientScanner()
+        // ADP模块
         val mSerialClientAdp = SerialClientAdp()
 
         // 是否首次进入主界面
@@ -173,8 +180,10 @@ class MainActivity : AppCompatActivity()
 
             // 打开温湿度串口
             mSerialClientHumiture.openSerial()
-            // 打开扫码模块串口
-            mSerialClientScanner.openSerial()
+            // 打开玻片扫码模块串口
+            mSerialClientScannerSlide.openSerial(true)
+            // 打开试管扫码模块串口
+            mSerialClientScannerTube.openSerial(false)
             // 打开 ADP 串口
             mSerialClientAdp.openSerial()
         }, 1500)
@@ -215,8 +224,11 @@ class MainActivity : AppCompatActivity()
 
         if (mSerialClientHumiture.isConnected) mSerialClientHumiture.closeSerial()
 
-        // 扫码模块
-        if (mSerialClientScanner.isConnected) mSerialClientScanner.closeSerial()
+        // 玻片扫码模块
+        if (mSerialClientScannerSlide.isConnected) mSerialClientScannerSlide.closeSerial()
+
+        // 试管扫码模块
+        if (mSerialClientScannerTube.isConnected) mSerialClientScannerTube.closeSerial()
 
         // 大肯ADP
         if (mSerialClientAdp.isConnected) mSerialClientAdp.closeSerial()

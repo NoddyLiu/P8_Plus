@@ -174,6 +174,38 @@
                     android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+            <info.hoang8f.widget.FButton
+                    style="@style/ButtonStyle"
+                    android:id="@+id/btn_scan"
+                    android:text="@string/scan"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/result"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/separator_layout_margin_left_right"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text=":"/>
+
+            <TextView
+                    android:id="@+id/tv_scan_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text=""/>
+        </LinearLayout>
+
         <!--点位置按钮-->
         <LinearLayout
                 android:layout_width="wrap_content"

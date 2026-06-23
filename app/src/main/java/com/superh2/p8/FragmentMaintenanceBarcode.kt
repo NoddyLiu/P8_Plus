@@ -1,10 +1,7 @@
 package com.superh2.p8
 
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Toast
@@ -14,7 +11,7 @@ import com.superh2.library.myInterface.IScannerResultCallback
 import com.superh2.library.utils.ConstantsUtils
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper.paramPosBarcode
-import com.superh2.p8.MainActivity.Companion.mSerialClientScanner
+import com.superh2.p8.MainActivity.Companion.mSerialClientScannerSlide
 import com.superh2.p8.databinding.FragmentMaintenanceBarcodeBinding
 import com.superh2.p8.utils.CmdHelper
 import com.superh2.p8.utils.ViewUtils.fullScreen
@@ -134,9 +131,9 @@ class FragmentMaintenanceBarcode : FragmentBase<FragmentMaintenanceBarcodeBindin
 
             R.id.btn_scan ->
             {
-                if (mSerialClientScanner.isConnected)
+                if (mSerialClientScannerSlide.isConnected)
                 {
-                    mSerialClientScanner.decodeStart(object : IScannerResultCallback
+                    mSerialClientScannerSlide.decodeStart(object : IScannerResultCallback
                     {
                         override fun success(info: String)
                         {

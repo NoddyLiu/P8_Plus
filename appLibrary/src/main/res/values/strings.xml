@@ -38,7 +38,7 @@
     <string name="axis_scale_value_with_info">Axis Scale Value(1 mm = x Steps) or (1 ul = x Steps)</string>
     <string name="tubes_pos">Tubes Position</string>
     <string name="tips_pos">Tips Position</string>
-    <string name="barcode_scan_pos">Barcode Scan Position</string>
+    <string name="barcode_scan_pos">Slide Scan Position</string>
     <string name="spray_pos">Spray Position</string>
     <string name="dispense_pos">Dispense Position</string>
     <string name="fixative_pos">Fixative Position</string>
@@ -303,4 +303,8 @@
     <string name="info_input_barcode_new">Input New QR code</string>
     <string name="info_new_code_cannot_empty">New QR code Cannot Be Empty</string>
     <string name="info_click_ok_2_recovery">Please select recovery Pos, and then Run continue</string>
+    <string name="info_pls_push_strip_to_scan_position">Please push strip %1$d into scan position, then tap confirm</string>
+    <string name="info_strip_scan_completed_next">Strip %1$d scan completed. Please push it back and then push strip %2$d in</string>
+    <string name="info_all_tube_scan_completed">All tube scans completed!</string>
+    <string name="info_input_tube_barcode_title">Tube %1$d</string>
 </resources>

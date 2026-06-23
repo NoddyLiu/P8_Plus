@@ -21,7 +21,9 @@ class SerialClientScanner
 {
     private val TAG = "SerialClientScanner"
 
-    private val SERIAL_PORT = "ttyS3"
+    // 串口名称
+    private val SERIAL_PORT_SCANNER_SLIDE = "ttyS3"
+    private val SERIAL_PORT_SCANNER_TUBE = "ttyS1"
 
     private var serialttyS: SerialPort? = null
     private var ttySInputStream: InputStream? = null
@@ -47,12 +49,14 @@ class SerialClientScanner
 
     /**
      * 打开串口
+     * @param isSlideScanner 是否是载玻片扫码模块，否为试管扫码模块
      */
-    fun openSerial()
+    fun openSerial(isSlideScanner: Boolean)
     {
         try
         {
-            serialttyS = SerialPort(File("/dev/${SERIAL_PORT}"), 9600, 0)
+            val serialPort = if (isSlideScanner) SERIAL_PORT_SCANNER_SLIDE else SERIAL_PORT_SCANNER_TUBE
+            serialttyS = SerialPort(File("/dev/${serialPort}"), 9600, 0)
             ttySInputStream = serialttyS!!.inputStream
             ttySOutputStream = serialttyS!!.outputStream
 
