@@ -76,7 +76,7 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     private var alreadyScannedTubeListFromScannerGun: MutableList<Barcode> = mutableListOf()
     private var currentScannedIndexFromScannerGun = 0 // 当前摆放位置
     // 8组抽拉条，每组8支试管二维码
-    private val tubeStripBarcodes: Array<Array<String?>> = Array(8) { arrayOfNulls(8) }
+    private val tubeStripBarcodes: Array<Array<String?>> = Array(TUBE_STRIP_COUNT) { arrayOfNulls(TUBE_PER_STRIP_COUNT) }
     // 当前正在处理的抽拉条索引（0~7）
     private var currentStripIndex = 0
     // 当前条内正在处理的试管索引（0~7）
@@ -107,6 +107,9 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
     companion object
     {
+        private const val TUBE_STRIP_COUNT = 8
+        private const val TUBE_PER_STRIP_COUNT = 8
+
         fun newInstance() = FragmentMain()
 
         // 当前选择参数组
@@ -771,8 +774,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                             {
                                 override fun clicked()
                                 {
-                                    currentStripIndex = stripIndex
-                                    currentTubeIndexInStrip = 0
                                     mHandlerOperationTh.post { scanCurrentStrip(stripIndex) }
                                 }
                             }).show(parentFragmentManager, null)
@@ -794,14 +795,14 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
      */
     private fun scanOneTube(stripIndex: Int, tubeIndex: Int)
     {
-        if (tubeIndex >= 8)
+        if (tubeIndex >= TUBE_PER_STRIP_COUNT)
         {
             onCurrentStripCompleted(stripIndex)
             return
         }
 
         currentTubeIndexInStrip = tubeIndex
-        val globalIndex = stripIndex * 8 + tubeIndex
+        val globalIndex = stripIndex * TUBE_PER_STRIP_COUNT + tubeIndex
         mHandlerMain.post {
             refreshTubeHoleStatus(globalIndex, isBlink = true, isFill = false)
         }
@@ -811,57 +812,23 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
             override fun success(info: String)
             {
                 val barcode = info.trim()
-                if (barcode.isNotEmpty())
-                {
-                    tubeStripBarcodes[stripIndex][tubeIndex] = barcode
-                    alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
-                    currentScannedIndexFromScannerGun = globalIndex + 1
-                    mHandlerMain.post {
-                        refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
+                mHandlerOperationTh.post {
+                    if (barcode.isNotEmpty())
+                    {
+                        recordTubeBarcode(stripIndex, tubeIndex, globalIndex, barcode)
+                        currentScannedIndexFromScannerGun = globalIndex + 1
+                        scanOneTube(stripIndex, tubeIndex + 1)
+                    }
+                    else
+                    {
+                        showManualTubeInputDialog(stripIndex, tubeIndex, globalIndex)
                     }
                 }
-                else
-                {
-                    mHandlerMain.post {
-                        refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
-                    }
-                }
-                mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
             }
 
             override fun timeOut()
             {
-                mHandlerMain.post {
-                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
-                    DialogFragment_Input_Barcode_Manually.newInstance()
-                            .setDialogContent(
-                                    getString(R.string.info_input_tube_barcode_title, globalIndex + 1),
-                                    globalIndex,
-                                    getString(R.string.confirm),
-                                    getString(R.string.cancel),
-                                    object : RenameListener
-                                    {
-                                        override fun confirm(index: Int, newValue: String)
-                                        {
-                                            val barcode = newValue.trim()
-                                            if (barcode.isNotEmpty())
-                                            {
-                                                tubeStripBarcodes[stripIndex][tubeIndex] = barcode
-                                                alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
-                                                currentScannedIndexFromScannerGun = globalIndex + 1
-                                                mHandlerMain.post {
-                                                    refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
-                                                }
-                                            }
-                                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
-                                        }
-
-                                        override fun cancel()
-                                        {
-                                            mHandlerOperationTh.post { scanOneTube(stripIndex, tubeIndex + 1) }
-                                        }
-                                    }).show(parentFragmentManager, null)
-                }
+                showManualTubeInputDialog(stripIndex, tubeIndex, globalIndex)
             }
         })
     }
@@ -871,7 +838,7 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
      */
     private fun onCurrentStripCompleted(stripIndex: Int)
     {
-        if (stripIndex < 7)
+        if (stripIndex < TUBE_STRIP_COUNT - 1)
         {
             mHandlerMain.post {
                 DialogFragment_Info_Prompt.newInstance()
@@ -907,6 +874,51 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                                     }
                                 }).show(parentFragmentManager, null)
             }
+        }
+    }
+
+    private fun recordTubeBarcode(stripIndex: Int, tubeIndex: Int, globalIndex: Int, barcode: String)
+    {
+        tubeStripBarcodes[stripIndex][tubeIndex] = barcode
+        alreadyScannedTubeListFromScannerGun.add(Barcode(barcode, globalIndex))
+        mHandlerMain.post {
+            refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = true)
+        }
+    }
+
+    private fun showManualTubeInputDialog(stripIndex: Int, tubeIndex: Int, globalIndex: Int)
+    {
+        mHandlerMain.post {
+            refreshTubeHoleStatus(globalIndex, isBlink = false, isFill = false)
+            DialogFragment_Input_Barcode_Manually.newInstance()
+                    .setDialogContent(
+                            getString(R.string.info_input_tube_barcode_title, globalIndex + 1),
+                            globalIndex,
+                            getString(R.string.confirm),
+                            getString(R.string.cancel),
+                            object : RenameListener
+                            {
+                                override fun confirm(index: Int, newValue: String)
+                                {
+                                    val barcode = newValue.trim()
+                                    mHandlerOperationTh.post {
+                                        if (barcode.isNotEmpty())
+                                        {
+                                            recordTubeBarcode(stripIndex, tubeIndex, globalIndex, barcode)
+                                        }
+                                        currentScannedIndexFromScannerGun = globalIndex + 1
+                                        scanOneTube(stripIndex, tubeIndex + 1)
+                                    }
+                                }
+
+                                override fun cancel()
+                                {
+                                    mHandlerOperationTh.post {
+                                        currentScannedIndexFromScannerGun = globalIndex + 1
+                                        scanOneTube(stripIndex, tubeIndex + 1)
+                                    }
+                                }
+                            }).show(parentFragmentManager, null)
         }
     }
 
