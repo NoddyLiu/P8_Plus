@@ -8,6 +8,7 @@ import com.superh2.library.myEntityJson.*
 import com.superh2.library.utils.ParamsHelper.paramGeneralParams
 import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
 import com.superh2.library.utils.ParamsHelper.paramPosBarcode
+import com.superh2.library.utils.ParamsHelper.paramPosCollect
 import com.superh2.library.utils.ParamsHelper.paramPosDispense
 import com.superh2.library.utils.ParamsHelper.paramPosFixative
 import com.superh2.library.utils.ParamsHelper.paramPosOther
@@ -240,6 +241,24 @@ object JsonParamHelper
         }
         catch (ex: Exception)
         {
+        }
+    }
+
+    /**
+     * 收集架位置
+     */
+    fun loadCollectPos()
+    {
+        try
+        {
+            val json = FileUtils.getJsonFromSD(ConstantsUtils.FOLDER_MAINTENANCE, ConstantsUtils.FILE_COLLECT_POS)
+            if (json != null && json != "") paramPosCollect = JSON.parseObject<PosCollect>(json, object : TypeReference<PosCollect>()
+            {}.type)
+            else FileUtils.saveCollectPos(paramPosCollect, false)
+        }
+        catch (ex: Exception)
+        {
+            ex.printStackTrace()
         }
     }
 

@@ -24,8 +24,10 @@ import com.superh2.library.myView.SlideView
 import com.superh2.library.utils.*
 import com.superh2.library.utils.ParamsHelper.paramGeneralParams
 import com.superh2.library.utils.ParamsHelper.paramMethodParamsGroup
+import com.superh2.library.utils.ParamsHelper.paramPosCollect
 import com.superh2.library.utils.ParamsHelper.paramPosDispense
 import com.superh2.library.utils.ParamsHelper.paramPosFixative
+import com.superh2.library.utils.ParamsHelper.paramPosSlide
 import com.superh2.library.utils.ParamsHelper.paramPosSpray
 import com.superh2.library.utils.ParamsHelper.paramPosTips
 import com.superh2.p8.MainActivity.Companion.isFirstIn
@@ -1414,108 +1416,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
             }
         }
     }
-//    private val rnDoWork = Runnable {
-//        try
-//        {
-//            isManualPause = false
-//            isManualStop = false
-//            isProcedureRunning = true
-//
-//            异常中断不用插入新状态
-//            // 数据库插入新状态（新状态默认isInterrupted为false，等程序完成所有扫码动作才置true，因为默认扫码动作不在异常中断恢复范围内）
-//            DBHelper.insertRunState(selectedMethodParams.barcode == EOnOff.On, false)
-//
-//            // 默认模式
-//            if (barcodeRunMode == EBarcodeRunMode.Default)
-//            {
-//                // 运行前先到退枪头位置执行一次退枪头，预防移液头已经插了枪头
-//                actionReleaseTipNoQRCodeChannel()
-//
-//                CmdHelper.initMotor()
-//
-//                // 是否扫二维码
-//                if (selectedMethodParams.barcode == EOnOff.On)
-//                {
-//                    doWorkWithBarcodeScan()
-//                }
-//                else
-//                {
-//                    doWorkWithoutBarcode()
-//                }
-//            }
-//            // 二维码修正模式
-//            else if (barcodeRunMode == EBarcodeRunMode.Correct)
-//            {
-//                doWorkWithBarcodeScan()
-//            }
-//
-//            CmdHelper.initMotor()
-//
-//            mHandlerMain.post(rnHideWaitDialog)
-//
-//            //  清空扫描枪二维码
-//            alreadyScannedTubeListFromScannerGun.clear()
-//
-//            isProcedureRunning = false
-//
-//            // 程序正常或者手动结束，标记程序为正常完成
-//            DBHelper.markRunCompleted(false)
-//        }
-//        // 二维码异常
-//        catch (e: BarcodeException)
-//        {
-//            LogHelper.error("抛出了二维码异常")
-//            // 让程序完全停止
-//            sleep(1000)
-//            // 复位手动停止属性
-//            isManualPause = false
-//            isManualStop = false
-//            CmdHelper.initMotor()
-//
-//            // 弹出纠正二维码输入提示
-//            DialogFragment_Info_Prompt.newInstance().setDialogContent(null, getString(R.string.info_click_red_slide_and_correct_qr_code), getString(R.string.ok), 0, 0, object : InfoPromptListener
-//            {
-//                override fun clicked()
-//                {
-//                    barcodeRunMode = EBarcodeRunMode.Correct
-//                }
-//            }).show(fragmentManager, null)
-//        }
-//        // 中断异常
-//        catch (e: InterruptedException)
-//        {
-//            e.printStackTrace()
-//
-//            // 程序正常或者手动结束，标记程序为正常完成
-//            DBHelper.markRunCompleted(false)
-//        }
-//        // 超时异常
-//        catch (e: TimeOutException)
-//        {
-//            e.printStackTrace()
-//            showWarningDialogAutoPause(getString(R.string.info_action_failed_click_stop_to_main_ui), false)
-//
-//            // 程序正常或者手动结束，标记程序为正常完成
-//            DBHelper.markRunCompleted(false)
-//        }
-//        // 初始化异常
-//        catch (e: InitException)
-//        {
-//            e.printStackTrace()
-//            showWarningDialogAutoPause(getString(R.string.info_init_failed_click_stop_to_main_ui), false)
-//
-//            // 程序正常或者手动结束，标记程序为正常完成
-//            DBHelper.markRunCompleted(false)
-//        }
-//        // 手动停止
-//        catch (e: ManualStopException)
-//        {
-//            e.printStackTrace()
-//
-//            // 程序正常或者手动结束，标记程序为正常完成
-//            DBHelper.markRunCompleted(false)
-//        }
-//    }
 
     /**
      * 开始工作前预备动作
@@ -1541,6 +1441,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     {
         // 是否继续运行程序
         var isContinueRun = true
+        // 当前正在操作的是第几个托盘（0代表架1）
+        var currentTrayIndex = 0
 
         while (isContinueRun)
         {
@@ -1795,6 +1697,9 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                         // 如果做完64块玻片，就提示是否更换玻片底板继续执行
                         if (slideTick == 63)
                         {
+                            // 收集满盘玻片
+                            actionCollectTray(currentTrayIndex)
+
                             // 提示是否更换玻片底板
                             mHandlerMain.post {
                                 DialogFragment_Warn_Prompt.newInstance().setDialogContent(null, getString(R.string.question_do_you_need_to_replace_slides_base), getString(R.string.yes), getString(R.string.no), true, true, object : WarnPromptListener
@@ -1809,7 +1714,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                                             {
                                                 // 初始化玻片状态信息
                                                 initAllSlideStatus()
-
+                                                // 换板后，切换到收集架2
+                                                currentTrayIndex++
                                                 ViewUtils.continueRunningDialog()
                                             }
                                         }).show(parentFragmentManager, null)
@@ -1832,9 +1738,13 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                         else
                         {
                             // 不足64个玻片且为最后一个玻片
-                            if (slideTick == (alreadyScannedBarcodeFromCamera.size - 1)) isContinueRun = false
+                            if (slideTick == (alreadyScannedBarcodeFromCamera.size - 1))
+                            {
+                                // 收集不满盘玻片
+                                actionCollectTray(currentTrayIndex)
+                                isContinueRun = false
+                            }
                         }
-
                         slideTick++
                     }
                 }
@@ -1859,6 +1769,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     {
         // 是否继续运行程序
         var isContinueRun = true
+        // 当前正在操作的是第几个托盘（0代表架1）
+        var currentTrayIndex = 0
 
         //  默认每个玻片底板有64块玻片
         val tubesCount = selectedMethodParams.tubeQuantity
@@ -1960,6 +1872,15 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                     currentSlideIndex++
                     currentSlideTotalIndex++
 
+                    // ===================================================
+                    // 【关键触发点】：当这一盘做满64片，立刻收集
+                    // ===================================================
+                    if (currentSlideIndex == 64)
+                    {
+                        // 收集满盘玻片
+                        actionCollectTray(currentTrayIndex)
+                    }
+
                     // 如果玻片不足以做完本试管，就提示是否更换玻片底板继续执行
                     if (currentSlideIndex > 63 && currentSlideTotalIndex < slideCountTotal)
                     {
@@ -1980,6 +1901,8 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
                                             // 初始化玻片状态信息
                                             initAllSlideStatus()
+                                            // 换板后，切换到收集架2
+                                            currentTrayIndex++
                                         }
                                     }).show(parentFragmentManager, null)
                                 }
@@ -1998,6 +1921,17 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                         CmdHelper.manualPause()
 
                         if (!isContinueRun) return
+                    }
+                    else if (currentSlideTotalIndex == slideCountTotal)
+                    {
+                        // ===================================================
+                        // 【关键触发点】：程序结束时，如果最后一盘不满64片，也要收集
+                        // ===================================================
+                        if (currentSlideIndex > 0 && currentSlideIndex <= 63)
+                        {
+                            // 收集最后的不满盘玻片
+                            actionCollectTray(currentTrayIndex)
+                        }
                     }
                 }
             }
@@ -2832,6 +2766,31 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
                 if (needRelease) reExecuteAction()
             }
+        }
+    }
+
+    /**
+     * 收集玻片动作（1个托盘对应1个收集架，共64片）
+     * @param trayIndex 当前是第几个托盘（0:收集架1，1:收集架2）
+     */
+    private fun actionCollectTray(trayIndex: Int)
+    {
+        // 如果不为 true，不执行收集逻辑
+        if (!paramPosCollect.isAutoCollect) return
+        // 安全起见，最多只支持两个收集架
+        if (trayIndex > 1) return
+
+        for (i in 0..63)
+        {
+            // 只有已成功完成滴片的玻片才会被收集，没有玻片或跳过的空着
+            if (listSlide64[i].slideStatus != ESlideStatus.Finished) continue
+
+            CmdHelper.manualPause()
+
+            // 吸玻片
+            CmdHelper.collectSuck(i, false)
+            // 放玻片
+            CmdHelper.collectRelease(trayIndex, i, false)
         }
     }
 }

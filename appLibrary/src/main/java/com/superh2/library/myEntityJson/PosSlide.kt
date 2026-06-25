@@ -1,7 +1,7 @@
 package com.superh2.library.myEntityJson
 
 /**
- *@Description 吸玻片位置
+ *@Description 吸玻片位置(未滴片)
  *@Author liu_ja
  *@Time 2021/08/06 14:34
  */

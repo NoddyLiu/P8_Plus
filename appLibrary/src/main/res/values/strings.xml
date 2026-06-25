@@ -43,6 +43,7 @@
     <string name="dispense_pos">Dispense Position</string>
     <string name="fixative_pos">Fixative Position</string>
     <string name="slide_pos">Slide Position</string>
+    <string name="collect_pos">Collect Position</string>
     <string name="x">X</string>
     <string name="y">Y</string>
     <string name="z">Z</string>
@@ -53,10 +54,12 @@
     <string name="first_point">First Point</string>
     <string name="first_point_x">First Point X</string>
     <string name="first_point_y">First Point Y</string>
+    <string name="first_point_z">First Point Z</string>
     <string name="point_y_step">Point Y Step</string>
     <string name="step_length">Step Length</string>
     <string name="step_length_x">Step Length X</string>
     <string name="step_length_y">Step Length Y</string>
+    <string name="step_length_z">Step Length Z</string>
     <string name="suck_height">Suck Height</string>
     <string name="mm">mm</string>
     <string name="to_this_pos">To This Position</string>
@@ -238,6 +241,11 @@
     <string name="tip_check_pos">Tip Check Position</string>
     <string name="tip_take_check">Tip Take Check</string>
     <string name="tip_release_check">Tip Release Check</string>
+    <string name="auto_collect">Auto Collect</string>
+    <string name="rack_1">Rack1 (First piece at bottom left)</string>
+    <string name="rack_2">Rack2 (First piece at bottom left)</string>
+    <string name="insert_y_dist">Insert Y Distance</string>
+    <string name="place_z_dist">Place Z Distance</string>
 
     <string name="prompt">Prompt</string>
     <!--问题-->

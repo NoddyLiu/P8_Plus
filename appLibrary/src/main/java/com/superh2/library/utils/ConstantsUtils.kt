@@ -34,6 +34,7 @@ object ConstantsUtils
     val FILE_BARCODE_POS = "barcode_pos.json" // 二维码位置
     val FILE_FIXATIVE_POS = "fixative_pos.json" // 固定液位置
     val FILE_SLIDE_POS = "slide_pos.json" // 玻片位置
+    val FILE_COLLECT_POS = "collect_pos.json" // 收集架位置
     val FILE_OTHER_POS = "other_pos.json" // 其他位置
     val FILE_GENERAL_PARAMETERS = "general_parameters.json" // 通用参数设置
 

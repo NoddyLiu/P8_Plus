@@ -253,6 +253,16 @@ object FileUtils
     }
 
     /**
+     * 保存收集架位置
+     * @param jsonObj json实体类
+     * @param isDeleteOld 是否删除旧版本
+     */
+    fun saveCollectPos(jsonObj: PosCollect, isDeleteOld: Boolean): Boolean
+    {
+        return FileUtils.saveJsonToSD(JSON.toJSONString(jsonObj, true), ConstantsUtils.FOLDER_MAINTENANCE, ConstantsUtils.FILE_COLLECT_POS, isDeleteOld)
+    }
+
+    /**
      * 保存其他位置
      * @param jsonObj json实体类
      * @param isDeleteOld 是否删除旧版本

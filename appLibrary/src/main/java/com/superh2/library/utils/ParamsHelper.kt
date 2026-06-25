@@ -2,6 +2,7 @@ package com.superh2.library.utils
 
 import com.superh2.library.myEntityJson.*
 import com.superh2.library.utils.JsonParamHelper.loadBarcodePos
+import com.superh2.library.utils.JsonParamHelper.loadCollectPos
 import com.superh2.library.utils.JsonParamHelper.loadDispensePos
 import com.superh2.library.utils.JsonParamHelper.loadFixativePos
 import com.superh2.library.utils.JsonParamHelper.loadGeneralParams
@@ -40,6 +41,8 @@ object ParamsHelper
     var paramPosFixative: PosFixative = PosFixative()
     // 玻片位置
     var paramPosSlide:PosSlide = PosSlide()
+    // 收集架位置
+    var paramPosCollect:PosCollect = PosCollect()
     // 其他位置
     var paramPosOther:PosOther = PosOther()
     // 工程师参数设置
@@ -69,6 +72,8 @@ object ParamsHelper
         loadFixativePos()
         // 玻片位置
         loadSlidePos()
+        // 收集架位置
+        loadCollectPos()
         // 其他位置
         loadOtherPos()
         // 通用参数

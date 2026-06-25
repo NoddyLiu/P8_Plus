@@ -60,6 +60,7 @@ class FragmentMaintenance : FragmentBase<FragmentMaintenanceBinding>(FragmentMai
         binding.btnDispensePos.setOnClickListener(this)
         binding.btnFixativePos.setOnClickListener(this)
         binding.btnSlidePos.setOnClickListener(this)
+        binding.btnCollectPos.setOnClickListener(this)
         binding.btnGeneralParams.setOnClickListener(this)
 
         binding.btnLightOn.setOnClickListener(this)
@@ -111,6 +112,7 @@ class FragmentMaintenance : FragmentBase<FragmentMaintenanceBinding>(FragmentMai
             R.id.btn_dispense_pos -> replaceFragment(FragmentMaintenanceDispense.newInstance(), "FragmentMaintenanceDispense")
             R.id.btn_fixative_pos -> replaceFragment(FragmentMaintenanceFixative.newInstance(), "FragmentMaintenanceFixative")
             R.id.btn_slide_pos ->replaceFragment(FragmentMaintenanceSlide.newInstance(), "FragmentMaintenanceSlide")
+            R.id.btn_collect_pos ->replaceFragment(FragmentMaintenanceCollect.newInstance(), "FragmentMaintenanceCollect")
             R.id.btn_general_params -> replaceFragment(FragmentMaintenanceGeneralParameters.newInstance(), "FragmentMaintenanceEnginnerSetting")
 
             R.id.btn_light_on -> thread { mSerialClientHumiture.lightToggle(EOnOff.On) }

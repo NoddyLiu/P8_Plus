@@ -43,6 +43,7 @@
     <string name="dispense_pos">滴液位置</string>
     <string name="fixative_pos">固定液位置</string>
     <string name="slide_pos">玻片位置</string>
+    <string name="collect_pos">收集架位置</string>
     <string name="x">X</string>
     <string name="y">Y</string>
     <string name="z">Z</string>
@@ -53,10 +54,12 @@
     <string name="first_point">第一点</string>
     <string name="first_point_x">第一点X</string>
     <string name="first_point_y">第一点Y</string>
+    <string name="first_point_z">第一点Z</string>
     <string name="point_y_step">Y点步长</string>
     <string name="step_length">步长</string>
     <string name="step_length_x">X步长</string>
     <string name="step_length_y">Y步长</string>
+    <string name="step_length_z">Z步长</string>
     <string name="suck_height">吸液高度</string>
     <string name="mm">毫米</string>
     <string name="to_this_pos">到本位置</string>
@@ -238,6 +241,12 @@
     <string name="tip_check_pos">枪头检测位置</string>
     <string name="tip_take_check">取枪头状态检测</string>
     <string name="tip_release_check">退枪头状态检测</string>
+    <string name="auto_collect">自动收集</string>
+    <string name="rack_1">收集架1（第1片位于左下角）</string>
+    <string name="rack_2">收集架2（第1片位于左下角）</string>
+    <string name="insert_y_dist">伸入Y距离</string>
+    <string name="place_z_dist">放置Z距离</string>
+
 
     <string name="prompt">提示</string>
     <!--问题-->

@@ -16,6 +16,7 @@ import com.superh2.library.utils.LogHelper
 import com.superh2.library.utils.MathHelper
 import com.superh2.library.utils.ParamsHelper.paramGeneralParams
 import com.superh2.library.utils.ParamsHelper.paramPosBarcode
+import com.superh2.library.utils.ParamsHelper.paramPosCollect
 import com.superh2.library.utils.ParamsHelper.paramPosDispense
 import com.superh2.library.utils.ParamsHelper.paramPosFixative
 import com.superh2.library.utils.ParamsHelper.paramPosSlide
@@ -345,8 +346,9 @@ object CmdHelper
         xaya(paramPosBarcode.slides[index].x, paramPosBarcode.slides[index].y, isAsync)
     }
 
+    // region 玻片摆放(未滴片)
     /**
-     * 吸玻片位置
+     * 吸玻片位置(未滴片)
      * @param isAsync 是否异步
      */
     private fun toSlideSuckPos(isAsync: Boolean)
@@ -356,7 +358,7 @@ object CmdHelper
     }
 
     /**
-     * 吸玻片高度
+     * 吸玻片高度(未滴片)
      * @param remainQty 剩余玻片数目
      * @param isAsync 是否异步
      */
@@ -370,7 +372,7 @@ object CmdHelper
     }
 
     /**
-     * 放玻片位置
+     * 放玻片位置(未滴片)
      * @param index 位置0~63
      * @param isAsync 是否异步
      */
@@ -381,7 +383,7 @@ object CmdHelper
     }
 
     /**
-     * 吸玻片
+     * 吸玻片(未滴片)
      * @param remainQty 剩余玻片数量
      * @param isAsync 是否异步
      */
@@ -409,7 +411,7 @@ object CmdHelper
     }
 
     /**
-     * 放玻片高度
+     * 放玻片高度(未滴片)
      * @param isAsync 是否异步
      */
     private fun toSlideReleaseHeight(isAsync: Boolean)
@@ -419,7 +421,7 @@ object CmdHelper
     }
 
     /**
-     * 放玻片
+     * 放玻片(未滴片)
      * @param index 玻片位置Index
      * @param isAsync 是否异步
      */
@@ -446,6 +448,145 @@ object CmdHelper
         // 行走高度
         wa(paramPosSlide.walkingHeight, isAsync)
     }
+    // endregion 吸玻片(未滴片)
+
+    // region 玻片收集(已滴片)
+    /**
+     * 吸玻片位置(已滴片)
+     * @param isAsync 是否异步
+     */
+    private fun toCollectSuckPos(index:Int,isAsync: Boolean)
+    {
+        manualPause()
+        val originX = paramPosSlide.slides[index].x
+        val originY = paramPosSlide.slides[index].y
+        xaya(originX, originY, isAsync)
+    }
+
+    /**
+     * 吸玻片高度(已滴片)
+     * @param isAsync 是否异步
+     */
+    private fun toCollectSuckHeight(isAsync: Boolean)
+    {
+        manualPause()
+        wa(paramPosSlide.releaseHeight, isAsync)
+    }
+
+    /**
+     * 放玻片位置(已滴片)
+     * @param trayIndex 收集架0~1
+     * @param slideIndex 玻片位置0~63
+     * @param isAsync 是否异步
+     */
+    private fun toCollectReleasePos(trayIndex:Int, slideIndex: Int, isAsync: Boolean)
+    {
+        manualPause()
+
+        // 矩阵坐标映射
+        // 假设托盘是 4行 x 16列 (你的UI也是 posIndex/16 行， posIndex%16 列)
+        val trayRow = slideIndex / 16
+
+        // 确定当前应该放入哪个收集架
+        val startX = if (trayIndex == 0) paramPosCollect.rack1StartX else paramPosCollect.rack2StartX
+        val targetY = if (trayIndex == 0) paramPosCollect.rack1StartY else paramPosCollect.rack2StartY
+
+        // 计算该格子在收集架中的绝对坐标：托盘行对应X轴步长，托盘列对应Z轴步长
+        val targetX = startX + (trayRow * paramPosCollect.stepX)
+
+        xaya(targetX, targetY, isAsync)
+    }
+
+    /**
+     * 放玻片高度(已滴片)
+     * @param trayIndex 收集架0~1
+     * @param slideIndex 玻片位置0~63
+     * @param isAsync 是否异步
+     */
+    private fun toCollectReleaseHeight(trayIndex: Int, slideIndex: Int, isAsync: Boolean)
+    {
+        manualPause()
+
+        // 矩阵坐标映射
+        // 假设托盘是 4行 x 16列 (你的UI也是 posIndex/16 行， posIndex%16 列)
+        val trayCol = slideIndex % 16
+        val startZ = if (trayIndex == 0) paramPosCollect.rack1StartZ else paramPosCollect.rack2StartZ
+
+        val targetZ = startZ + (trayCol * paramPosCollect.stepZ)
+        wa(targetZ, isAsync)
+    }
+
+    /**
+     * 吸玻片(已滴片)
+     * @param index 玻片位置Index
+     * @param isAsync 是否异步
+     */
+    fun collectSuck(index: Int, isAsync: Boolean)
+    {
+        manualPause()
+        // 行走高度
+        wa(paramPosSlide.walkingHeight, isAsync)
+
+        // 吸玻片位置
+        toCollectSuckPos(index, isAsync)
+
+        // 吸玻片高度
+        toCollectSuckHeight(isAsync)
+
+        // 吸
+        manualPause()
+        doCmd("AO11", isAsync)
+
+        // 先提高5mm
+        manualPause()
+        ws(-5.0, isAsync)
+
+        sleep(300)
+    }
+
+    /**
+     * 收集玻片(已滴片)
+     * @param trayIndex 收集架0~1
+     * @param slideIndex 玻片位置0~63
+     * @param isAsync 是否异步
+     */
+    fun collectRelease(trayIndex: Int, slideIndex: Int, isAsync: Boolean)
+    {
+        manualPause()
+        // 行走高度
+        wa(paramPosSlide.walkingHeight, isAsync)
+
+        // 放玻片位置
+        toCollectReleasePos(trayIndex, slideIndex, isAsync)
+
+        // 放玻片高度
+        toCollectReleaseHeight(trayIndex, slideIndex, isAsync)
+
+        // Y轴向前伸入
+        manualPause()
+        val finalY = paramPosCollect.insertYDist * -1 // 负数表示向前伸入
+        ys(finalY, isAsync)
+
+        // Z轴微降放置玻片
+        manualPause()
+        val finalZ = paramPosCollect.placeZDist // 正数表示向下放置
+        ws(finalZ, isAsync)
+
+        // 放
+        manualPause()
+        doCmd("AO10", isAsync)
+
+        // 停稳玻片
+        sleep(1000)
+
+        // Y轴退回原位，Z轴抬起安全高度准备下一次循环
+        manualPause()
+        ys(finalY * -1, isAsync)
+        manualPause()
+        wa(paramPosSlide.walkingHeight, isAsync)
+    }
+    // endregion 吸玻片(未滴片)
+
 
     /**
      * 喷雾时间
