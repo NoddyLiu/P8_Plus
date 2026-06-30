@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".FragmentMaintenance"
+        android:layout_marginTop="@dimen/title_height"
+        tools:layout_margin="0dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/content_layout_margin"
+            android:gravity="center_horizontal">
+
+        <TextView
+                style="@style/TitleTextViewStyle"
+                android:text="@string/collect_pos"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_collect" />
+
+            <com.suke.widget.SwitchButton
+                    android:id="@+id/switch_auto_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:sb_show_indicator="false"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E0E0E0" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/rack_1"
+                android:textStyle="bold" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/first_point_x" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack1_x"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack1_x"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/first_point_y" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack1_y"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack1_y"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/first_point_z" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack1_z"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack1_z"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E0E0E0" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/rack_2"
+                android:textStyle="bold" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/first_point_x" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack2_x"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack2_x"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/first_point_y" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack2_y"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack2_y"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/first_point_z" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_rack2_z"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <info.hoang8f.widget.FButton
+                    android:id="@+id/btn_rack2_z"
+                    style="@style/ButtonStyle"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/execute" />
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E0E0E0" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insert_y_dist" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_insert_y"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/place_z_dist" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_place_z"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/step_length_x" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_step_x"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/step_length_z" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+            <EditText
+                    android:id="@+id/et_step_z"
+                    android:layout_width="@dimen/et_input_layout_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mm"/>
+        </LinearLayout>
+
+        <info.hoang8f.widget.FButton
+                android:id="@+id/btn_save"
+                style="@style/ButtonStyle"
+                android:layout_marginTop="40dp"
+                android:text="@string/save" />
+
+    </LinearLayout>
+</FrameLayout>
