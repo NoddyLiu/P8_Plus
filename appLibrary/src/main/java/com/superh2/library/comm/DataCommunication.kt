@@ -538,7 +538,6 @@ class DataCommunication(private val mContext: Context, private val mIsTcp: Boole
                     "X" -> step = value * paramScale.x
                     "Y" -> step = value * paramScale.y
                     "Z" -> step = value * paramScale.z
-                    "M" -> step = value * paramScale.m
                     "W" -> step = value * paramScale.w
                     "P" -> step = value * paramScale.p
                 }

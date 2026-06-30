@@ -234,9 +234,6 @@
     <string name="slide_pos_continued">继续运行玻片位置</string>
     <string name="tube_pos_interrupted">异常中断试管位置</string>
     <string name="tube_pos_continued">继续运行试管位置</string>
-    <string name="sealing_plate">防漏挡板</string>
-    <string name="retracted_pos">缩入位置</string>
-    <string name="extended_pos">伸出位置</string>
     <string name="tip_check">枪头检测</string>
     <string name="tip_check_pos">枪头检测位置</string>
     <string name="tip_take_check">取枪头状态检测</string>

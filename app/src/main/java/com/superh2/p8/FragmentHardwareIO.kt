@@ -31,9 +31,6 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
 
         // 设置固定液速度
         CmdHelper.fixativePressure(selectedMethodParams.paramsSlideMode.fixativeDispensePressure, false)
-
-        // 缩回防漏挡板，避免误撞
-        CmdHelper.ma(ParamsHelper.paramPosTips.plateRetractedPos, true)
     }
 
     override fun initWidget()

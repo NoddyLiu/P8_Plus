@@ -63,11 +63,6 @@ object CmdHelper
 
         manualPause()
 
-        // M轴：防漏挡板
-        if (!doCmd("MI", false, 15000)) throw InitException()
-
-        manualPause()
-
         // 吸玻片
         if (!doCmd("AO10", false, 10000)) throw InitException()
 
@@ -164,10 +159,10 @@ object CmdHelper
      */
     fun toReleaseTipOffset(isAsync: Boolean)
     {
-        manualPause()
-
-        val heightLength = paramPosTips.releaseTipHeight - paramPosTips.releaseTipOffset
-        za(heightLength, isAsync)
+//        manualPause()
+//
+//        val heightLength = paramPosTips.releaseTipHeight - paramPosTips.releaseTipOffset
+//        za(heightLength, isAsync)
     }
 
     /**
@@ -1150,28 +1145,6 @@ object CmdHelper
     {
         val zStep = (length * paramScale.z).toInt()
         doCmd("ZA$zStep", isAsync)
-    }
-
-    /**
-     * MA指令
-     * @param length 长度（mm）
-     * @param isAsync 是否异步
-     */
-    fun ma(length: Double, isAsync: Boolean)
-    {
-        var mStep = (length * paramScale.m).toInt()
-        doCmd("MA$mStep", isAsync)
-    }
-
-    /**
-     * MS指令
-     * @param length 长度（mm）
-     * @param isAsync 是否异步
-     */
-    fun ms(length: Double, isAsync: Boolean)
-    {
-        var mStep = (length * paramScale.m).toInt()
-        doCmd("MS$mStep", isAsync)
     }
 
     /**

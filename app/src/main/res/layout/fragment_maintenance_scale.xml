@@ -124,30 +124,6 @@
                             android:inputType="numberDecimal"/>
                 </LinearLayout>
 
-                <!--m-->
-                <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/m"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=":"/>
-
-                    <EditText
-                            android:id="@+id/et_m"
-                            android:layout_width="@dimen/et_input_layout_width"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:inputType="numberDecimal"/>
-                </LinearLayout>
-
                 <!--w-->
                 <LinearLayout
                         android:layout_width="wrap_content"

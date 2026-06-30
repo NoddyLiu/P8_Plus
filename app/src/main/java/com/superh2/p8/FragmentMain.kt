@@ -2188,9 +2188,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
         CmdHelper.toTipPos(currentTakeTipIndex, false)
 
-        // 防漏挡板缩入
-        actionSealingPlate(false)
-
         CmdHelper.toPreTakeTipHeight(false)
         CmdHelper.toTakeTipHeight(false)
         CmdHelper.za(0.0, false)
@@ -2216,9 +2213,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     private fun actionSampleStir(posIndex: Int)
     {
         CmdHelper.toTubePos(posIndex, false)
-
-        // 防漏挡板缩入
-        actionSealingPlate(false)
 
         // 吹打
         val numberOfSampleStir = paramGeneralParams.numberOfSampleStir // 吹打次数
@@ -2273,22 +2267,9 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
         CmdHelper.za(0.0, false)
 
-        // 防漏挡板伸出
-        actionSealingPlate(true)
-
         // 到枪头盒点1避让。避免吸取样品后，走在枪头盒上方，液滴溅落
         CmdHelper.xa(paramPosTips.releaseTipBoxPoint1X, false)
         CmdHelper.ya(paramPosTips.releaseTipBoxPoint1Y, false)
-    }
-
-    /**
-     * 防漏挡板
-     * @param extended 是否伸展，true-伸展；false-收回
-     */
-    private fun actionSealingPlate(extended: Boolean)
-    {
-        if (extended) CmdHelper.ma(paramPosTips.plateExtendedPos, false)
-        else CmdHelper.ma(paramPosTips.plateRetractedPos, false)
     }
 
     /**
@@ -2468,8 +2449,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
             1 ->
             {
                 CmdHelper.toDispensePos(posIndex, 1, false)
-                // 防漏挡板缩入
-                actionSealingPlate(false)
                 CmdHelper.toDispenseHeight(selectedMethodParams, 1, false)
                 // 最后一个玻片（直接PA0）
                 if (lastSlide) CmdHelper.pa(0.0, false)
@@ -2493,8 +2472,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                  * 第1滴
                  */
                 CmdHelper.toDispensePos(posIndex, 0, false)
-                // 防漏挡板缩入
-                actionSealingPlate(false)
                 CmdHelper.toDispenseHeight(selectedMethodParams, 0, false)
                 // 第一个玻片（滴液量+ 吸液后吸空气量）
                 if (firstSlide && !lastSlide)
@@ -2532,8 +2509,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
                  * 第1滴
                  */
                 CmdHelper.toDispensePos(posIndex, 0, false)
-                // 防漏挡板缩入
-                actionSealingPlate(false)
                 CmdHelper.toDispenseHeight(selectedMethodParams, 0, false)
                 // 第一个玻片（滴液量+ 吸液后吸空气量）
                 if (firstSlide && !lastSlide)
@@ -2587,9 +2562,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
         // 回到0位
         CmdHelper.za(0.0, false)
-
-        // 防漏挡板伸出
-        actionSealingPlate(true)
     }
 
     /**
@@ -2660,8 +2632,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
 
         CmdHelper.toReleaseTipPosY(false)
 
-        // 防漏挡板缩入
-        actionSealingPlate(false)
         CmdHelper.toReleaseTipHeight(false)
 
         CmdHelper.toReleaseTipPosX(false)
@@ -2673,8 +2643,6 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
      */
     private fun actionReleaseTipNoQRCodeAndTipBoxChannel()
     {
-        // 防漏挡板缩入
-        actionSealingPlate(false)
         CmdHelper.toReleaseTipHeight(false)
         CmdHelper.toReleaseTipPosY(false)
         CmdHelper.toReleaseTipPosX(false)

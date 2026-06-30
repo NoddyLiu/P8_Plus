@@ -11,7 +11,6 @@ class Scale
     var y: Double = 0.0
     var z: Double = 0.0
     var p: Double = 0.0 // 吸喷液体
-    var m: Double = 0.0 // 移液头防漏挡板
     var w: Double = 0.0 // 喷雾高度
     var n:Double = 0.0 // 固定液
 }

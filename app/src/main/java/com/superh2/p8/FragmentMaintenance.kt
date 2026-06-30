@@ -30,9 +30,6 @@ class FragmentMaintenance : FragmentBase<FragmentMaintenanceBinding>(FragmentMai
     override fun onResume()
     {
         super.onResume()
-
-        // 缩回防漏挡板，避免误撞
-        CmdHelper.ma(ParamsHelper.paramPosTips.plateRetractedPos, true)
     }
 
     override fun initWidget()

@@ -44,8 +44,6 @@ class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(Fra
         binding.btnReleaseTipBoxPoint1.setOnClickListener(this)
         binding.btnReleaseTipBoxPoint2.setOnClickListener(this)
         binding.btnAdditionalAirHeight.setOnClickListener(this)
-        binding.btnRetractedPos.setOnClickListener(this)
-        binding.btnExtendedPos.setOnClickListener(this)
         binding.btnTipCheckPos.setOnClickListener(this)
         binding.btnTipCheckHeight.setOnClickListener(this)
         binding.btnSave.setOnClickListener(this)
@@ -71,8 +69,6 @@ class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(Fra
         binding.etReleaseTipBoxPoint2X.setText(paramPosTips.releaseTipBoxPoint2X.toString())
         binding.etReleaseTipBoxPoint2Y.setText(paramPosTips.releaseTipBoxPoint2Y.toString())
         binding.etAdditionalAirHeight.setText(paramPosTips.additionalAirHeight.toString())
-        binding.etRetractedPos.setText(paramPosTips.plateRetractedPos.toString())
-        binding.etExtendedPos.setText(paramPosTips.plateExtendedPos.toString())
         binding.etTipCheckPosX.setText(paramPosTips.tipCheckPos.x.toString())
         binding.etTipCheckPosY.setText(paramPosTips.tipCheckPos.y.toString())
         binding.etTipCheckHeight.setText(paramPosTips.tipCheckHeight.toString())
@@ -97,8 +93,6 @@ class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(Fra
             R.id.btn_release_tip_box_point_1 -> CmdHelper.xaya(binding.etReleaseTipBoxPoint1X.text.toString().toDouble(), binding.etReleaseTipBoxPoint1Y.text.toString().toDouble(), true)
             R.id.btn_release_tip_box_point_2 -> CmdHelper.xaya(binding.etReleaseTipBoxPoint2X.text.toString().toDouble(), binding.etReleaseTipBoxPoint2Y.text.toString().toDouble(), true)
             R.id.btn_additional_air_height -> CmdHelper.za(binding.etAdditionalAirHeight.text.toString().toDouble(), true)
-            R.id.btn_retracted_pos -> CmdHelper.ma(binding.etRetractedPos.text.toString().toDouble(), true)
-            R.id.btn_extended_pos -> CmdHelper.ma(binding.etExtendedPos.text.toString().toDouble(), true)
             R.id.btn_tip_check_pos -> CmdHelper.xaya(binding.etTipCheckPosX.text.toString().toDouble(), binding.etTipCheckPosY.text.toString().toDouble(), true)
             R.id.btn_tip_check_height -> CmdHelper.za(binding.etTipCheckHeight.text.toString().toDouble(), true)
             R.id.btn_save ->
@@ -118,8 +112,6 @@ class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(Fra
                 val releaseTipBoxPoint2X = if (binding.etReleaseTipBoxPoint2X.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint2X.text.toString().toDouble()
                 val releaseTipBoxPoint2Y = if (binding.etReleaseTipBoxPoint2Y.text.toString().isNullOrEmpty()) 0.0 else binding.etReleaseTipBoxPoint2Y.text.toString().toDouble()
                 val additionalAirHeight = if (binding.etAdditionalAirHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etAdditionalAirHeight.text.toString().toDouble()
-                val plateRetractedPos = if (binding.etRetractedPos.text.toString().isNullOrEmpty()) 0.0 else binding.etRetractedPos.text.toString().toDouble()
-                val plateExtendedPos = if (binding.etExtendedPos.text.toString().isNullOrEmpty()) 0.0 else binding.etExtendedPos.text.toString().toDouble()
                 val tipCheckPosX = if (binding.etTipCheckPosX.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckPosX.text.toString().toDouble()
                 val tipCheckPosY = if (binding.etTipCheckPosY.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckPosY.text.toString().toDouble()
                 val tipCheckHeight = if (binding.etTipCheckHeight.text.toString().isNullOrEmpty()) 0.0 else binding.etTipCheckHeight.text.toString().toDouble()
@@ -144,8 +136,6 @@ class FragmentMaintenanceTips : FragmentBase<FragmentMaintenanceTipsBinding>(Fra
                 paramPosTips.releaseTipBoxPoint2X = releaseTipBoxPoint2X
                 paramPosTips.releaseTipBoxPoint2Y = releaseTipBoxPoint2Y
                 paramPosTips.additionalAirHeight = additionalAirHeight
-                paramPosTips.plateRetractedPos = plateRetractedPos
-                paramPosTips.plateExtendedPos = plateExtendedPos
                 paramPosTips.tipCheckPos.x = tipCheckPosX
                 paramPosTips.tipCheckPos.y = tipCheckPosY
                 paramPosTips.tipCheckHeight = tipCheckHeight

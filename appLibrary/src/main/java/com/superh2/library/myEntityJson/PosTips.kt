@@ -41,11 +41,6 @@ class PosTips
     // Tip头隔离空气高度
     var additionalAirHeight: Double = 0.0
 
-    // 防漏挡板伸出位置
-    var plateExtendedPos: Double = 0.0
-    // 防漏挡板缩入位置
-    var plateRetractedPos: Double = 0.0
-
     // 枪头检测位置
     var tipCheckPos = Position()
     var tipCheckHeight: Double = 0.0

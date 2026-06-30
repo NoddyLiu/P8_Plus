@@ -40,7 +40,6 @@ class FragmentMaintenanceScale : FragmentBase<FragmentMaintenanceScaleBinding>(F
         binding.etY.setText(paramScale.y.toString())
         binding.etZ.setText(paramScale.z.toString())
         binding.etP.setText(paramScale.p.toString())
-        binding.etM.setText(paramScale.m.toString())
         binding.etW.setText(paramScale.w.toString())
         binding.etN.setText(paramScale.n.toString())
     }
@@ -58,7 +57,6 @@ class FragmentMaintenanceScale : FragmentBase<FragmentMaintenanceScaleBinding>(F
                 paramScale.y = if (binding.etY.text.toString().isNullOrEmpty()) 0.0 else binding.etY.text.toString().toDouble()
                 paramScale.z = if (binding.etZ.text.toString().isNullOrEmpty()) 0.0 else binding.etZ.text.toString().toDouble()
                 paramScale.p = if (binding.etP.text.toString().isNullOrEmpty()) 0.0 else binding.etP.text.toString().toDouble()
-                paramScale.m = if (binding.etM.text.toString().isNullOrEmpty()) 0.0 else binding.etM.text.toString().toDouble()
                 paramScale.w = if (binding.etW.text.toString().isNullOrEmpty()) 0.0 else binding.etW.text.toString().toDouble()
                 paramScale.n = if (binding.etN.text.toString().isNullOrEmpty()) 0.0 else binding.etN.text.toString().toDouble()
 
