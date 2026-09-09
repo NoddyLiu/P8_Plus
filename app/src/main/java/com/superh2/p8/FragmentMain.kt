@@ -2594,7 +2594,7 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     /**
-     * 退tip（走二维码通道）
+     * 退枪头（走二维码通道）
      * @param posIndex 玻片 index
      */
     private fun actionReleaseTip(posIndex: Int)
@@ -2619,7 +2619,7 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     /**
-     * 退tip（不走二维码通道，但会绕过枪头盒）
+     * 退枪头（不走二维码通道，但会绕过枪头盒）
      */
     private fun actionReleaseTipNoQRCodeChannel()
     {
@@ -2635,18 +2635,20 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         CmdHelper.toReleaseTipHeight(false)
 
         CmdHelper.toReleaseTipPosX(false)
-        CmdHelper.toReleaseTipOffset(false)
+//        CmdHelper.toReleaseTipOffset(false)
+        CmdHelper.releaseTip()
     }
 
     /**
-     * 退tip（不走二维码通道，也不走枪头盒两点）
+     * 退枪头（不走二维码通道，也不走枪头盒两点）
      */
     private fun actionReleaseTipNoQRCodeAndTipBoxChannel()
     {
         CmdHelper.toReleaseTipHeight(false)
         CmdHelper.toReleaseTipPosY(false)
         CmdHelper.toReleaseTipPosX(false)
-        CmdHelper.toReleaseTipOffset(false)
+//        CmdHelper.toReleaseTipOffset(false)
+        CmdHelper.releaseTip()
     }
 
     /**

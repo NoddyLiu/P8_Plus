@@ -34,6 +34,8 @@ import com.superh2.p8.R
 import com.superh2.p8.dialogs.DialogFragment_Warn_Prompt
 import com.superh2.p8.serial.PipetteCompat
 import java.lang.Thread.sleep
+import java.util.Timer
+import java.util.TimerTask
 import kotlin.concurrent.thread
 import kotlin.math.roundToInt
 
@@ -44,6 +46,10 @@ import kotlin.math.roundToInt
 object CmdHelper
 {
     private val TAG = "CmdHelper"
+
+    // 蜂鸣器
+    var timerTaskBuzzer: Timer? = null
+    var isRunningBuzzer = false
 
     /**
      * 初始化电机
@@ -1038,6 +1044,59 @@ object CmdHelper
     }
 
     /**
+     * 退枪头
+     */
+    fun releaseTip()
+    {
+        PipetteCompat.driver.releaseTip()
+    }
+
+    /**
+     * 运行蜂鸣器
+     */
+    fun startBuzzer()
+    {
+        if (isRunningBuzzer) return
+
+        timerTaskBuzzer = Timer()
+        timerTaskBuzzer?.schedule(object : TimerTask()
+        {
+            override fun run()
+            {
+                ab(true, false)
+                sleep(1000)
+                ab(false, false)
+            }
+        }, 0, 3000)
+
+        isRunningBuzzer = true
+    }
+
+    /**
+     * 关闭蜂鸣器
+     */
+    fun stopBuzzer()
+    {
+        timerTaskBuzzer?.cancel()
+        timerTaskBuzzer = null
+        CmdHelper.ab(false, false)
+        isRunningBuzzer = false
+    }
+
+    /**
+     * 蜂鸣器指令
+     * @param isOpen 是否打开蜂鸣器
+     * @param isAsync 是否异步
+     */
+    private fun ab(isOpen:Boolean,isAsync: Boolean): Boolean
+    {
+        if(isOpen)
+            return doCmd("ab 1",isAsync)
+        else
+            return doCmd("ab 0",isAsync)
+    }
+
+    /**
      * XS指令
      * @param length 长度（mm）
      * @param isAsync 是否异步
@@ -1302,7 +1361,10 @@ object CmdHelper
      */
     fun pi(isAsync: Boolean)
     {
-        doCmd("PI", isAsync)
+//        doCmd("PI", isAsync)
+        runPipette(isAsync) {
+            PipetteCompat.driver.init()
+        }
     }
 
     /**
@@ -1406,15 +1468,19 @@ object CmdHelper
             {
                 // 弹出超时提示框
                 ViewUtils.pauseRunningDialog() // 模拟“暂停”按钮
+                // 打开蜂鸣
+                startBuzzer()
                 DialogFragment_Warn_Prompt.newInstance().setDialogContent(null, MainActivity.mContext!!.getString(R.string.info_cmd_timeOut_1) + cmd + MainActivity.mContext!!.getString(R.string.info_cmd_timeOut_2), MainActivity.mContext!!.getString(R.string.yes), MainActivity.mContext!!.getString(R.string.no), true, true, object : WarnPromptListener
                 {
                     override fun clickedOk()
                     {
+                        stopBuzzer()
                         ViewUtils.continueRunningDialog() // 模拟“继续”按钮
                     }
 
                     override fun clickedCancel()
                     {
+                        stopBuzzer()
                         ViewUtils.closeRunningDialog() // 模拟“停止”按钮
                     }
                 }).show((MainActivity.mContext as AppCompatActivity).supportFragmentManager, null)

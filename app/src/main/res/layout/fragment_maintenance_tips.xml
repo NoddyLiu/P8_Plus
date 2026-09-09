@@ -312,19 +312,13 @@
                             android:id="@+id/btn_release_tip_y"
                             android:text="@string/execute"
                             android:layout_marginLeft="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp">
 
                     <!--退枪高度-->
                     <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginLeft="30dp">
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -361,6 +355,14 @@
                             android:id="@+id/btn_release_tip_height"
                             android:text="@string/execute"
                             android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
 
                     <!--拉提偏移-->
                     <LinearLayout

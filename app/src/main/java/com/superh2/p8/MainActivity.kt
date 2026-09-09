@@ -107,6 +107,9 @@ class MainActivity : AppCompatActivity()
                         isManualStop = true
                         mHandlerMain.post(rnHideWaitDialog)
 
+                        // 关闭蜂鸣器
+                        CmdHelper.stopBuzzer()
+
                         // 扫码期间，开照明
                         if (isScanningQRCode)
                         {
