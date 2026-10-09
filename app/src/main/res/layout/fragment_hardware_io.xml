@@ -24,9 +24,9 @@
             <GridLayout
                     android:id="@+id/gridlayout_spray"
                     style="@style/GridLayoutStyle"
+                    android:layout_weight="1"
                     android:columnCount="1"
-                    android:rowCount="1"
-                    android:layout_weight="1">
+                    android:rowCount="1">
 
                 <LinearLayout
                         style="@style/GridCellStyle"
@@ -103,8 +103,8 @@
                                 android:layout_width="@dimen/hardware_io_edittext_layout_width"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
-                                android:text=""
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="" />
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -125,9 +125,9 @@
                     style="@style/GridLayoutStyle"
                     android:layout_gravity="top"
                     android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
                     android:columnCount="1"
-                    android:rowCount="1"
-                    android:layout_weight="1">
+                    android:rowCount="1">
 
                 <LinearLayout
                         style="@style/GridCellStyle"
@@ -209,6 +209,176 @@
             </GridLayout>
         </LinearLayout>
 
+        <!-- ADP -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_layout_margin">
+
+            <GridLayout
+                    style="@style/GridLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:columnCount="1"
+                    android:rowCount="1">
+
+                <LinearLayout
+                        style="@style/GridCellStyle"
+                        android:layout_columnSpan="1"
+                        android:background="@color/appBackground">
+
+                    <TextView
+                            style="@style/TitleTextViewStyle"
+                            android:text="@string/hardware_io_adp" />
+                </LinearLayout>
+
+                <LinearLayout
+                        style="@style/GridCellStyle"
+                        android:layout_columnSpan="1"
+                        android:orientation="vertical">
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:layout_width="@dimen/hardware_io_tv_title_item_layout_width"
+                                android:layout_height="wrap_content"
+                                android:text="@string/aspirate" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <EditText
+                                android:id="@+id/et_adp_aspirate_volume"
+                                android:layout_width="@dimen/hardware_io_edittext_layout_width"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:textSize="@dimen/default_textSize" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/unit_ul" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_adp_aspirate"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/execute" />
+
+                        <TextView
+                                android:layout_width="@dimen/hardware_io_tv_title_item_layout_width"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/content_layout_margin"
+                                android:text="@string/dispense" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <EditText
+                                android:id="@+id/et_adp_dispense_volume"
+                                android:layout_width="@dimen/hardware_io_edittext_layout_width"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:textSize="@dimen/default_textSize" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/unit_ul" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_adp_dispense"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/execute" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_adp_init"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/execute" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/separator_layout_margin_left_right"
+                                android:text="@string/release_tip" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_adp_release_tip"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/execute" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/separator_layout_margin_left_right"
+                                android:text="@string/check_tip" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                        <info.hoang8f.widget.FButton
+                                android:id="@+id/btn_adp_check_tip"
+                                style="@style/ButtonStyle"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/execute" />
+
+                        <TextView
+                                android:id="@+id/tv_adp_check_tip_result"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/green" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="@dimen/hardware_io_each_line_layout_width"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </GridLayout>
+        </LinearLayout>
+
         <!--密封圈-->
         <LinearLayout
                 android:layout_width="match_parent"
@@ -279,8 +449,8 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Y"
-                                android:layout_marginLeft="@dimen/content_layout_margin"/>
+                                android:layout_marginLeft="@dimen/content_layout_margin"
+                                android:text="Y" />
 
                         <EditText
                                 android:id="@+id/et_replace_pos_y"
@@ -308,8 +478,8 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Z"
-                                android:layout_marginLeft="@dimen/content_layout_margin"/>
+                                android:layout_marginLeft="@dimen/content_layout_margin"
+                                android:text="Z" />
 
                         <EditText
                                 android:id="@+id/et_replace_pos_z"

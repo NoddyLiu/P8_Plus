@@ -201,6 +201,7 @@
     <string name="hardware_io_spray">Spray</string>
     <string name="hardware_io_fixative">Fixative</string>
     <string name="hardware_io_sealing_ring">Sealing Ring</string>
+    <string name="hardware_io_adp">ADP</string>
     <string name="spray_time">Spray Time</string>
     <string name="liquid_addition">Liquid Addition</string>
     <string name="fixative_volume">Fixative Volume</string>
@@ -234,9 +235,6 @@
     <string name="slide_pos_continued">Slide Pos Continued</string>
     <string name="tube_pos_interrupted">Tube Pos Interrupted</string>
     <string name="tube_pos_continued">Tube Pos Continued</string>
-    <string name="sealing_plate">Sealing Plate</string>
-    <string name="retracted_pos">Retracted Position</string>
-    <string name="extended_pos">Extended Position</string>
     <string name="tip_check">Tip Check</string>
     <string name="tip_check_pos">Tip Check Position</string>
     <string name="tip_take_check">Tip Take Check</string>
@@ -246,6 +244,12 @@
     <string name="rack_2">Rack2 (First piece at bottom left)</string>
     <string name="insert_y_dist">Insert Y Distance</string>
     <string name="place_z_dist">Place Z Distance</string>
+    <string name="aspirate">Aspirate</string>
+    <string name="dispense">Dispense</string>
+    <string name="check_tip">Check Tip</string>
+    <string name="tip_detected">Tip Detected</string>
+    <string name="tip_not_detected">No Tip Detected</string>
+    <string name="invalid_volume">Invalid %1$s</string>
 
     <string name="prompt">Prompt</string>
     <!--问题-->

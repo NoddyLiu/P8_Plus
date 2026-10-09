@@ -201,6 +201,7 @@
     <string name="hardware_io_spray">喷雾</string>
     <string name="hardware_io_fixative">固定液</string>
     <string name="hardware_io_sealing_ring">密封圈</string>
+    <string name="hardware_io_adp">ADP</string>
     <string name="spray_time">喷雾时间</string>
     <string name="liquid_addition">加液</string>
     <string name="fixative_volume">固定液容量</string>
@@ -243,7 +244,12 @@
     <string name="rack_2">收集架2（第1片位于左下角）</string>
     <string name="insert_y_dist">伸入Y距离</string>
     <string name="place_z_dist">放置Z距离</string>
-
+    <string name="aspirate">吸液</string>
+    <string name="dispense">喷液</string>
+    <string name="check_tip">检测枪头</string>
+    <string name="tip_detected">有枪头</string>
+    <string name="tip_not_detected">无枪头</string>
+    <string name="invalid_volume">无效的 %1$s</string>
 
     <string name="prompt">提示</string>
     <!--问题-->

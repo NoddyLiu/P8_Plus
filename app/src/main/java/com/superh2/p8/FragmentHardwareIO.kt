@@ -4,11 +4,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import com.superh2.library.utils.FileUtils
 import com.superh2.library.utils.ParamsHelper
 import com.superh2.library.utils.ParamsHelper.paramPosOther
 import com.superh2.p8.FragmentMain.Companion.selectedMethodParams
 import com.superh2.p8.databinding.FragmentHardwareIoBinding
+import com.superh2.p8.serial.PipetteCompat
 import com.superh2.p8.utils.CmdHelper
 import com.superh2.p8.utils.ViewUtils.fullScreen
 import kotlin.concurrent.thread
@@ -46,6 +48,12 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
         binding.btnSprayLiquidAddition.setOnClickListener(this)
         binding.btnFixativeVolume.setOnClickListener(this)
         binding.btnFixativeLiquidSpitOut.setOnClickListener(this)
+
+        binding.btnAdpAspirate.setOnClickListener(this)
+        binding.btnAdpDispense.setOnClickListener(this)
+        binding.btnAdpReleaseTip.setOnClickListener(this)
+        binding.btnAdpCheckTip.setOnClickListener(this)
+        binding.btnAdpInit.setOnClickListener(this)
 
         binding.etReplacePosX.setText(paramPosOther.replaceSealingRingPos.x.toString())
         binding.etReplacePosY.setText(paramPosOther.replaceSealingRingPos.y.toString())
@@ -125,10 +133,12 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
                     }
                 }
             }
+
             R.id.btn_spray_liquid_addition ->
             {
                 CmdHelper.sprayAddLiquid(binding.etSprayLiquidAddition.text.toString().toInt(), true)
             }
+
             R.id.btn_fixative_volume ->
             {
                 val vol = binding.etFixativeVolume.text.toString()
@@ -140,6 +150,7 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
                     }
                 }
             }
+
             R.id.btn_fixative_liquid_spit_out ->
             {
                 thread {
@@ -147,14 +158,49 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
                     CmdHelper.ns(200, false)
                 }
             }
+
+            R.id.btn_adp_aspirate -> runAdpVolumeCommand(binding.etAdpAspirateVolume.text.toString(), getString(R.string.aspirate)) {
+                PipetteCompat.driver.aspirate(it)
+            }
+
+            R.id.btn_adp_dispense -> runAdpVolumeCommand(binding.etAdpDispenseVolume.text.toString(), getString(R.string.dispense)) {
+                PipetteCompat.driver.dispense(it)
+            }
+
+            R.id.btn_adp_release_tip -> thread { PipetteCompat.driver.releaseTip() }
+            R.id.btn_adp_check_tip ->
+            {
+                val hostActivity = requireActivity()
+                thread {
+                    val hasTip = PipetteCompat.driver.hasTip()
+                    hostActivity.runOnUiThread {
+                        val message = if (hasTip) R.string.tip_detected else R.string.tip_not_detected
+                        binding.tvAdpCheckTipResult.text = getString(message)
+                    }
+                }
+            }
+            R.id.btn_adp_init -> thread { PipetteCompat.driver.init() }
+
             R.id.btn_replace_pos_x_y ->
             {
                 CmdHelper.xaya(binding.etReplacePosX.text.toString().toDouble(), binding.etReplacePosY.text.toString().toDouble(), true)
             }
+
             R.id.btn_replace_pos_z ->
             {
                 CmdHelper.za(binding.etReplacePosZ.text.toString().toDouble(), true)
             }
         }
+    }
+
+    private fun runAdpVolumeCommand(value: String, label: String, command: (Int) -> Unit)
+    {
+        val volume = value.toIntOrNull()
+        if (volume == null || volume < 0)
+        {
+            Toast.makeText(requireContext(), getString(R.string.invalid_volume, label), Toast.LENGTH_SHORT).show()
+            return
+        }
+        thread { command(volume) }
     }
 }
