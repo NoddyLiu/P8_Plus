@@ -29,7 +29,7 @@ class SerialClientAdp
 {
     private val TAG = "SerialClientAdp"
 
-    private val SERIAL_PORT = "ttyS3"
+    private val SERIAL_PORT = "ttyS4"
     private var serialttyS: SerialPort? = null
     private var ttySInputStream: InputStream? = null
     private var ttySOutputStream: OutputStream? = null
