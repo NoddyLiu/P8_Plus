@@ -181,12 +181,12 @@ class MainActivity : AppCompatActivity()
             val connectThread = Thread(mDataCommunication)
             connectThread.start()
 
-            // 打开温湿度串口
-            mSerialClientHumiture.openSerial()
-            // 打开玻片扫码模块串口
-            mSerialClientScannerSlide.openSerial(true)
-            // 打开试管扫码模块串口
-            mSerialClientScannerTube.openSerial(false)
+//            // 打开温湿度串口
+//            mSerialClientHumiture.openSerial()
+//            // 打开玻片扫码模块串口
+//            mSerialClientScannerSlide.openSerial(true)
+//            // 打开试管扫码模块串口
+//            mSerialClientScannerTube.openSerial(false)
             // 打开 ADP 串口
             mSerialClientAdp.openSerial()
         }, 1500)

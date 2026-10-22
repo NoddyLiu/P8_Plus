@@ -41,7 +41,7 @@ object ConstantsUtils
     /**
      * 移液头量程
      */
-    val HEAD_RANGE = 180
+    val HEAD_RANGE = 200
 
     /**
      * 移液头0位在左上还是右上（默认右上）

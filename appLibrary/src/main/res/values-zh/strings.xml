@@ -250,6 +250,7 @@
     <string name="tip_detected">有枪头</string>
     <string name="tip_not_detected">无枪头</string>
     <string name="invalid_volume">无效的 %1$s</string>
+    <string name="stir">吹打</string>
 
     <string name="prompt">提示</string>
     <!--问题-->

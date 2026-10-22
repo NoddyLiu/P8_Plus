@@ -713,9 +713,10 @@ object CmdHelper
     /**
      * 吹打样本（吸液、排液）
      * @param liquidVolume 吹打体积
+     * @param times 吹打次数
      * @param isAsync 是否异步
      */
-    fun stirLiquid(liquidVolume: Int, isAsync: Boolean)
+    fun stirLiquid(liquidVolume: Int, times: Int, isAsync: Boolean)
     {
         manualPause()
 
@@ -725,11 +726,15 @@ object CmdHelper
         // 吹打速度
         stirSpeed(paramGeneralParams.speedOfSampleStir, false)
 
-        // 吸液容积
-        ps(liquidVolume, isAsync)
+//        // 吸液容积
+//        ps(liquidVolume, isAsync)
+//
+//        // 喷液容积
+//        pa(0.0, isAsync)
 
-        // 喷液容积
-        pa(0.0, isAsync)
+        runPipette(isAsync) {
+            PipetteCompat.driver.stir(liquidVolume, times)
+        }
     }
 
     /** 吸液

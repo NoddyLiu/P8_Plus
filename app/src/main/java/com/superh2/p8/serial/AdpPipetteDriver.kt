@@ -72,6 +72,15 @@ class AdpPipetteDriver(private val client: SerialClientAdp) : IPipetteDriver
     }
 
     /**
+     * 吹打
+     */
+    override fun stir(volumeUl: Int, times: Int)= runBlocking {
+        require(volumeUl >= 0) { "吹打体积不能小于 0" }
+        require(times > 0) { "吹打次数必须大于 0" }
+        runMotion("吹打") { client.mixLiquid(volumeUl, times) }
+    }
+
+    /**
      * 退枪头
      */
     override fun releaseTip()= runBlocking {

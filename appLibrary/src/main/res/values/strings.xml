@@ -250,6 +250,7 @@
     <string name="tip_detected">Tip Detected</string>
     <string name="tip_not_detected">No Tip Detected</string>
     <string name="invalid_volume">Invalid %1$s</string>
+    <string name="stir">Stir</string>
 
     <string name="prompt">Prompt</string>
     <!--问题-->

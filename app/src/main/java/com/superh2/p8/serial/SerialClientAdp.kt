@@ -29,7 +29,7 @@ class SerialClientAdp
 {
     private val TAG = "SerialClientAdp"
 
-    private val SERIAL_PORT = "ttyS4"
+    private val SERIAL_PORT = "ttyS3"
     private var serialttyS: SerialPort? = null
     private var ttySInputStream: InputStream? = null
     private var ttySOutputStream: OutputStream? = null
@@ -116,10 +116,10 @@ class SerialClientAdp
 
                 // 3. 计算 CRC 并转换为 4位 十六进制字符串 (低字节在前)
                 val crc = calCrc(frameWithoutCrc.toByteArray(Charsets.US_ASCII))
-                val crcStr = String.format("%02X%02X", crc and 0xFF, (crc ushr 8) and 0xFF)
+                val crcStr = String.format("%02X%02X",(crc ushr 8) and 0xFF, crc and 0xFF)
 
-                // 4. 加上 \r\n 并发送
-                val fullFrame = "$frameWithoutCrc$crcStr\r\n"
+                // 4. 完整指令
+                val fullFrame = "$frameWithoutCrc$crcStr"
 
                 out.write(fullFrame.toByteArray(Charsets.US_ASCII))
                 out.flush()
@@ -159,7 +159,7 @@ class SerialClientAdp
                 val resFrameWithoutCrc = response.substring(0, response.length - 4)
                 val resCrcStr = response.substring(response.length - 4)
                 val expectedCrc = calCrc(resFrameWithoutCrc.toByteArray(Charsets.US_ASCII))
-                val expectedCrcStr = String.format("%02X%02X", expectedCrc and 0xFF, (expectedCrc ushr 8) and 0xFF)
+                val expectedCrcStr = String.format("%02X%02X",(expectedCrc ushr 8) and 0xFF, expectedCrc and 0xFF)
 
                 if (!resCrcStr.equals(expectedCrcStr, ignoreCase = true))
                 {

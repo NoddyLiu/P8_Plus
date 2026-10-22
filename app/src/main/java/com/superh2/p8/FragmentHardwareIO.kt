@@ -51,6 +51,7 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
 
         binding.btnAdpAspirate.setOnClickListener(this)
         binding.btnAdpDispense.setOnClickListener(this)
+        binding.btnAdpStir.setOnClickListener(this)
         binding.btnAdpReleaseTip.setOnClickListener(this)
         binding.btnAdpCheckTip.setOnClickListener(this)
         binding.btnAdpInit.setOnClickListener(this)
@@ -165,6 +166,10 @@ class FragmentHardwareIO : FragmentBase<FragmentHardwareIoBinding>(FragmentHardw
 
             R.id.btn_adp_dispense -> runAdpVolumeCommand(binding.etAdpDispenseVolume.text.toString(), getString(R.string.dispense)) {
                 PipetteCompat.driver.dispense(it)
+            }
+
+            R.id.btn_adp_stir -> runAdpVolumeCommand(binding.etAdpStirVolume.text.toString(), getString(R.string.stir)) {
+                PipetteCompat.driver.stir(it, binding.etAdpStirTimes.text.toString().toIntOrNull() ?: 1)
             }
 
             R.id.btn_adp_release_tip -> thread { PipetteCompat.driver.releaseTip() }

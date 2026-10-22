@@ -14,6 +14,7 @@ interface IPipetteDriver
     fun aspirate(volumeUl: Int)
     fun secondAspirateBackAir(volumeUl: Int)
     fun dispense(volumeUl: Int)
+    fun stir(volumeUl: Int, times: Int)
     fun releaseTip()
     fun hasTip(): Boolean
 }

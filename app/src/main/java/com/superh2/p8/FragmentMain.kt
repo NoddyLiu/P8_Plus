@@ -2217,10 +2217,11 @@ class FragmentMain : FragmentBase<FragmentMainBinding>(FragmentMainBinding::infl
         // 吹打
         val numberOfSampleStir = paramGeneralParams.numberOfSampleStir // 吹打次数
         val volumnOfSampleStir = paramGeneralParams.volumnOfSampleStir // 吹打体积
-        for (i in 0 until numberOfSampleStir)
-        {
-            CmdHelper.stirLiquid(volumnOfSampleStir, false)
-        }
+//        for (i in 0 until numberOfSampleStir)
+//        {
+//            CmdHelper.stirLiquid(volumnOfSampleStir, false)
+//        }
+        CmdHelper.stirLiquid(volumnOfSampleStir, numberOfSampleStir, false)
     }
 
     /**
